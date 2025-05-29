@@ -8,7 +8,7 @@ module.exports = ({ env }) => ({
         enabled: true,
         config: {
             autoStart: true,
-            migrationFolderPath: process.env.MIGRATION_PATH,
+            migrationFolderPath: env('MIGRATION_PATH'),
         }
     },
     matomo: {
