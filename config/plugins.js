@@ -5,7 +5,7 @@ module.exports = ({ env }) => ({
         }
     },
     migrations5p: {
-        enabled: true,
+        enabled: false,
         config: {
             autoStart: true,
             migrationFolderPath: env('MIGRATION_PATH'),
@@ -15,5 +15,16 @@ module.exports = ({ env }) => ({
         config: {
             widgetURL: env('MATOMO_WIDGET_URL'),
         }
+    },
+    navigation: {
+        additionalFields: ['audience', { name: 'new_window', type: 'boolean', label: 'New window' }],
+        contentTypes: ['api::page.page'],
+        contentTypesNameFields: {
+            'api::page.page': ['title']
+        },
+        pathDefaultFields: {
+            'api::page.page': ['slug']
+        },
+        allowedLevels: 2,
     }
 });
