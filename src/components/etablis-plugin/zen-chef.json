@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_etablis_plugin_zen_chefs",
+  "info": {
+    "displayName": "ZenChef"
+  },
+  "options": {},
+  "attributes": {
+    "establishment_name": {
+      "type": "string",
+      "required": true
+    },
+    "restaurant_id": {
+      "type": "string",
+      "required": true
+    },
+    "user_email": {
+      "type": "email",
+      "required": true
+    },
+    "booking_url": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}
