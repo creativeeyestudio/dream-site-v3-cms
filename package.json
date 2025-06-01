@@ -24,6 +24,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
     "strapi-5-sitemap-plugin": "^1.0.5",
+    "strapi-geodata": "^0.1.2",
     "strapi-location-picker": "^0.0.1",
     "strapi-plugin-matomo": "^1.0.1",
     "strapi-plugin-migration-v5p": "^1.0.1",
