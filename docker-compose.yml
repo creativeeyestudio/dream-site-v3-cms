@@ -4,7 +4,6 @@ services:
   cms:
     build: .
     container_name: dreamsite-cms
-    image: strapi:latest
     restart: unless-stopped
     env_file: .env
     environment:
