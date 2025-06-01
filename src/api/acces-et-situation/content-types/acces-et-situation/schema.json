@@ -12,12 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "map_locale": {
+    "location": {
       "type": "customField",
-      "options": {
-        "info": true
-      },
-      "customField": "plugin::strapi-location-picker.location-picker"
+      "customField": "plugin::geodata.geojson"
     },
     "adress": {
       "type": "string",
