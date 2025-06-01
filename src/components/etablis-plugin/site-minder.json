@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_etablis_plugin_site_minders",
+  "info": {
+    "displayName": "SiteMinder"
+  },
+  "options": {},
+  "attributes": {
+    "establishment_name": {
+      "type": "string",
+      "required": true
+    },
+    "client_id": {
+      "type": "string",
+      "required": true
+    },
+    "client_secret": {
+      "type": "string",
+      "required": true
+    },
+    "hotel_code": {
+      "type": "string",
+      "required": true
+    },
+    "group_id": {
+      "type": "string"
+    },
+    "booking_url": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

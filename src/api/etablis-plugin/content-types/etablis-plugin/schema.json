@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "etablis_plugins",
+  "info": {
+    "singularName": "etablis-plugin",
+    "pluralName": "etablis-plugins",
+    "displayName": "Etablis Plugin"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteminder": {
+      "type": "component",
+      "component": "etablis-plugin.site-minder",
+      "repeatable": true
+    },
+    "zenchef": {
+      "type": "component",
+      "component": "etablis-plugin.zen-chef",
+      "repeatable": true
+    }
+  }
+}
