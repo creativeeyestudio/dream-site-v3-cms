@@ -13,10 +13,6 @@
       "type": "string",
       "required": true
     },
-    "client_secret": {
-      "type": "string",
-      "required": true
-    },
     "hotel_code": {
       "type": "string",
       "required": true
