@@ -18,12 +18,13 @@
     "@payloadcms/db-mongodb": "3.40.0",
     "@payloadcms/next": "3.40.0",
     "@payloadcms/payload-cloud": "3.40.0",
+    "@payloadcms/plugin-seo": "^3.42.0",
     "@payloadcms/richtext-lexical": "3.40.0",
     "@payloadcms/ui": "3.40.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "next": "15.3.0",
-    "payload": "3.40.0",
+    "payload": "^3.42.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sharp": "0.32.6"
@@ -45,6 +46,10 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
+    ],
+    "ignoredBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver"
     ]
   },
   "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
