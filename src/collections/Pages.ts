@@ -1,4 +1,11 @@
+import Parallax from '@/blocks/Parallax';
+import TextDoubleImage from '@/blocks/TextImageDouble';
+import TextImage from '@/blocks/TextImage';
 import type { CollectionConfig } from 'payload';
+import Text from '@/blocks/Text';
+import TextIntro from '@/blocks/TextIntro';
+import HtmlContent from '@/blocks/HtmlContent';
+import Heroscreen from '@/blocks/Heroscreen';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -25,8 +32,18 @@ const Pages: CollectionConfig = {
       unique: true,
     },
     {
-      name: 'content',
-      type: 'richText',
+      name: 'layout',
+      type: 'blocks',
+      blocks: [
+        Text, 
+        TextIntro, 
+        TextImage, 
+        TextDoubleImage, 
+        Parallax,
+        HtmlContent,
+        Heroscreen
+      ],
+      required: true,
     },
     {
       name: 'published',
