@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     gallery: Gallery;
+    navigation: Navigation;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -140,7 +142,7 @@ export interface User {
  */
 export interface Media {
   id: string;
-  alt: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -161,6 +163,8 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
+  published?: boolean | null;
+  homepage?: boolean | null;
   layout: (
     | {
         title: string;
@@ -269,8 +273,6 @@ export interface Page {
         blockType: 'heroscreen';
       }
   )[];
-  published?: boolean | null;
-  homepage?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -282,6 +284,40 @@ export interface Gallery {
   id: string;
   gallery_name?: string | null;
   gallery_images: (string | Media)[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: string;
+  title: string;
+  /**
+   * Sélectionne une position unique pour ce menu
+   */
+  menuId: 'main' | 'secondary' | 'footer';
+  items?:
+    | {
+        type: 'page' | 'external';
+        newTab?: boolean | null;
+        page?: (string | null) | Page;
+        label?: string | null;
+        url?: string | null;
+        children?:
+          | {
+              type: 'internal' | 'external';
+              page?: (string | null) | Page;
+              label?: string | null;
+              url?: string | null;
+              newTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -307,6 +343,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gallery';
         value: string | Gallery;
+      } | null)
+    | ({
+        relationTo: 'navigation';
+        value: string | Navigation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -390,6 +430,8 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  published?: T;
+  homepage?: T;
   layout?:
     | T
     | {
@@ -451,8 +493,6 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
-  published?: T;
-  homepage?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -463,6 +503,36 @@ export interface PagesSelect<T extends boolean = true> {
 export interface GallerySelect<T extends boolean = true> {
   gallery_name?: T;
   gallery_images?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  title?: T;
+  menuId?: T;
+  items?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        page?: T;
+        label?: T;
+        url?: T;
+        children?:
+          | T
+          | {
+              type?: T;
+              page?: T;
+              label?: T;
+              url?: T;
+              newTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

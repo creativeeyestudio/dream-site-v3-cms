@@ -8,6 +8,7 @@ const Galleries: CollectionConfig = {
     },
     admin: {
         useAsTitle: 'gallery_name',
+        group: 'Contenu'
     },
     access: {
         read: () => true, // Public

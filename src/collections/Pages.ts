@@ -15,6 +15,7 @@ const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    group: 'Contenu',
   },
   access: {
     read: () => true, // Public
@@ -32,6 +33,19 @@ const Pages: CollectionConfig = {
       unique: true,
     },
     {
+      name: 'published',
+      type: 'checkbox',
+      label: 'Published',
+      defaultValue: false,
+    },
+    {
+      name: 'homepage',
+      type: 'checkbox',
+      label: 'Homepage',
+      defaultValue: false,
+      unique: true,
+    },
+    {
       name: 'layout',
       type: 'blocks',
       blocks: [
@@ -44,19 +58,6 @@ const Pages: CollectionConfig = {
         Heroscreen
       ],
       required: true,
-    },
-    {
-      name: 'published',
-      type: 'checkbox',
-      label: 'Published',
-      defaultValue: false,
-    },
-    {
-      name: 'homepage',
-      type: 'checkbox',
-      label: 'Homepage',
-      defaultValue: false,
-      unique: true,
     },
   ],
 };
