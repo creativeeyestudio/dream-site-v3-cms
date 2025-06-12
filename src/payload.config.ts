@@ -6,7 +6,6 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import { seoPlugin } from '@payloadcms/plugin-seo'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -38,8 +37,5 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
-    seoPlugin({
-      collections: ['Pages', 'Posts'],
-    }),
   ],
 })
