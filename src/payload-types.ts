@@ -293,21 +293,17 @@ export interface Gallery {
  */
 export interface Navigation {
   id: string;
-  title: string;
-  /**
-   * Sélectionne une position unique pour ce menu
-   */
-  menuId: 'main' | 'secondary' | 'footer';
+  menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
   items?:
     | {
-        type: 'page' | 'external';
-        newTab?: boolean | null;
+        type: 'page' | 'article' | 'external';
         page?: (string | null) | Page;
         label?: string | null;
         url?: string | null;
+        newTab?: boolean | null;
         children?:
           | {
-              type: 'internal' | 'external';
+              type: 'page' | 'article' | 'external';
               page?: (string | null) | Page;
               label?: string | null;
               url?: string | null;
@@ -511,16 +507,15 @@ export interface GallerySelect<T extends boolean = true> {
  * via the `definition` "navigation_select".
  */
 export interface NavigationSelect<T extends boolean = true> {
-  title?: T;
   menuId?: T;
   items?:
     | T
     | {
         type?: T;
-        newTab?: T;
         page?: T;
         label?: T;
         url?: T;
+        newTab?: T;
         children?:
           | T
           | {
