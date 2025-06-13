@@ -295,8 +295,10 @@ export interface Page {
      */
     noindex?: boolean | null;
   };
-  published?: boolean | null;
-  homepage?: boolean | null;
+  config?: {
+    published?: ('0' | '1' | '2') | null;
+    homepage?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -558,8 +560,12 @@ export interface PagesSelect<T extends boolean = true> {
         meta_image?: T;
         noindex?: T;
       };
-  published?: T;
-  homepage?: T;
+  config?:
+    | T
+    | {
+        published?: T;
+        homepage?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

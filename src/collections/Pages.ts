@@ -98,23 +98,30 @@ const Pages: CollectionConfig = {
 
     // Publication et Homepage
     {
-      name: 'published',
-      type: 'checkbox',
-      label: 'Publié',
-      defaultValue: false,
+      name: 'config',
+      type: 'group',
       admin: {
         position: 'sidebar',
       },
-    },
-    {
-      name: 'homepage',
-      type: 'checkbox',
-      label: "Page d'accueil",
-      defaultValue: false,
-      unique: true,
-      admin: {
-        position: 'sidebar',
-      },
+      fields: [
+        {
+          name: 'published',
+          type: 'radio',
+          label: 'Publié',
+          options: [
+            { label: 'En brouillon', value: '0' },
+            { label: 'A relire', value: '1' },
+            { label: 'Publié', value: '2' },
+          ],
+        },
+        {
+          name: 'homepage',
+          type: 'checkbox',
+          label: "Page d'accueil",
+          defaultValue: false,
+          unique: true,
+        },
+      ],
     },
   ],
 }
