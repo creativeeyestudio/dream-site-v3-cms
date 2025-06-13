@@ -277,27 +277,17 @@ export interface Page {
         )[]
       | null;
   };
-  seo?: {
-    /**
-     * Titre pour les moteurs de recherche (60 caractères max)
-     */
-    meta_title?: string | null;
-    /**
-     * Description pour les moteurs de recherche (160 caractères max)
-     */
-    meta_description?: string | null;
-    /**
-     * Image utilisée pour les partages sur les réseaux sociaux
-     */
-    meta_image?: (string | null) | Media;
-    /**
-     * Empêche l’indexation par les moteurs de recherche
-     */
-    noindex?: boolean | null;
-  };
   config?: {
     published?: ('0' | '1' | '2') | null;
     homepage?: boolean | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -330,6 +320,14 @@ export interface Post {
   author?: (string | null) | User;
   published?: boolean | null;
   publishedDate?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -552,19 +550,18 @@ export interface PagesSelect<T extends boolean = true> {
                   };
             };
       };
-  seo?:
-    | T
-    | {
-        meta_title?: T;
-        meta_description?: T;
-        meta_image?: T;
-        noindex?: T;
-      };
   config?:
     | T
     | {
         published?: T;
         homepage?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -582,6 +579,13 @@ export interface PostsSelect<T extends boolean = true> {
   author?: T;
   published?: T;
   publishedDate?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

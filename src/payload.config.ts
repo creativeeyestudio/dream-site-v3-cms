@@ -14,6 +14,8 @@ import Galleries from './collections/Galleries'
 import Navigation from './collections/Navigation'
 import Posts from './collections/Posts'
 
+import { seoPlugin } from '@payloadcms/plugin-seo'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -37,5 +39,11 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    seoPlugin({
+      collections: ['pages', 'posts'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }) => doc.seo.meta_title,
+      generateDescription: ({ doc }) => doc.seo.meta_description,
+    }),
   ],
 })
