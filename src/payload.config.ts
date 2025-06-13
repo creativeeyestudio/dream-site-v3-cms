@@ -42,8 +42,6 @@ export default buildConfig({
     seoPlugin({
       collections: ['pages', 'posts'],
       uploadsCollection: 'media',
-      generateTitle: ({ doc }) => doc.seo.meta_title,
-      generateDescription: ({ doc }) => doc.seo.meta_description,
     }),
   ],
 })
