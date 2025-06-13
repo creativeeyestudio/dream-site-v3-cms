@@ -94,9 +94,11 @@ export interface Config {
   };
   globals: {
     'legal-notice': LegalNotice;
+    confidentiality: Confidentiality;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
+    confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
   };
   locale: null;
   user: User & {
@@ -702,6 +704,29 @@ export interface LegalNotice {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "confidentiality".
+ */
+export interface Confidentiality {
+  id: string;
+  identity: {
+    id_name: string;
+    id_adress: string;
+    id_email: string;
+    id_tel?: string | null;
+  };
+  personal_data?: {
+    data_collected?:
+      | {
+          data_collect?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -735,6 +760,33 @@ export interface LegalNoticeSelect<T extends boolean = true> {
     | T
     | {
         proprieteIntellectuelle?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "confidentiality_select".
+ */
+export interface ConfidentialitySelect<T extends boolean = true> {
+  identity?:
+    | T
+    | {
+        id_name?: T;
+        id_adress?: T;
+        id_email?: T;
+        id_tel?: T;
+      };
+  personal_data?:
+    | T
+    | {
+        data_collected?:
+          | T
+          | {
+              data_collect?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
