@@ -72,7 +72,7 @@ const Cgv: GlobalConfig = {
         },
         {
           name: 'prepayment',
-          label: 'Acompte ou prépaiement exigé ?',
+          label: 'Acompte ou prépaiement exigé',
           type: 'checkbox',
         },
         {
