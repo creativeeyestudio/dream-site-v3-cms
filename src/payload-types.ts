@@ -95,10 +95,12 @@ export interface Config {
   globals: {
     'legal-notice': LegalNotice;
     confidentiality: Confidentiality;
+    cgv: Cgv;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
+    cgv: CgvSelect<false> | CgvSelect<true>;
   };
   locale: null;
   user: User & {
@@ -727,6 +729,40 @@ export interface Confidentiality {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cgv".
+ */
+export interface Cgv {
+  id: string;
+  user_data: {
+    user_name: string;
+    user_adress: string;
+    user_email: string;
+    user_siret: string;
+  };
+  services_data?:
+    | {
+        service: string;
+        id?: string | null;
+      }[]
+    | null;
+  payments_data: {
+    payment: {
+      payment_item: string;
+      id?: string | null;
+    }[];
+    prepayment?: boolean | null;
+    payment_place?: boolean | null;
+  };
+  cancel_conditions: {
+    cancel_delay: string;
+    cancel_fees: string;
+    special_cancel_conditions?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -787,6 +823,48 @@ export interface ConfidentialitySelect<T extends boolean = true> {
               data_collect?: T;
               id?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cgv_select".
+ */
+export interface CgvSelect<T extends boolean = true> {
+  user_data?:
+    | T
+    | {
+        user_name?: T;
+        user_adress?: T;
+        user_email?: T;
+        user_siret?: T;
+      };
+  services_data?:
+    | T
+    | {
+        service?: T;
+        id?: T;
+      };
+  payments_data?:
+    | T
+    | {
+        payment?:
+          | T
+          | {
+              payment_item?: T;
+              id?: T;
+            };
+        prepayment?: T;
+        payment_place?: T;
+      };
+  cancel_conditions?:
+    | T
+    | {
+        cancel_delay?: T;
+        cancel_fees?: T;
+        special_cancel_conditions?: T;
       };
   updatedAt?: T;
   createdAt?: T;
