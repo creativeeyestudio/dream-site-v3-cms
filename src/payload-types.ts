@@ -92,8 +92,16 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'legal-notice': LegalNotice;
+    confidentiality: Confidentiality;
+    cgv: Cgv;
+  };
+  globalsSelect: {
+    'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
+    confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
+    cgv: CgvSelect<false> | CgvSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -665,6 +673,202 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-notice".
+ */
+export interface LegalNotice {
+  id: string;
+  editeur: {
+    identite: string;
+    capital?: string | null;
+    coordonnees?: {
+      adresse?: string | null;
+      email?: string | null;
+      telephone?: string | null;
+    };
+  };
+  concepteur: {
+    nom: string;
+    site?: string | null;
+  };
+  hebergeur: {
+    nom: string;
+    adresse?: string | null;
+    site?: string | null;
+  };
+  other?: {
+    proprieteIntellectuelle?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "confidentiality".
+ */
+export interface Confidentiality {
+  id: string;
+  identity: {
+    id_name: string;
+    id_adress: string;
+    id_email: string;
+    id_tel?: string | null;
+  };
+  personal_data?: {
+    data_collected?:
+      | {
+          data_collect?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cgv".
+ */
+export interface Cgv {
+  id: string;
+  user_data: {
+    user_name: string;
+    user_adress: string;
+    user_email: string;
+    user_siret: string;
+  };
+  services_data?:
+    | {
+        service: string;
+        id?: string | null;
+      }[]
+    | null;
+  payments_data: {
+    payment: {
+      payment_item: string;
+      id?: string | null;
+    }[];
+    prepayment?: boolean | null;
+    payment_place?: boolean | null;
+  };
+  cancel_conditions: {
+    cancel_delay: string;
+    cancel_fees: string;
+    special_cancel_conditions?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-notice_select".
+ */
+export interface LegalNoticeSelect<T extends boolean = true> {
+  editeur?:
+    | T
+    | {
+        identite?: T;
+        capital?: T;
+        coordonnees?:
+          | T
+          | {
+              adresse?: T;
+              email?: T;
+              telephone?: T;
+            };
+      };
+  concepteur?:
+    | T
+    | {
+        nom?: T;
+        site?: T;
+      };
+  hebergeur?:
+    | T
+    | {
+        nom?: T;
+        adresse?: T;
+        site?: T;
+      };
+  other?:
+    | T
+    | {
+        proprieteIntellectuelle?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "confidentiality_select".
+ */
+export interface ConfidentialitySelect<T extends boolean = true> {
+  identity?:
+    | T
+    | {
+        id_name?: T;
+        id_adress?: T;
+        id_email?: T;
+        id_tel?: T;
+      };
+  personal_data?:
+    | T
+    | {
+        data_collected?:
+          | T
+          | {
+              data_collect?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cgv_select".
+ */
+export interface CgvSelect<T extends boolean = true> {
+  user_data?:
+    | T
+    | {
+        user_name?: T;
+        user_adress?: T;
+        user_email?: T;
+        user_siret?: T;
+      };
+  services_data?:
+    | T
+    | {
+        service?: T;
+        id?: T;
+      };
+  payments_data?:
+    | T
+    | {
+        payment?:
+          | T
+          | {
+              payment_item?: T;
+              id?: T;
+            };
+        prepayment?: T;
+        payment_place?: T;
+      };
+  cancel_conditions?:
+    | T
+    | {
+        cancel_delay?: T;
+        cancel_fees?: T;
+        special_cancel_conditions?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
