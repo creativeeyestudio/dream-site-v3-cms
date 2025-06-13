@@ -15,6 +15,7 @@ import Navigation from './collections/Navigation'
 import Posts from './collections/Posts'
 
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import LegalNotice from './globals/LegalNotice'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,6 +28,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages, Posts, Galleries, Navigation],
+  globals: [LegalNotice],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -92,8 +92,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'legal-notice': LegalNotice;
+  };
+  globalsSelect: {
+    'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -665,6 +669,76 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-notice".
+ */
+export interface LegalNotice {
+  id: string;
+  editeur: {
+    identite: string;
+    capital?: string | null;
+    coordonnees?: {
+      adresse?: string | null;
+      email?: string | null;
+      telephone?: string | null;
+    };
+  };
+  concepteur: {
+    nom: string;
+    site?: string | null;
+  };
+  hebergeur: {
+    nom: string;
+    adresse?: string | null;
+    site?: string | null;
+  };
+  other?: {
+    proprieteIntellectuelle?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-notice_select".
+ */
+export interface LegalNoticeSelect<T extends boolean = true> {
+  editeur?:
+    | T
+    | {
+        identite?: T;
+        capital?: T;
+        coordonnees?:
+          | T
+          | {
+              adresse?: T;
+              email?: T;
+              telephone?: T;
+            };
+      };
+  concepteur?:
+    | T
+    | {
+        nom?: T;
+        site?: T;
+      };
+  hebergeur?:
+    | T
+    | {
+        nom?: T;
+        adresse?: T;
+        site?: T;
+      };
+  other?:
+    | T
+    | {
+        proprieteIntellectuelle?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
