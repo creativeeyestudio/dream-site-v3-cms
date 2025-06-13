@@ -39,40 +39,51 @@ const Posts: CollectionConfig = {
       required: false,
     },
     {
-      name: 'author',
-      type: 'relationship',
-      relationTo: 'users',
-      required: false,
-      admin: {
-        readOnly: true,
-        position: 'sidebar',
-      },
-      hooks: {
-        beforeChange: [
-          ({ req, value }) => {
-            if (value) return value
-
-            if (req.user) return req.user.id
-
-            return value
-          },
-        ],
-      },
-    },
-    {
-      name: 'published',
-      type: 'checkbox',
-      defaultValue: false,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'publishedDate',
       type: 'date',
       admin: {
         condition: (data) => data.published === true,
       },
+    },
+    {
+      name: 'config',
+      type: 'group',
+      admin: {
+        position: 'sidebar',
+      },
+      fields: [
+        {
+          name: 'author',
+          type: 'relationship',
+          relationTo: 'users',
+          required: false,
+          admin: {
+            readOnly: true,
+            position: 'sidebar',
+          },
+          hooks: {
+            beforeChange: [
+              ({ req, value }) => {
+                if (value) return value
+
+                if (req.user) return req.user.id
+
+                return value
+              },
+            ],
+          },
+        },
+        {
+          name: 'published',
+          type: 'radio',
+          label: 'Publié',
+          options: [
+            { label: 'En brouillon', value: '0' },
+            { label: 'A relire', value: '1' },
+            { label: 'Publié', value: '2' },
+          ],
+        },
+      ],
     },
   ],
 }

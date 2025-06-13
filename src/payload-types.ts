@@ -317,9 +317,11 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  author?: (string | null) | User;
-  published?: boolean | null;
   publishedDate?: string | null;
+  config?: {
+    author?: (string | null) | User;
+    published?: ('0' | '1' | '2') | null;
+  };
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -576,9 +578,13 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   content?: T;
   coverImage?: T;
-  author?: T;
-  published?: T;
   publishedDate?: T;
+  config?:
+    | T
+    | {
+        author?: T;
+        published?: T;
+      };
   meta?:
     | T
     | {
