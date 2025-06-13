@@ -1,11 +1,11 @@
-import Parallax from '@/blocks/Parallax';
-import TextDoubleImage from '@/blocks/TextImageDouble';
-import TextImage from '@/blocks/TextImage';
-import type { CollectionConfig } from 'payload';
-import Text from '@/blocks/Text';
-import TextIntro from '@/blocks/TextIntro';
-import HtmlContent from '@/blocks/HtmlContent';
-import Heroscreen from '@/blocks/Heroscreen';
+import type { CollectionConfig } from 'payload'
+import Text from '@/blocks/Text'
+import TextIntro from '@/blocks/TextIntro'
+import HtmlContent from '@/blocks/HtmlContent'
+import Heroscreen from '@/blocks/Heroscreen'
+import Parallax from '@/blocks/Parallax'
+import TextDoubleImage from '@/blocks/TextImageDouble'
+import TextImage from '@/blocks/TextImage'
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -21,45 +21,65 @@ const Pages: CollectionConfig = {
     read: () => true, // Public
   },
   fields: [
+    // Titre
     {
       name: 'title',
+      label: 'Titre de la page',
       type: 'text',
       required: true,
     },
     {
       name: 'slug',
+      label: 'URL',
       type: 'text',
       required: true,
       unique: true,
     },
+
+    // Contenu
     {
-      name: 'published',
-      type: 'checkbox',
-      label: 'Published',
-      defaultValue: false,
-    },
-    {
-      name: 'homepage',
-      type: 'checkbox',
-      label: 'Homepage',
-      defaultValue: false,
-      unique: true,
-    },
-    {
-      name: 'layout',
-      type: 'blocks',
-      blocks: [
-        Text, 
-        TextIntro, 
-        TextImage, 
-        TextDoubleImage, 
-        Parallax,
-        HtmlContent,
-        Heroscreen
+      name: 'content',
+      label: 'Contenu de la page',
+      type: 'group',
+      fields: [
+        {
+          name: 'layout',
+          label: 'Blocks de la page',
+          type: 'blocks',
+          blocks: [Text, TextIntro, TextImage, TextDoubleImage, Parallax, HtmlContent, Heroscreen],
+          required: false,
+        },
       ],
-      required: true,
+    },
+
+    // Publication et Homepage
+    {
+      name: 'config',
+      type: 'group',
+      admin: {
+        position: 'sidebar',
+      },
+      fields: [
+        {
+          name: 'published',
+          type: 'radio',
+          label: 'Publié',
+          options: [
+            { label: 'En brouillon', value: '0' },
+            { label: 'A relire', value: '1' },
+            { label: 'Publié', value: '2' },
+          ],
+        },
+        {
+          name: 'homepage',
+          type: 'checkbox',
+          label: "Page d'accueil",
+          defaultValue: false,
+          unique: true,
+        },
+      ],
     },
   ],
-};
+}
 
-export default Pages;
+export default Pages

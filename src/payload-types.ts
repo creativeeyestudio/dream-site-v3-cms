@@ -165,116 +165,130 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
-  published?: boolean | null;
-  homepage?: boolean | null;
-  layout: (
-    | {
-        title: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'text';
-      }
-    | {
-        title: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'text-intro';
-      }
-    | {
-        title: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        image: string | Media;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'text-image';
-      }
-    | {
-        title: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        image1: string | Media;
-        image2?: (string | null) | Media;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'text-double-image';
-      }
-    | {
-        parallax_image: string | Media;
-        parallax_speed: number;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'parallax';
-      }
-    | {
-        content: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'html-content';
-      }
-    | {
-        hero_image: (string | Media)[];
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'heroscreen';
-      }
-  )[];
+  content?: {
+    layout?:
+      | (
+          | {
+              title: string;
+              content: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'text';
+            }
+          | {
+              title: string;
+              content: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'text-intro';
+            }
+          | {
+              title: string;
+              content: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              image: string | Media;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'text-image';
+            }
+          | {
+              title: string;
+              content: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              image1: string | Media;
+              image2?: (string | null) | Media;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'text-double-image';
+            }
+          | {
+              parallax_image: string | Media;
+              parallax_speed: number;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'parallax';
+            }
+          | {
+              content: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'html-content';
+            }
+          | {
+              hero_image: (string | Media)[];
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'heroscreen';
+            }
+        )[]
+      | null;
+  };
+  config?: {
+    published?: ('0' | '1' | '2') | null;
+    homepage?: boolean | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -303,9 +317,19 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  author?: (string | null) | User;
-  published?: boolean | null;
   publishedDate?: string | null;
+  config?: {
+    author?: (string | null) | User;
+    published?: ('0' | '1' | '2') | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -463,68 +487,83 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  published?: T;
-  homepage?: T;
-  layout?:
+  content?:
     | T
     | {
-        text?:
+        layout?:
           | T
           | {
-              title?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
+              text?:
+                | T
+                | {
+                    title?: T;
+                    content?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              'text-intro'?:
+                | T
+                | {
+                    title?: T;
+                    content?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              'text-image'?:
+                | T
+                | {
+                    title?: T;
+                    content?: T;
+                    image?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              'text-double-image'?:
+                | T
+                | {
+                    title?: T;
+                    content?: T;
+                    image1?: T;
+                    image2?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              parallax?:
+                | T
+                | {
+                    parallax_image?: T;
+                    parallax_speed?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              'html-content'?:
+                | T
+                | {
+                    content?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              heroscreen?:
+                | T
+                | {
+                    hero_image?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
             };
-        'text-intro'?:
-          | T
-          | {
-              title?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        'text-image'?:
-          | T
-          | {
-              title?: T;
-              content?: T;
-              image?: T;
-              id?: T;
-              blockName?: T;
-            };
-        'text-double-image'?:
-          | T
-          | {
-              title?: T;
-              content?: T;
-              image1?: T;
-              image2?: T;
-              id?: T;
-              blockName?: T;
-            };
-        parallax?:
-          | T
-          | {
-              parallax_image?: T;
-              parallax_speed?: T;
-              id?: T;
-              blockName?: T;
-            };
-        'html-content'?:
-          | T
-          | {
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        heroscreen?:
-          | T
-          | {
-              hero_image?: T;
-              id?: T;
-              blockName?: T;
-            };
+      };
+  config?:
+    | T
+    | {
+        published?: T;
+        homepage?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -539,9 +578,20 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   content?: T;
   coverImage?: T;
-  author?: T;
-  published?: T;
   publishedDate?: T;
+  config?:
+    | T
+    | {
+        author?: T;
+        published?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
