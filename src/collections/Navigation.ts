@@ -54,6 +54,9 @@ const Navigation: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'menuId',
   },
+  access: {
+    read: ({ req }) => req.user?.role === 'admin', // Public
+  },
   fields: [
     {
       name: 'menuId',

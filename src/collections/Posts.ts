@@ -6,6 +6,9 @@ const Posts: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'title',
   },
+  access: {
+    read: ({ req }) => req.user?.role === 'admin', // Public
+  },
   labels: {
     singular: 'Article',
     plural: 'Articles',

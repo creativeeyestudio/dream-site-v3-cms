@@ -6,7 +6,7 @@ export const Media: CollectionConfig = {
     group: 'Contenu',
   },
   access: {
-    read: () => true,
+    read: ({ req }) => req.user?.role === 'admin', // Public
   },
   fields: [
     {
