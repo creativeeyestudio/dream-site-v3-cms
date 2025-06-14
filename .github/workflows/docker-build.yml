@@ -3,10 +3,10 @@ name: Image Docker
 on:
   push:
     tags:
-      - "v*"       # Déclenche sur tous les tags commençant par "v"
-      - "v*-beta"  # Déclenche sur tous les tags contenant "beta"
-      - "v*-rc*"  # Déclenche sur tous les tags commençant par "RC"
-  workflow_dispatch: # Permet le déclenchement manuel depuis l'interface GitHub
+      - "v*"          # Déclenche sur tous les tags commençant par "v"
+      - "v*-beta"     # Déclenche sur tous les tags contenant "beta"
+      - "v*-rc*"      # Déclenche sur tous les tags commençant par "RC"
+  workflow_dispatch:  # Permet le déclenchement manuel depuis l'interface GitHub
 
 jobs:
   build:
