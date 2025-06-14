@@ -3,6 +3,9 @@ import { GlobalConfig } from 'payload'
 const Cgv: GlobalConfig = {
   slug: 'cgv',
   label: 'Conditions générales de vente (CGV)',
+  access: {
+    read: ({ req }) => req.user?.role === 'admin', // Public
+  },
   admin: {
     group: 'Infos juridiques',
   },

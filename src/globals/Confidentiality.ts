@@ -3,6 +3,9 @@ import { GlobalConfig } from 'payload'
 const Confidentiality: GlobalConfig = {
   slug: 'confidentiality',
   label: 'Politique de confidentialité',
+  access: {
+    read: ({ req }) => req.user?.role === 'admin', // Public
+  },
   admin: {
     group: 'Infos juridiques',
   },
