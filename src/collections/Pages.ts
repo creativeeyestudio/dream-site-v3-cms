@@ -18,7 +18,7 @@ const Pages: CollectionConfig = {
     group: 'Contenu',
   },
   access: {
-    read: () => true, // Public
+    read: ({ req }) => req.user?.role === 'admin', // Public
   },
   fields: [
     // Titre
