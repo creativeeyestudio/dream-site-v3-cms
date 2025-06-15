@@ -18,13 +18,6 @@ const Text: Block = {
       label: 'Contenu',
       type: 'richText',
       required: true,
-      access: {
-        read: ({ req }) => {
-          // visible dans l'admin, caché dans l'API publique
-          if (req?.api === 'local') return false
-          return true
-        },
-      },
     },
   ],
 }

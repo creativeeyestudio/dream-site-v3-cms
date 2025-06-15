@@ -11,7 +11,7 @@ const Galleries: CollectionConfig = {
     group: 'Contenu',
   },
   access: {
-    read: ({ req }) => req.user?.role === 'admin', // Public
+    read: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
     {
