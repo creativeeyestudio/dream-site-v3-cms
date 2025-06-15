@@ -6,6 +6,20 @@ import Heroscreen from '@/blocks/Heroscreen'
 import Parallax from '@/blocks/Parallax'
 import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
+import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
+
+async function enrichLayoutWithHTML(layout = []) {
+  return layout.map((block) => {
+    // Supposons que les blocs avec un champ "content" de type richText soient les seuls à traiter
+    if (block.content) {
+      return {
+        ...block,
+        html: convertRichTextToHTML(block.content),
+      }
+    }
+    return block
+  })
+}
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -80,6 +94,17 @@ const Pages: CollectionConfig = {
       ],
     },
   ],
+
+  hooks: {
+    afterRead: [
+      async ({ doc }) => {
+        if (doc?.content?.layout) {
+          doc.content.layout = await enrichLayoutWithHTML(doc.content.layout)
+        }
+        return doc
+      },
+    ],
+  },
 }
 
 export default Pages

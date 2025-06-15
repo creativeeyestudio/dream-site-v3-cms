@@ -1,4 +1,5 @@
-import { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload'
+import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -7,7 +8,7 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: ({ req }) => req.user?.role === 'admin', // Public
+    read: () => true, // ou gère selon ton besoin
   },
   labels: {
     singular: 'Article',
@@ -28,7 +29,6 @@ const Posts: CollectionConfig = {
     {
       name: 'excerpt',
       type: 'textarea',
-      required: false,
     },
     {
       name: 'content',
@@ -39,13 +39,12 @@ const Posts: CollectionConfig = {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',
-      required: false,
     },
     {
       name: 'publishedDate',
       type: 'date',
       admin: {
-        condition: (data) => data.published === true,
+        condition: (data) => data.config?.published === '2',
       },
     },
     {
@@ -59,18 +58,14 @@ const Posts: CollectionConfig = {
           name: 'author',
           type: 'relationship',
           relationTo: 'users',
-          required: false,
           admin: {
             readOnly: true,
-            position: 'sidebar',
           },
           hooks: {
             beforeChange: [
               ({ req, value }) => {
                 if (value) return value
-
                 if (req.user) return req.user.id
-
                 return value
               },
             ],
@@ -82,13 +77,25 @@ const Posts: CollectionConfig = {
           label: 'Publié',
           options: [
             { label: 'En brouillon', value: '0' },
-            { label: 'A relire', value: '1' },
+            { label: 'À relire', value: '1' },
             { label: 'Publié', value: '2' },
           ],
         },
       ],
     },
   ],
+
+  hooks: {
+    afterRead: [
+      async ({ doc }) => {
+        // Convertir le champ richText en HTML dans un champ `html`
+        if (doc?.content) {
+          doc.html = convertRichTextToHTML(doc.content)
+        }
+        return doc
+      },
+    ],
+  },
 }
 
 export default Posts
