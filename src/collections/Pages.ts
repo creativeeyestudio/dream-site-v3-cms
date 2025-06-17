@@ -41,6 +41,7 @@ const Pages: CollectionConfig = {
       label: 'Titre de la page',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
@@ -62,6 +63,7 @@ const Pages: CollectionConfig = {
           type: 'blocks',
           blocks: [Text, TextIntro, TextImage, TextDoubleImage, Parallax, HtmlContent, Heroscreen],
           required: false,
+          localized: true,
         },
       ],
     },
