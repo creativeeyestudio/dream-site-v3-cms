@@ -8,7 +8,7 @@ const linkFields = () => [
     type: 'radio',
     options: [
       { label: 'Page', value: 'page' },
-      { label: 'Article', value: 'article' },
+      { label: 'Article', value: 'post' },
       { label: 'Lien personnalisé', value: 'external' },
     ],
     defaultValue: 'page',
@@ -23,9 +23,18 @@ const linkFields = () => [
     },
   },
   {
+    name: 'post',
+    type: 'relationship',
+    relationTo: 'posts',
+    admin: {
+      condition: (_, siblingData) => siblingData.type === 'post',
+    },
+  },
+  {
     name: 'label',
     type: 'text',
     required: true,
+    localized: true,
     admin: {
       condition: (_, siblingData) => siblingData.type === 'external',
     },

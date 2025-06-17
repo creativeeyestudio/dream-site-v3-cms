@@ -19,6 +19,7 @@ const Posts: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
@@ -29,11 +30,13 @@ const Posts: CollectionConfig = {
     {
       name: 'excerpt',
       type: 'textarea',
+      localized: true,
     },
     {
       name: 'content',
       type: 'richText',
       required: true,
+      localized: true,
     },
     {
       name: 'coverImage',

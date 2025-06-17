@@ -102,7 +102,7 @@ export interface Config {
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
   };
-  locale: null;
+  locale: 'fr' | 'en' | 'es';
   user: User & {
     collection: 'users';
   };
@@ -362,15 +362,17 @@ export interface Navigation {
   menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
   items?:
     | {
-        type: 'page' | 'article' | 'external';
+        type: 'page' | 'post' | 'external';
         page?: (string | null) | Page;
+        post?: (string | null) | Post;
         label?: string | null;
         url?: string | null;
         newTab?: boolean | null;
         children?:
           | {
-              type: 'page' | 'article' | 'external';
+              type: 'page' | 'post' | 'external';
               page?: (string | null) | Page;
+              post?: (string | null) | Post;
               label?: string | null;
               url?: string | null;
               newTab?: boolean | null;
@@ -626,6 +628,7 @@ export interface NavigationSelect<T extends boolean = true> {
     | {
         type?: T;
         page?: T;
+        post?: T;
         label?: T;
         url?: T;
         newTab?: T;
@@ -634,6 +637,7 @@ export interface NavigationSelect<T extends boolean = true> {
           | {
               type?: T;
               page?: T;
+              post?: T;
               label?: T;
               url?: T;
               newTab?: T;
