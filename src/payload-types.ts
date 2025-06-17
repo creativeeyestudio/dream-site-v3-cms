@@ -367,6 +367,7 @@ export interface Navigation {
         post?: (string | null) | Post;
         label?: string | null;
         url?: string | null;
+        image?: (string | null) | Media;
         newTab?: boolean | null;
         children?:
           | {
@@ -375,6 +376,7 @@ export interface Navigation {
               post?: (string | null) | Post;
               label?: string | null;
               url?: string | null;
+              image?: (string | null) | Media;
               newTab?: boolean | null;
               id?: string | null;
             }[]
@@ -631,6 +633,7 @@ export interface NavigationSelect<T extends boolean = true> {
         post?: T;
         label?: T;
         url?: T;
+        image?: T;
         newTab?: T;
         children?:
           | T
@@ -640,6 +643,7 @@ export interface NavigationSelect<T extends boolean = true> {
               post?: T;
               label?: T;
               url?: T;
+              image?: T;
               newTab?: T;
               id?: T;
             };

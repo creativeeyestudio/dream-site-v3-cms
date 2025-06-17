@@ -47,6 +47,13 @@ const linkFields = () => [
     },
   },
   {
+    name: 'image',
+    label: 'Image',
+    type: 'relationship',
+    relationTo: 'media',
+    required: false
+  },
+  {
     name: 'newTab',
     type: 'checkbox',
     label: 'Ouvrir dans un nouvel onglet',
