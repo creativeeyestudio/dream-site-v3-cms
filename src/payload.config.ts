@@ -11,7 +11,6 @@ import { fr } from '@payloadcms/translations/languages/fr'
 import { en } from '@payloadcms/translations/languages/en'
 import { es } from '@payloadcms/translations/languages/es'
 
-
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import Pages from './collections/Pages'
@@ -55,7 +54,7 @@ export default buildConfig({
   ],
   i18n: {
     fallbackLanguage: 'fr',
-    supportedLanguages: { en, fr, es }
+    supportedLanguages: { en, fr, es },
   },
   localization: {
     locales: ['fr', 'en', 'es'], // required

@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Payload } from 'payload'
 import Text from '@/blocks/Text'
 import TextIntro from '@/blocks/TextIntro'
 import HtmlContent from '@/blocks/HtmlContent'
@@ -20,9 +20,15 @@ type LayoutBlock = {
 export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
   return layout.map((block) => {
     if (block.content) {
+      const { id, blockType, title, image, image1, image2, ...rest } = block
       return {
-        ...block,
+        blockType,
+        title,
         html: convertRichTextToHTML(block.content),
+        image,
+        image1,
+        image2,
+        ...rest,
       }
     }
     return block
