@@ -8,6 +8,7 @@ import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { pagesAccess } from '@/access/pagesAccess'
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
@@ -26,9 +27,7 @@ type LayoutBlock = {
  * On utilise `Promise.all` pour gérer correctement une éventuelle
  * fonction `convertRichTextToHTML` asynchrone.
  */
-export async function enrichLayoutWithHTML(
-  layout: LayoutBlock[] = [],
-): Promise<LayoutBlock[]> {
+export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
   return Promise.all(
     layout.map(async (block) => {
       if (!block.content) return block
@@ -59,9 +58,7 @@ const Pages: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Contenu',
   },
-  access: {
-    read: ({ req }) => req.user?.role === 'admin', // Public
-  },
+  access: pagesAccess,
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
     {

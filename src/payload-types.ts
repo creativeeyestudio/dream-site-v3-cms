@@ -137,7 +137,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  role?: ('admin' | 'editor' | 'author' | 'contributor') | null;
+  role: 'admin' | 'editor' | 'author' | 'contributor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -329,8 +329,8 @@ export interface Post {
   coverImage?: (string | null) | Media;
   publishedDate?: string | null;
   config?: {
-    author?: (string | null) | User;
     published?: ('0' | '1' | '2') | null;
+    createdBy?: (string | null) | User;
   };
   meta?: {
     title?: string | null;
@@ -596,8 +596,8 @@ export interface PostsSelect<T extends boolean = true> {
   config?:
     | T
     | {
-        author?: T;
         published?: T;
+        createdBy?: T;
       };
   meta?:
     | T
