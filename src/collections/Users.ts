@@ -24,8 +24,12 @@ export const Users: CollectionConfig = {
           value: 'editor',
         },
         {
-          label: 'Rédacteur',
-          value: 'publisher',
+          label: 'Auteur',
+          value: 'author',
+        },
+        {
+          label: 'Contributeur',
+          value: 'contributor',
         },
       ],
     },

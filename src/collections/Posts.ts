@@ -1,5 +1,23 @@
 import type { CollectionConfig } from 'payload'
+import { Access } from 'payload/types';
+import { hasRole } from '../utils/roles';
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
+
+const canRead: Access = ({ req: { user } }) => {
+  return hasRole(user?.role, 'subscriber'); // tout le monde lit
+};
+
+const canCreate: Access = ({ req: { user } }) => {
+  return hasRole(user?.role, 'contributor'); // à partir de contributeur
+};
+
+const canUpdate: Access = ({ req: { user } }) => {
+  return hasRole(user?.role, 'editor'); // à partir d'éditeur
+};
+
+const canDelete: Access = ({ req: { user } }) => {
+  return hasRole(user?.role, 'admin'); // réservé admin
+};
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -8,7 +26,10 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: () => true, // ou gère selon ton besoin
+    read: canRead,
+    create: canCreate,
+    update: canUpdate,
+    delete: canDelete,
   },
   labels: {
     singular: 'Article',
