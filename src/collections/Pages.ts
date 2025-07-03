@@ -1,4 +1,4 @@
-import type { CollectionConfig, Payload } from 'payload'
+import type { CollectionConfig } from 'payload'
 import Text from '@/blocks/Text'
 import TextIntro from '@/blocks/TextIntro'
 import HtmlContent from '@/blocks/HtmlContent'
@@ -9,6 +9,10 @@ import TextImage from '@/blocks/TextImage'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
+/* -------------------------------------------------------------------------- */
+/*  Helpers                                                                   */
+/* -------------------------------------------------------------------------- */
+
 type LayoutBlock = {
   blockType: string
   blockName?: string
@@ -17,24 +21,34 @@ type LayoutBlock = {
   [key: string]: unknown
 }
 
-export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
-  return layout.map((block) => {
-    if (block.content) {
-      const { id, blockType, title, image, image1, image2, ...rest } = block
+/**
+ * Ajoute une propriété `html` à chaque block possédant `content`.
+ * On utilise `Promise.all` pour gérer correctement une éventuelle
+ * fonction `convertRichTextToHTML` asynchrone.
+ */
+export async function enrichLayoutWithHTML(
+  layout: LayoutBlock[] = [],
+): Promise<LayoutBlock[]> {
+  return Promise.all(
+    layout.map(async (block) => {
+      if (!block.content) return block
+
+      // On extrait uniquement ce qu’on veut réellement renvoyer
+      const { blockType, blockName, content, ...rest } = block
+
       return {
         blockType,
-        title,
-        html: convertRichTextToHTML(block.content),
-        image,
-        image1,
-        image2,
+        blockName,
+        html: await convertRichTextToHTML(content),
         ...rest,
       }
-    }
-    return block
-  })
+    }),
+  )
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Collection                                                                */
+/* -------------------------------------------------------------------------- */
 const Pages: CollectionConfig = {
   slug: 'pages',
   labels: {
@@ -49,7 +63,7 @@ const Pages: CollectionConfig = {
     read: ({ req }) => req.user?.role === 'admin', // Public
   },
   fields: [
-    // Titre
+    /* ------------------------ Métadonnées basiques ------------------------ */
     {
       name: 'title',
       label: 'Titre de la page',
@@ -65,7 +79,7 @@ const Pages: CollectionConfig = {
       unique: true,
     },
 
-    // Contenu
+    /* ------------------------------ Contenu ------------------------------ */
     {
       name: 'content',
       label: 'Contenu de la page',
@@ -82,7 +96,7 @@ const Pages: CollectionConfig = {
       ],
     },
 
-    // Publication et Homepage
+    /* ------------------------ Options de publication ------------------------ */
     {
       name: 'config',
       type: 'group',
@@ -100,18 +114,17 @@ const Pages: CollectionConfig = {
             { label: 'Publié', value: '2' },
           ],
         },
-        {
-          name: 'homepage',
-          type: 'checkbox',
-          label: "Page d'accueil",
-          defaultValue: false,
-          unique: true,
-        },
       ],
     },
   ],
 
+  /* ---------------------------------------------------------------------- */
+  /*  Hooks                                                                 */
+  /* ---------------------------------------------------------------------- */
   hooks: {
+    /**
+     * Enrichit les blocks avec du HTML côté lecture.
+     */
     afterRead: [
       async ({ doc }) => {
         if (doc?.content?.layout) {
