@@ -96,11 +96,13 @@ export interface Config {
     'legal-notice': LegalNotice;
     confidentiality: Confidentiality;
     cgv: Cgv;
+    settings: Setting;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
   };
   locale: 'fr' | 'en' | 'es';
   user: User & {
@@ -135,7 +137,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  role?: ('admin' | 'editor' | 'publisher') | null;
+  role: 'admin' | 'editor' | 'author' | 'contributor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -288,7 +290,6 @@ export interface Page {
   };
   config?: {
     published?: ('0' | '1' | '2') | null;
-    homepage?: boolean | null;
   };
   meta?: {
     title?: string | null;
@@ -326,10 +327,9 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  publishedDate?: string | null;
   config?: {
-    author?: (string | null) | User;
     published?: ('0' | '1' | '2') | null;
+    createdBy?: (string | null) | User;
   };
   meta?: {
     title?: string | null;
@@ -570,7 +570,6 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         published?: T;
-        homepage?: T;
       };
   meta?:
     | T
@@ -592,12 +591,11 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   content?: T;
   coverImage?: T;
-  publishedDate?: T;
   config?:
     | T
     | {
-        author?: T;
         published?: T;
+        createdBy?: T;
       };
   meta?:
     | T
@@ -773,6 +771,27 @@ export interface Cgv {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  websiteConfigGroup?: {
+    title?: string | null;
+    logo?: (string | null) | Media;
+    favicon?: (string | null) | Media;
+    homepage?: (string | null) | Page;
+  };
+  mediasGroup?: {
+    defaultImg?: (string | null) | Media;
+  };
+  maintenanceGroup?: {
+    maintenance?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -875,6 +894,33 @@ export interface CgvSelect<T extends boolean = true> {
         cancel_delay?: T;
         cancel_fees?: T;
         special_cancel_conditions?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  websiteConfigGroup?:
+    | T
+    | {
+        title?: T;
+        logo?: T;
+        favicon?: T;
+        homepage?: T;
+      };
+  mediasGroup?:
+    | T
+    | {
+        defaultImg?: T;
+      };
+  maintenanceGroup?:
+    | T
+    | {
+        maintenance?: T;
       };
   updatedAt?: T;
   createdAt?: T;
