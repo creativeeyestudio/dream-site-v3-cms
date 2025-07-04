@@ -274,7 +274,7 @@ export interface Page {
               blockType: 'parallax';
             }
           | {
-              content: string;
+              htmlCode: string;
               id?: string | null;
               blockName?: string | null;
               blockType: 'html-content';
@@ -553,7 +553,7 @@ export interface PagesSelect<T extends boolean = true> {
               'html-content'?:
                 | T
                 | {
-                    content?: T;
+                    htmlCode?: T;
                     id?: T;
                     blockName?: T;
                   };

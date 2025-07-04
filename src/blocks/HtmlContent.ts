@@ -8,7 +8,7 @@ const HtmlContent: Block = {
   },
   fields: [
     {
-      name: 'content',
+      name: 'htmlCode',
       label: 'Code HTML',
       type: 'code',
       required: true,
