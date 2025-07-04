@@ -327,7 +327,6 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  publishedDate?: string | null;
   config?: {
     published?: ('0' | '1' | '2') | null;
     createdBy?: (string | null) | User;
@@ -592,7 +591,6 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   content?: T;
   coverImage?: T;
-  publishedDate?: T;
   config?:
     | T
     | {

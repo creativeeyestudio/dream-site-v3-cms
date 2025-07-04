@@ -48,14 +48,6 @@ const Posts: CollectionConfig = {
       relationTo: 'media',
     },
     {
-      name: 'publishedDate',
-      label: 'Date de publication',
-      type: 'date',
-      admin: {
-        condition: (data) => data.config?.published === '2',
-      },
-    },
-    {
       name: 'config',
       type: 'group',
       admin: {
