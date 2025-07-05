@@ -35,8 +35,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, Posts, Galleries, Navigation],
-  globals: [LegalNotice, Confidentiality, Cgv, Settings, ChrConnectConfig],
+  collections: [Users, Media, Pages, Posts, Galleries, Navigation, ChrConnectConfig],
+  globals: [LegalNotice, Confidentiality, Cgv, Settings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
