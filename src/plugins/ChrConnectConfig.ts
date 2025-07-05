@@ -1,6 +1,5 @@
 import { CollectionConfig, Field } from 'payload'
 import crypto from 'crypto'
-import { password } from 'payload/shared'
 
 // DATAS
 // ----------------------------------------------
@@ -41,25 +40,32 @@ const ThaisPMS: Field = {
       name: 'password',
       label: 'Mot de passe',
       type: 'text',
-      defaultValue: undefined,
       admin: {
         placeholder: 'Mot de passe fourni par Thais',
-        condition: (data) => {
-          return !data?.thais?.cryptedPassword
-        },
+        condition: (data) => !data?.thais?.passwordHash,
       },
     },
     {
-      name: 'cryptedPassword',
+      name: 'passwordHash',
       type: 'text',
+      admin: { hidden: true },
+    },
+    {
+      name: 'resetPassword',
+      type: 'ui',
       admin: {
-        position: 'sidebar', // par exemple
-        readOnly: true,
-        // Toujours caché dans l’UI
-        hidden: true,
+        condition: ({ thais }) => Boolean(thais?.passwordHash),
+        components: {
+          Field: {
+            path: '/components/ResetPasswordButton',
+            clientProps: {
+              label: 'Changer mon mot de passe',
+              fieldPath: 'thais.password',
+              hashPath: 'thais.passwordHash',
+            },
+          },
+        },
       },
-      // Optionnel : pour que ce champ soit accessible via API, ne pas mettre 'admin' seulement
-      // sinon ajoute `access` pour le rendre lisible par les rôles souhaités
     },
   ],
 }
@@ -111,12 +117,23 @@ const ChrConnectConfig: CollectionConfig = {
     beforeChange: [
       async ({ data }) => {
         if (data.thais?.password) {
+          console.log('Password : ', data.thais?.password)
           const hashed = encrypt(data.thais.password)
           return {
             ...data,
             thais: {
               ...data.thais,
-              password: hashed,
+              passwordHash: hashed, // on stocke le hash
+              password: undefined, // on enlève le clair
+            },
+          }
+        } else {
+          return {
+            ...data,
+            thais: {
+              ...data.thais,
+              passwordHash: undefined, // on stocke le hash
+              password: undefined, // on enlève le clair
             },
           }
         }
