@@ -23,6 +23,7 @@ import LegalNotice from './globals/LegalNotice'
 import Confidentiality from './globals/Confidentiality'
 import Cgv from './globals/Cgv'
 import Settings from '@/globals/Settings'
+import ChrConnectConfig from './plugins/ChrConnectConfig'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,7 +36,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages, Posts, Galleries, Navigation],
-  globals: [LegalNotice, Confidentiality, Cgv, Settings],
+  globals: [LegalNotice, Confidentiality, Cgv, Settings, ChrConnectConfig],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

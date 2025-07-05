@@ -97,12 +97,14 @@ export interface Config {
     confidentiality: Confidentiality;
     cgv: Cgv;
     settings: Setting;
+    'chr-config': ChrConfig;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
     settings: SettingsSelect<false> | SettingsSelect<true>;
+    'chr-config': ChrConfigSelect<false> | ChrConfigSelect<true>;
   };
   locale: 'fr' | 'en' | 'es';
   user: User & {
@@ -792,6 +794,27 @@ export interface Setting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "chr-config".
+ */
+export interface ChrConfig {
+  id: string;
+  thais?: {
+    apiLink?: string | null;
+    username?: string | null;
+    password?: string | null;
+  };
+  siteminder?: {
+    apiUrl?: string | null;
+    apiKey?: string | null;
+  };
+  zenchef?: {
+    widget?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -921,6 +944,33 @@ export interface SettingsSelect<T extends boolean = true> {
     | T
     | {
         maintenance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "chr-config_select".
+ */
+export interface ChrConfigSelect<T extends boolean = true> {
+  thais?:
+    | T
+    | {
+        apiLink?: T;
+        username?: T;
+        password?: T;
+      };
+  siteminder?:
+    | T
+    | {
+        apiUrl?: T;
+        apiKey?: T;
+      };
+  zenchef?:
+    | T
+    | {
+        widget?: T;
       };
   updatedAt?: T;
   createdAt?: T;
