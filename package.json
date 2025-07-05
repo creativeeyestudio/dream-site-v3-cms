@@ -23,6 +23,7 @@
     "@payloadcms/richtext-slate": "^3.44.0",
     "@payloadcms/translations": "^3.43.0",
     "@payloadcms/ui": "3.42.0",
+    "bcrypt": "^6.0.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "next": "15.3.0",

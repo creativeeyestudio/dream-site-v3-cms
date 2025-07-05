@@ -402,6 +402,7 @@ export interface ChrConfig {
     apiLink?: string | null;
     username?: string | null;
     password?: string | null;
+    cryptedPassword?: string | null;
   };
   siteminder?: {
     apiUrl?: string | null;
@@ -696,6 +697,7 @@ export interface ChrConfigSelect<T extends boolean = true> {
         apiLink?: T;
         username?: T;
         password?: T;
+        cryptedPassword?: T;
       };
   siteminder?:
     | T

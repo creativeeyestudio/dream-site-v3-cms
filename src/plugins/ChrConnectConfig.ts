@@ -1,5 +1,9 @@
 import { CollectionConfig, Field } from 'payload'
+import crypto from 'crypto'
+import { password } from 'payload/shared'
 
+// DATAS
+// ----------------------------------------------
 const hotelData: Field = {
   name: 'hotelData',
   label: "Infos de l'hôtel",
@@ -13,6 +17,8 @@ const hotelData: Field = {
   ],
 }
 
+// THAIS PMS
+// ----------------------------------------------
 const ThaisPMS: Field = {
   name: 'thais',
   label: 'Thais PMS',
@@ -36,11 +42,30 @@ const ThaisPMS: Field = {
       label: 'Mot de passe',
       type: 'text',
       defaultValue: undefined,
-      admin: { placeholder: 'Mot de passe fourni par Thais' },
+      admin: {
+        placeholder: 'Mot de passe fourni par Thais',
+        condition: (data) => {
+          return !data?.thais?.cryptedPassword
+        },
+      },
+    },
+    {
+      name: 'cryptedPassword',
+      type: 'text',
+      admin: {
+        position: 'sidebar', // par exemple
+        readOnly: true,
+        // Toujours caché dans l’UI
+        hidden: true,
+      },
+      // Optionnel : pour que ce champ soit accessible via API, ne pas mettre 'admin' seulement
+      // sinon ajoute `access` pour le rendre lisible par les rôles souhaités
     },
   ],
 }
 
+// SITEMINDER
+// ----------------------------------------------
 const SiteMinder: Field = {
   name: 'siteminder',
   label: 'SiteMinder',
@@ -83,8 +108,26 @@ const ChrConnectConfig: CollectionConfig = {
   },
   fields: [hotelData, ThaisPMS, SiteMinder, ZenChef],
   hooks: {
-    beforeChange: [(req) => console.log(req)],
+    beforeChange: [
+      async ({ data }) => {
+        if (data.thais?.password) {
+          const hashed = encrypt(data.thais.password)
+          return {
+            ...data,
+            thais: {
+              ...data.thais,
+              password: hashed,
+            },
+          }
+        }
+        return data
+      },
+    ],
   },
+}
+
+function encrypt(password: string) {
+  return crypto.createHash('sha256').update(password).digest('hex')
 }
 
 export default ChrConnectConfig
