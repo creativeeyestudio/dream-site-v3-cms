@@ -319,7 +319,7 @@ export interface Page {
 export interface Setting {
   id: string;
   title?: string | null;
-  websiteConfigGroup?: {
+  identityGroup?: {
     logo?: (string | null) | Media;
     favicon?: (string | null) | Media;
     homepage?: (string | null) | Page;
@@ -744,7 +744,7 @@ export interface NavigationSelect<T extends boolean = true> {
  */
 export interface SettingsSelect<T extends boolean = true> {
   title?: T;
-  websiteConfigGroup?:
+  identityGroup?:
     | T
     | {
         logo?: T;
