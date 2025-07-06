@@ -28,7 +28,7 @@ export default function SiteSelector() {
     () => [
       { label: 'Sélectionner un site…', value: '' },
       ...sites.map((s) => ({
-        label: s?.websiteConfigGroup?.title || s?.nom || s?.domain,
+        label: s?.websiteConfigGroup?.title,
         value: s?.id,
       })),
     ],
