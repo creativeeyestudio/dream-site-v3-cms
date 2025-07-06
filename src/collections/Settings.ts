@@ -1,8 +1,11 @@
-import { GlobalConfig } from 'payload'
+import { CollectionConfig } from 'payload'
 
-const LegalNotice: GlobalConfig = {
+const LegalNotice: CollectionConfig = {
   slug: 'settings',
-  label: 'Personnalisation du site',
+  labels: {
+    singular: 'Site internet',
+    plural: 'Sites internet',
+  },
   access: {
     read: ({ req }) => req.user?.role === 'admin', // Public
   },
@@ -34,11 +37,11 @@ const LegalNotice: GlobalConfig = {
         },
         {
           name: 'homepage',
-          label: 'Page d\'accueil',
+          label: "Page d'accueil",
           type: 'relationship',
-          relationTo: 'pages'
+          relationTo: 'pages',
         },
-      ]
+      ],
     },
     {
       name: 'mediasGroup',
@@ -51,7 +54,7 @@ const LegalNotice: GlobalConfig = {
           type: 'upload',
           relationTo: 'media',
         },
-      ]
+      ],
     },
     {
       name: 'maintenanceGroup',
@@ -63,10 +66,10 @@ const LegalNotice: GlobalConfig = {
           label: 'Mettre le site en maintenance',
           type: 'checkbox',
           defaultValue: false,
-        }
-      ]
-    }
-  ]
+        },
+      ],
+    },
+  ],
 }
 
 export default LegalNotice

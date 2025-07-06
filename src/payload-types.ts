@@ -73,6 +73,7 @@ export interface Config {
     posts: Post;
     gallery: Gallery;
     navigation: Navigation;
+    settings: Setting;
     'chr-config': ChrConfig;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
     'chr-config': ChrConfigSelect<false> | ChrConfigSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -98,13 +100,11 @@ export interface Config {
     'legal-notice': LegalNotice;
     confidentiality: Confidentiality;
     cgv: Cgv;
-    settings: Setting;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
-    settings: SettingsSelect<false> | SettingsSelect<true>;
   };
   locale: 'fr' | 'en' | 'es';
   user: User & {
@@ -391,6 +391,27 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  websiteConfigGroup?: {
+    title?: string | null;
+    logo?: (string | null) | Media;
+    favicon?: (string | null) | Media;
+    homepage?: (string | null) | Page;
+  };
+  mediasGroup?: {
+    defaultImg?: (string | null) | Media;
+  };
+  maintenanceGroup?: {
+    maintenance?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "chr-config".
  */
 export interface ChrConfig {
@@ -445,6 +466,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'navigation';
         value: string | Navigation;
+      } | null)
+    | ({
+        relationTo: 'settings';
+        value: string | Setting;
       } | null)
     | ({
         relationTo: 'chr-config';
@@ -684,6 +709,32 @@ export interface NavigationSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  websiteConfigGroup?:
+    | T
+    | {
+        title?: T;
+        logo?: T;
+        favicon?: T;
+        homepage?: T;
+      };
+  mediasGroup?:
+    | T
+    | {
+        defaultImg?: T;
+      };
+  maintenanceGroup?:
+    | T
+    | {
+        maintenance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "chr-config_select".
  */
 export interface ChrConfigSelect<T extends boolean = true> {
@@ -836,27 +887,6 @@ export interface Cgv {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface Setting {
-  id: string;
-  websiteConfigGroup?: {
-    title?: string | null;
-    logo?: (string | null) | Media;
-    favicon?: (string | null) | Media;
-    homepage?: (string | null) | Page;
-  };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
-  };
-  maintenanceGroup?: {
-    maintenance?: boolean | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -959,33 +989,6 @@ export interface CgvSelect<T extends boolean = true> {
         cancel_delay?: T;
         cancel_fees?: T;
         special_cancel_conditions?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings_select".
- */
-export interface SettingsSelect<T extends boolean = true> {
-  websiteConfigGroup?:
-    | T
-    | {
-        title?: T;
-        logo?: T;
-        favicon?: T;
-        homepage?: T;
-      };
-  mediasGroup?:
-    | T
-    | {
-        defaultImg?: T;
-      };
-  maintenanceGroup?:
-    | T
-    | {
-        maintenance?: T;
       };
   updatedAt?: T;
   createdAt?: T;
