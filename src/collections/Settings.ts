@@ -20,7 +20,7 @@ const Settings: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'websiteConfigGroup',
+      name: 'identityGroup',
       label: 'Identité du site',
       type: 'group',
       fields: [
