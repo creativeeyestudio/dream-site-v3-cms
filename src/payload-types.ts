@@ -324,9 +324,6 @@ export interface Setting {
     favicon?: (string | null) | Media;
     homepage?: (string | null) | Page;
   };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
-  };
   maintenanceGroup?: {
     maintenance?: boolean | null;
   };
@@ -753,11 +750,6 @@ export interface SettingsSelect<T extends boolean = true> {
         logo?: T;
         favicon?: T;
         homepage?: T;
-      };
-  mediasGroup?:
-    | T
-    | {
-        defaultImg?: T;
       };
   maintenanceGroup?:
     | T

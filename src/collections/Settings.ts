@@ -45,19 +45,6 @@ const Settings: CollectionConfig = {
       ],
     },
     {
-      name: 'mediasGroup',
-      label: 'Médias',
-      type: 'group',
-      fields: [
-        {
-          name: 'defaultImg',
-          label: 'Image par défaut',
-          type: 'upload',
-          relationTo: 'media',
-        },
-      ],
-    },
-    {
       name: 'maintenanceGroup',
       label: 'Maintenance du site',
       type: 'group',
