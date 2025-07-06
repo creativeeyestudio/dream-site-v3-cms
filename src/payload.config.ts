@@ -24,7 +24,6 @@ import Confidentiality from './globals/Confidentiality'
 import Cgv from './globals/Cgv'
 import Settings from '@/collections/Settings'
 import ChrConnectConfig from './plugins/ChrConnectConfig'
-import SiteSelector from './components/SiteSelector'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

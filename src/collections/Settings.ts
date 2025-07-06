@@ -10,19 +10,20 @@ const Settings: CollectionConfig = {
     read: ({ req }) => req.user?.role === 'admin', // Public
   },
   admin: {
+    useAsTitle: 'title',
     group: 'Administration',
   },
   fields: [
+    {
+      name: 'title',
+      label: 'Titre du site',
+      type: 'text',
+    },
     {
       name: 'websiteConfigGroup',
       label: 'Identité du site',
       type: 'group',
       fields: [
-        {
-          name: 'title',
-          label: 'Titre du site',
-          type: 'text',
-        },
         {
           name: 'logo',
           label: 'Logo du site',

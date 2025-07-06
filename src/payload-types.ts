@@ -176,6 +176,7 @@ export interface Media {
  */
 export interface Page {
   id: string;
+  site: string | Setting;
   title: string;
   slug: string;
   content?: {
@@ -306,6 +307,27 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  title?: string | null;
+  websiteConfigGroup?: {
+    logo?: (string | null) | Media;
+    favicon?: (string | null) | Media;
+    homepage?: (string | null) | Page;
+  };
+  mediasGroup?: {
+    defaultImg?: (string | null) | Media;
+  };
+  maintenanceGroup?: {
+    maintenance?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -386,27 +408,6 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface Setting {
-  id: string;
-  websiteConfigGroup?: {
-    title?: string | null;
-    logo?: (string | null) | Media;
-    favicon?: (string | null) | Media;
-    homepage?: (string | null) | Page;
-  };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
-  };
-  maintenanceGroup?: {
-    maintenance?: boolean | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -556,6 +557,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  site?: T;
   title?: T;
   slug?: T;
   content?:
@@ -712,10 +714,10 @@ export interface NavigationSelect<T extends boolean = true> {
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
+  title?: T;
   websiteConfigGroup?:
     | T
     | {
-        title?: T;
         logo?: T;
         favicon?: T;
         homepage?: T;
