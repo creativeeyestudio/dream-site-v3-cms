@@ -399,14 +399,15 @@ export interface ChrConfig {
     hotelName?: string | null;
   };
   thais?: {
-    apiLink?: string | null;
+    apiUrl?: string | null;
     username?: string | null;
     password?: string | null;
     passwordHash?: string | null;
   };
   siteminder?: {
     apiUrl?: string | null;
-    apiKey?: string | null;
+    password?: string | null;
+    passwordHash?: string | null;
   };
   zenchef?: {
     widget?: string | null;
@@ -694,7 +695,7 @@ export interface ChrConfigSelect<T extends boolean = true> {
   thais?:
     | T
     | {
-        apiLink?: T;
+        apiUrl?: T;
         username?: T;
         password?: T;
         passwordHash?: T;
@@ -703,7 +704,8 @@ export interface ChrConfigSelect<T extends boolean = true> {
     | T
     | {
         apiUrl?: T;
-        apiKey?: T;
+        password?: T;
+        passwordHash?: T;
       };
   zenchef?:
     | T

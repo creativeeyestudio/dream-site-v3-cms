@@ -12,6 +12,7 @@ const hotelData: Field = {
       name: 'hotelName',
       label: "Nom de l'hôtel",
       type: 'text',
+      admin: { placeholder: 'Nom de votre établissement' },
     },
   ],
 }
@@ -24,7 +25,7 @@ const ThaisPMS: Field = {
   type: 'group',
   fields: [
     {
-      name: 'apiLink',
+      name: 'apiUrl',
       label: "Lien de l'API",
       type: 'text',
       admin: { placeholder: "URL d'API fournie par Thais" },
@@ -81,15 +82,44 @@ const SiteMinder: Field = {
       name: 'apiUrl',
       label: "Lien de l'API",
       type: 'text',
+      admin: { placeholder: "URL d'API fournie par SiteMinder" },
     },
     {
-      name: 'apiKey',
+      name: 'password',
       label: 'API Key',
       type: 'text',
+      admin: {
+        placeholder: 'API Key fournie par SiteMinder',
+        condition: (data) => !data?.siteminder?.passwordHash,
+      },
+    },
+    {
+      name: 'passwordHash',
+      type: 'text',
+      admin: { hidden: true },
+    },
+    {
+      name: 'resetPassword',
+      type: 'ui',
+      admin: {
+        condition: ({ siteminder }) => Boolean(siteminder?.passwordHash),
+        components: {
+          Field: {
+            path: '/components/ResetPasswordButton',
+            clientProps: {
+              label: 'Changer mon API Token',
+              fieldPath: 'siteminder.password',
+              hashPath: 'siteminder.passwordHash',
+            },
+          },
+        },
+      },
     },
   ],
 }
 
+// ZENCHEF
+// ----------------------------------------------
 const ZenChef: Field = {
   name: 'zenchef',
   label: 'ZenChef',
@@ -99,6 +129,7 @@ const ZenChef: Field = {
       name: 'widget',
       label: 'Lien vers le widget de moteur de recherche',
       type: 'text',
+      admin: { placeholder: 'Lien du Widget fourni par ZenChef' },
     },
   ],
 }
@@ -116,28 +147,27 @@ const ChrConnectConfig: CollectionConfig = {
   hooks: {
     beforeChange: [
       async ({ data }) => {
-        if (data.thais?.password) {
-          console.log('Password : ', data.thais?.password)
-          const hashed = encrypt(data.thais.password)
-          return {
-            ...data,
-            thais: {
-              ...data.thais,
-              passwordHash: hashed, // on stocke le hash
-              password: undefined, // on enlève le clair
-            },
+        const hashPasswordFor = (group: any) => {
+          if (group?.password) {
+            return {
+              ...group,
+              passwordHash: encrypt(group.password),
+              password: undefined,
+            }
           }
-        } else {
+
           return {
-            ...data,
-            thais: {
-              ...data.thais,
-              passwordHash: undefined, // on stocke le hash
-              password: undefined, // on enlève le clair
-            },
+            ...group,
+            passwordHash: undefined,
+            password: undefined,
           }
         }
-        return data
+
+        return {
+          ...data,
+          thais: hashPasswordFor(data.thais),
+          siteminder: hashPasswordFor(data.siteminder),
+        }
       },
     ],
   },
