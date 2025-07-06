@@ -149,6 +149,13 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -290,7 +297,8 @@ export interface Page {
         )[]
       | null;
   };
-  config?: {
+  config: {
+    site: string | Setting;
     published?: ('0' | '1' | '2') | null;
   };
   meta?: {
@@ -300,6 +308,27 @@ export interface Page {
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (string | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  title?: string | null;
+  websiteConfigGroup?: {
+    logo?: (string | null) | Media;
+    favicon?: (string | null) | Media;
+    homepage?: (string | null) | Page;
+  };
+  mediasGroup?: {
+    defaultImg?: (string | null) | Media;
+  };
+  maintenanceGroup?: {
+    maintenance?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -329,7 +358,8 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  config?: {
+  config: {
+    site: string | Setting;
     published?: ('0' | '1' | '2') | null;
     createdBy?: (string | null) | User;
   };
@@ -352,6 +382,9 @@ export interface Gallery {
   id: string;
   gallery_name?: string | null;
   gallery_images: (string | Media)[];
+  config: {
+    site: string | Setting;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -386,26 +419,8 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface Setting {
-  id: string;
-  title?: string | null;
-  websiteConfigGroup?: {
-    logo?: (string | null) | Media;
-    favicon?: (string | null) | Media;
-    homepage?: (string | null) | Page;
-  };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
-  };
-  maintenanceGroup?: {
-    maintenance?: boolean | null;
+  config: {
+    site: string | Setting;
   };
   updatedAt: string;
   createdAt: string;
@@ -417,7 +432,7 @@ export interface Setting {
 export interface ChrConfig {
   id: string;
   hotelData: {
-    hotelName: string;
+    site: string | Setting;
   };
   thais?: {
     apiUrl?: string | null;
@@ -532,6 +547,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -626,6 +648,7 @@ export interface PagesSelect<T extends boolean = true> {
   config?:
     | T
     | {
+        site?: T;
         published?: T;
       };
   meta?:
@@ -651,6 +674,7 @@ export interface PostsSelect<T extends boolean = true> {
   config?:
     | T
     | {
+        site?: T;
         published?: T;
         createdBy?: T;
       };
@@ -671,6 +695,11 @@ export interface PostsSelect<T extends boolean = true> {
 export interface GallerySelect<T extends boolean = true> {
   gallery_name?: T;
   gallery_images?: T;
+  config?:
+    | T
+    | {
+        site?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -703,6 +732,11 @@ export interface NavigationSelect<T extends boolean = true> {
               id?: T;
             };
         id?: T;
+      };
+  config?:
+    | T
+    | {
+        site?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -741,7 +775,7 @@ export interface ChrConfigSelect<T extends boolean = true> {
   hotelData?:
     | T
     | {
-        hotelName?: T;
+        site?: T;
       };
   thais?:
     | T

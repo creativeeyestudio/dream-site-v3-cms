@@ -55,6 +55,13 @@ const Posts: CollectionConfig = {
       },
       fields: [
         {
+          name: 'site',
+          type: 'relationship',
+          relationTo: 'settings',
+          required: true,
+          multiple: true,
+        },
+        {
           name: 'published',
           type: 'radio',
           label: 'Publié',
@@ -76,7 +83,7 @@ const Posts: CollectionConfig = {
           type: 'relationship',
           relationTo: 'users',
           admin: {
-            readOnly: true,
+            hidden: true,
           },
           hooks: {
             beforeChange: [

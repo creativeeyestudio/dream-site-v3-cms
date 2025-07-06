@@ -102,6 +102,12 @@ const Pages: CollectionConfig = {
       },
       fields: [
         {
+          name: 'site',
+          type: 'relationship',
+          relationTo: 'settings',
+          required: true,
+        },
+        {
           name: 'published',
           type: 'radio',
           label: 'Publié',

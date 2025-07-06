@@ -9,9 +9,9 @@ const hotelData: Field = {
   type: 'group',
   fields: [
     {
-      name: 'hotelName',
-      label: "Nom de l'hôtel",
-      type: 'text',
+      name: 'site',
+      type: 'relationship',
+      relationTo: 'settings',
       required: true,
     },
   ],
