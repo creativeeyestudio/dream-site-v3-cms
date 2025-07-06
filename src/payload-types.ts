@@ -332,6 +332,7 @@ export interface Setting {
  */
 export interface Post {
   id: string;
+  sites: (string | Setting)[];
   title: string;
   slug: string;
   excerpt?: string | null;
@@ -372,6 +373,7 @@ export interface Post {
  */
 export interface Gallery {
   id: string;
+  sites: (string | Setting)[];
   gallery_name?: string | null;
   gallery_images: (string | Media)[];
   updatedAt: string;
@@ -384,6 +386,7 @@ export interface Gallery {
 export interface Navigation {
   id: string;
   menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
+  sites: (string | Setting)[];
   items?:
     | {
         type: 'page' | 'post' | 'external';
@@ -417,8 +420,8 @@ export interface Navigation {
  */
 export interface ChrConfig {
   id: string;
-  hotelData?: {
-    hotelName?: string | null;
+  hotelData: {
+    hotelName: string | Setting;
   };
   thais?: {
     apiUrl?: string | null;
@@ -645,6 +648,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  sites?: T;
   title?: T;
   slug?: T;
   excerpt?: T;
@@ -671,6 +675,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "gallery_select".
  */
 export interface GallerySelect<T extends boolean = true> {
+  sites?: T;
   gallery_name?: T;
   gallery_images?: T;
   updatedAt?: T;
@@ -682,6 +687,7 @@ export interface GallerySelect<T extends boolean = true> {
  */
 export interface NavigationSelect<T extends boolean = true> {
   menuId?: T;
+  sites?: T;
   items?:
     | T
     | {

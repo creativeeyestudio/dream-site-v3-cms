@@ -11,8 +11,20 @@ const hotelData: Field = {
     {
       name: 'hotelName',
       label: "Nom de l'hôtel",
-      type: 'text',
-      admin: { placeholder: 'Nom de votre établissement' },
+      type: 'relationship',
+      relationTo: 'settings',
+      required: true,
+      defaultValue: async ({ req }) => {
+        const siteId = await (req as any)
+        console.log('Cookies : ', siteId)
+
+        const { docs } = await req.payload.find({
+          collection: 'settings',
+          where: { id: { equals: siteId } },
+          limit: 1,
+        })
+        return docs?.[0]?.id
+      },
     },
   ],
 }
