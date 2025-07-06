@@ -15,14 +15,6 @@ const Posts: CollectionConfig = {
   },
   fields: [
     {
-      name: 'sites',
-      label: 'Sites',
-      type: 'relationship',
-      relationTo: 'settings',
-      required: true,
-      hasMany: true,
-    },
-    {
       name: 'title',
       label: 'Titre du post',
       type: 'text',

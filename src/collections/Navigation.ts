@@ -86,14 +86,6 @@ const Navigation: CollectionConfig = {
       ],
     },
     {
-      name: 'sites',
-      label: 'Sites',
-      type: 'relationship',
-      relationTo: 'settings',
-      required: true,
-      hasMany: true,
-    },
-    {
       name: 'items',
       type: 'array',
       label: 'Liens du menu',

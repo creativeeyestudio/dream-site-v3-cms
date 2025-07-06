@@ -176,7 +176,6 @@ export interface Media {
  */
 export interface Page {
   id: string;
-  site: string | Setting;
   title: string;
   slug: string;
   content?: {
@@ -307,32 +306,10 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface Setting {
-  id: string;
-  title?: string | null;
-  websiteConfigGroup?: {
-    logo?: (string | null) | Media;
-    favicon?: (string | null) | Media;
-    homepage?: (string | null) | Page;
-  };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
-  };
-  maintenanceGroup?: {
-    maintenance?: boolean | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
   id: string;
-  sites: (string | Setting)[];
   title: string;
   slug: string;
   excerpt?: string | null;
@@ -373,7 +350,6 @@ export interface Post {
  */
 export interface Gallery {
   id: string;
-  sites: (string | Setting)[];
   gallery_name?: string | null;
   gallery_images: (string | Media)[];
   updatedAt: string;
@@ -386,7 +362,6 @@ export interface Gallery {
 export interface Navigation {
   id: string;
   menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
-  sites: (string | Setting)[];
   items?:
     | {
         type: 'page' | 'post' | 'external';
@@ -416,12 +391,33 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  title?: string | null;
+  websiteConfigGroup?: {
+    logo?: (string | null) | Media;
+    favicon?: (string | null) | Media;
+    homepage?: (string | null) | Page;
+  };
+  mediasGroup?: {
+    defaultImg?: (string | null) | Media;
+  };
+  maintenanceGroup?: {
+    maintenance?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "chr-config".
  */
 export interface ChrConfig {
   id: string;
   hotelData: {
-    hotelName: string | Setting;
+    hotelName: string;
   };
   thais?: {
     apiUrl?: string | null;
@@ -560,7 +556,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
-  site?: T;
   title?: T;
   slug?: T;
   content?:
@@ -648,7 +643,6 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  sites?: T;
   title?: T;
   slug?: T;
   excerpt?: T;
@@ -675,7 +669,6 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "gallery_select".
  */
 export interface GallerySelect<T extends boolean = true> {
-  sites?: T;
   gallery_name?: T;
   gallery_images?: T;
   updatedAt?: T;
@@ -687,7 +680,6 @@ export interface GallerySelect<T extends boolean = true> {
  */
 export interface NavigationSelect<T extends boolean = true> {
   menuId?: T;
-  sites?: T;
   items?:
     | T
     | {

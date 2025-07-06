@@ -62,13 +62,6 @@ const Pages: CollectionConfig = {
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
     {
-      name: 'site',
-      label: 'Site sélectionné',
-      type: 'relationship',
-      relationTo: 'settings',
-      required: true,
-    },
-    {
       name: 'title',
       label: 'Titre de la page',
       type: 'text',
