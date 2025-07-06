@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-const LegalNotice: CollectionConfig = {
+const Settings: CollectionConfig = {
   slug: 'settings',
   labels: {
     singular: 'Site internet',
@@ -72,4 +72,4 @@ const LegalNotice: CollectionConfig = {
   ],
 }
 
-export default LegalNotice
+export default Settings

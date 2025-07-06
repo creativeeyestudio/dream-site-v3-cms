@@ -24,6 +24,7 @@ import Confidentiality from './globals/Confidentiality'
 import Cgv from './globals/Cgv'
 import Settings from '@/collections/Settings'
 import ChrConnectConfig from './plugins/ChrConnectConfig'
+import SiteSelector from './components/SiteSelector'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,6 +34,9 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    components: {
+      beforeNavLinks: ['/components/SiteSelector'],
     },
   },
   collections: [Users, Media, Pages, Posts, Galleries, Navigation, Settings, ChrConnectConfig],
