@@ -22,7 +22,7 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import LegalNotice from './globals/LegalNotice'
 import Confidentiality from './globals/Confidentiality'
 import Cgv from './globals/Cgv'
-import Settings from '@/globals/Settings'
+import Settings from '@/collections/Settings'
 import ChrConnectConfig from './plugins/ChrConnectConfig'
 
 const filename = fileURLToPath(import.meta.url)
@@ -34,9 +34,12 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      beforeNavLinks: ['/components/SiteSelector'],
+    },
   },
-  collections: [Users, Media, Pages, Posts, Galleries, Navigation, ChrConnectConfig],
-  globals: [LegalNotice, Confidentiality, Cgv, Settings],
+  collections: [Users, Media, Pages, Posts, Galleries, Navigation, Settings, ChrConnectConfig],
+  globals: [LegalNotice, Confidentiality, Cgv],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

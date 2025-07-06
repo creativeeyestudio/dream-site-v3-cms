@@ -15,6 +15,14 @@ const Galleries: CollectionConfig = {
   },
   fields: [
     {
+      name: 'sites',
+      label: 'Sites',
+      type: 'relationship',
+      relationTo: 'settings',
+      required: true,
+      hasMany: true,
+    },
+    {
       name: 'gallery_name',
       label: 'Nom de la galerie',
       type: 'text',

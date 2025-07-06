@@ -73,6 +73,7 @@ export interface Config {
     posts: Post;
     gallery: Gallery;
     navigation: Navigation;
+    settings: Setting;
     'chr-config': ChrConfig;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
     'chr-config': ChrConfigSelect<false> | ChrConfigSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -98,13 +100,11 @@ export interface Config {
     'legal-notice': LegalNotice;
     confidentiality: Confidentiality;
     cgv: Cgv;
-    settings: Setting;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
-    settings: SettingsSelect<false> | SettingsSelect<true>;
   };
   locale: 'fr' | 'en' | 'es';
   user: User & {
@@ -176,6 +176,7 @@ export interface Media {
  */
 export interface Page {
   id: string;
+  site: string | Setting;
   title: string;
   slug: string;
   content?: {
@@ -306,10 +307,32 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  title?: string | null;
+  websiteConfigGroup?: {
+    logo?: (string | null) | Media;
+    favicon?: (string | null) | Media;
+    homepage?: (string | null) | Page;
+  };
+  mediasGroup?: {
+    defaultImg?: (string | null) | Media;
+  };
+  maintenanceGroup?: {
+    maintenance?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
   id: string;
+  sites: (string | Setting)[];
   title: string;
   slug: string;
   excerpt?: string | null;
@@ -350,6 +373,7 @@ export interface Post {
  */
 export interface Gallery {
   id: string;
+  sites: (string | Setting)[];
   gallery_name?: string | null;
   gallery_images: (string | Media)[];
   updatedAt: string;
@@ -362,6 +386,7 @@ export interface Gallery {
 export interface Navigation {
   id: string;
   menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
+  sites: (string | Setting)[];
   items?:
     | {
         type: 'page' | 'post' | 'external';
@@ -395,8 +420,8 @@ export interface Navigation {
  */
 export interface ChrConfig {
   id: string;
-  hotelData?: {
-    hotelName?: string | null;
+  hotelData: {
+    hotelName: string | Setting;
   };
   thais?: {
     apiUrl?: string | null;
@@ -445,6 +470,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'navigation';
         value: string | Navigation;
+      } | null)
+    | ({
+        relationTo: 'settings';
+        value: string | Setting;
       } | null)
     | ({
         relationTo: 'chr-config';
@@ -531,6 +560,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  site?: T;
   title?: T;
   slug?: T;
   content?:
@@ -618,6 +648,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  sites?: T;
   title?: T;
   slug?: T;
   excerpt?: T;
@@ -644,6 +675,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "gallery_select".
  */
 export interface GallerySelect<T extends boolean = true> {
+  sites?: T;
   gallery_name?: T;
   gallery_images?: T;
   updatedAt?: T;
@@ -655,6 +687,7 @@ export interface GallerySelect<T extends boolean = true> {
  */
 export interface NavigationSelect<T extends boolean = true> {
   menuId?: T;
+  sites?: T;
   items?:
     | T
     | {
@@ -678,6 +711,32 @@ export interface NavigationSelect<T extends boolean = true> {
               id?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  title?: T;
+  websiteConfigGroup?:
+    | T
+    | {
+        logo?: T;
+        favicon?: T;
+        homepage?: T;
+      };
+  mediasGroup?:
+    | T
+    | {
+        defaultImg?: T;
+      };
+  maintenanceGroup?:
+    | T
+    | {
+        maintenance?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -836,27 +895,6 @@ export interface Cgv {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface Setting {
-  id: string;
-  websiteConfigGroup?: {
-    title?: string | null;
-    logo?: (string | null) | Media;
-    favicon?: (string | null) | Media;
-    homepage?: (string | null) | Page;
-  };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
-  };
-  maintenanceGroup?: {
-    maintenance?: boolean | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -959,33 +997,6 @@ export interface CgvSelect<T extends boolean = true> {
         cancel_delay?: T;
         cancel_fees?: T;
         special_cancel_conditions?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings_select".
- */
-export interface SettingsSelect<T extends boolean = true> {
-  websiteConfigGroup?:
-    | T
-    | {
-        title?: T;
-        logo?: T;
-        favicon?: T;
-        homepage?: T;
-      };
-  mediasGroup?:
-    | T
-    | {
-        defaultImg?: T;
-      };
-  maintenanceGroup?:
-    | T
-    | {
-        maintenance?: T;
       };
   updatedAt?: T;
   createdAt?: T;
