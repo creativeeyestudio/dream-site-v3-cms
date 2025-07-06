@@ -20,7 +20,7 @@ const Settings: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'websiteConfigGroup',
+      name: 'identityGroup',
       label: 'Identité du site',
       type: 'group',
       fields: [
@@ -41,19 +41,6 @@ const Settings: CollectionConfig = {
           label: "Page d'accueil",
           type: 'relationship',
           relationTo: 'pages',
-        },
-      ],
-    },
-    {
-      name: 'mediasGroup',
-      label: 'Médias',
-      type: 'group',
-      fields: [
-        {
-          name: 'defaultImg',
-          label: 'Image par défaut',
-          type: 'upload',
-          relationTo: 'media',
         },
       ],
     },

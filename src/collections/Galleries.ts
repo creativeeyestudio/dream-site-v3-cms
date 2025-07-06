@@ -15,14 +15,6 @@ const Galleries: CollectionConfig = {
   },
   fields: [
     {
-      name: 'sites',
-      label: 'Sites',
-      type: 'relationship',
-      relationTo: 'settings',
-      required: true,
-      hasMany: true,
-    },
-    {
       name: 'gallery_name',
       label: 'Nom de la galerie',
       type: 'text',
@@ -34,6 +26,24 @@ const Galleries: CollectionConfig = {
       relationTo: 'media',
       hasMany: true,
       required: true,
+    },
+
+    /* ------------------------ Options de publication ------------------------ */
+    {
+      name: 'config',
+      type: 'group',
+      admin: {
+        position: 'sidebar',
+      },
+      fields: [
+        {
+          name: 'site',
+          type: 'relationship',
+          relationTo: 'settings',
+          required: true,
+          multiple: true,
+        },
+      ],
     },
   ],
 }

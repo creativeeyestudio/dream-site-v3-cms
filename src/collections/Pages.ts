@@ -62,13 +62,6 @@ const Pages: CollectionConfig = {
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
     {
-      name: 'site',
-      label: 'Site sélectionné',
-      type: 'relationship',
-      relationTo: 'settings',
-      required: true,
-    },
-    {
       name: 'title',
       label: 'Titre de la page',
       type: 'text',
@@ -108,6 +101,12 @@ const Pages: CollectionConfig = {
         position: 'sidebar',
       },
       fields: [
+        {
+          name: 'site',
+          type: 'relationship',
+          relationTo: 'settings',
+          required: true,
+        },
         {
           name: 'published',
           type: 'radio',

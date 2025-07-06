@@ -149,6 +149,13 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -176,7 +183,6 @@ export interface Media {
  */
 export interface Page {
   id: string;
-  site: string | Setting;
   title: string;
   slug: string;
   content?: {
@@ -291,7 +297,8 @@ export interface Page {
         )[]
       | null;
   };
-  config?: {
+  config: {
+    site: string | Setting;
     published?: ('0' | '1' | '2') | null;
   };
   meta?: {
@@ -312,13 +319,10 @@ export interface Page {
 export interface Setting {
   id: string;
   title?: string | null;
-  websiteConfigGroup?: {
+  identityGroup?: {
     logo?: (string | null) | Media;
     favicon?: (string | null) | Media;
     homepage?: (string | null) | Page;
-  };
-  mediasGroup?: {
-    defaultImg?: (string | null) | Media;
   };
   maintenanceGroup?: {
     maintenance?: boolean | null;
@@ -332,7 +336,6 @@ export interface Setting {
  */
 export interface Post {
   id: string;
-  sites: (string | Setting)[];
   title: string;
   slug: string;
   excerpt?: string | null;
@@ -352,7 +355,8 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  config?: {
+  config: {
+    site: string | Setting;
     published?: ('0' | '1' | '2') | null;
     createdBy?: (string | null) | User;
   };
@@ -373,9 +377,11 @@ export interface Post {
  */
 export interface Gallery {
   id: string;
-  sites: (string | Setting)[];
   gallery_name?: string | null;
   gallery_images: (string | Media)[];
+  config: {
+    site: string | Setting;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -386,7 +392,6 @@ export interface Gallery {
 export interface Navigation {
   id: string;
   menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
-  sites: (string | Setting)[];
   items?:
     | {
         type: 'page' | 'post' | 'external';
@@ -411,6 +416,9 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
+  config: {
+    site: string | Setting;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -421,7 +429,7 @@ export interface Navigation {
 export interface ChrConfig {
   id: string;
   hotelData: {
-    hotelName: string | Setting;
+    site: string | Setting;
   };
   thais?: {
     apiUrl?: string | null;
@@ -536,6 +544,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -560,7 +575,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
-  site?: T;
   title?: T;
   slug?: T;
   content?:
@@ -631,6 +645,7 @@ export interface PagesSelect<T extends boolean = true> {
   config?:
     | T
     | {
+        site?: T;
         published?: T;
       };
   meta?:
@@ -648,7 +663,6 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  sites?: T;
   title?: T;
   slug?: T;
   excerpt?: T;
@@ -657,6 +671,7 @@ export interface PostsSelect<T extends boolean = true> {
   config?:
     | T
     | {
+        site?: T;
         published?: T;
         createdBy?: T;
       };
@@ -675,9 +690,13 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "gallery_select".
  */
 export interface GallerySelect<T extends boolean = true> {
-  sites?: T;
   gallery_name?: T;
   gallery_images?: T;
+  config?:
+    | T
+    | {
+        site?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -687,7 +706,6 @@ export interface GallerySelect<T extends boolean = true> {
  */
 export interface NavigationSelect<T extends boolean = true> {
   menuId?: T;
-  sites?: T;
   items?:
     | T
     | {
@@ -712,6 +730,11 @@ export interface NavigationSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  config?:
+    | T
+    | {
+        site?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -721,17 +744,12 @@ export interface NavigationSelect<T extends boolean = true> {
  */
 export interface SettingsSelect<T extends boolean = true> {
   title?: T;
-  websiteConfigGroup?:
+  identityGroup?:
     | T
     | {
         logo?: T;
         favicon?: T;
         homepage?: T;
-      };
-  mediasGroup?:
-    | T
-    | {
-        defaultImg?: T;
       };
   maintenanceGroup?:
     | T
@@ -749,7 +767,7 @@ export interface ChrConfigSelect<T extends boolean = true> {
   hotelData?:
     | T
     | {
-        hotelName?: T;
+        site?: T;
       };
   thais?:
     | T
