@@ -1,8 +1,6 @@
 import { Access } from 'payload/types'
 import { hasRole } from './roles'
 
-const canRead: Access = ({ req: { user } }) => hasRole(user?.role, 'contributor')
-
 const canCreate: Access = ({ req: { user } }) => hasRole(user?.role, 'contributor')
 
 const canUpdate: Access = async ({ req: { user }, doc }) => {
@@ -32,7 +30,7 @@ const canDelete: Access = async ({ req: { user }, doc }) => {
 }
 
 export const accessPosts = {
-  read: canRead,
+  read: () => true,
   create: canCreate,
   update: canUpdate,
   delete: canDelete,
