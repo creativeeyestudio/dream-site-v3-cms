@@ -1,5 +1,4 @@
-import { accessNavigation } from '@/access/navigationAccess'
-import { CollectionConfig, Field } from 'payload'
+import { CollectionConfig } from 'payload'
 import { v4 as uuidv4 } from 'uuid'
 import LinkField from '@/components/LinkField'
 
@@ -13,7 +12,6 @@ const Navigation: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'menuId',
   },
-  access: accessNavigation,
   fields: [
     {
       name: 'menuId',

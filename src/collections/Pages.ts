@@ -8,7 +8,6 @@ import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import { pagesAccess } from '@/access/pagesAccess'
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
@@ -58,7 +57,6 @@ const Pages: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Contenu',
   },
-  access: pagesAccess,
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
     {
