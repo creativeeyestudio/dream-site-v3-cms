@@ -1,4 +1,3 @@
-import { mediaAccess } from '@/access/mediaAccess'
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
@@ -6,7 +5,6 @@ export const Media: CollectionConfig = {
   admin: {
     group: 'Contenu',
   },
-  access: mediaAccess,
   fields: [
     {
       name: 'alt',

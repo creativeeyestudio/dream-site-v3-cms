@@ -8,6 +8,29 @@ const Posts: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'title',
   },
+  access: {
+    read: ({ req }) => {
+      if (['admin', 'editor', 'author'].includes(req.user.role)) {
+        return true;
+      }
+
+      return {
+        'config.createdBy': {
+          equals: req.user.id,
+        },
+      };
+    },
+
+    create: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+
+    update: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+
+    delete: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+  },
+
   labels: {
     singular: 'Article',
     plural: 'Articles',
@@ -71,9 +94,9 @@ const Posts: CollectionConfig = {
             { label: 'Publié', value: '2' },
           ],
           access: {
-            create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
-            read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
-            update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
+            read: () => true,
+            create: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+            update: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
           },
         },
         {
@@ -84,6 +107,7 @@ const Posts: CollectionConfig = {
           admin: {
             hidden: true,
           },
+
           hooks: {
             beforeChange: [
               ({ req, value }: { req: RequestProps, value: any }) => {
@@ -99,18 +123,28 @@ const Posts: CollectionConfig = {
   ],
 
   hooks: {
+    beforeChange: [
+      ({ req, data }) => {
+        if (req.user?.role === 'contributor' && data?.config?.published === '2') {
+          data.config.published = '1';
+        }
+        return data;
+      },
+    ],
+
     afterRead: [
       async ({ doc, req }: { doc: any; req: RequestProps }) => {
         // Convertir le champ richText en HTML dans un champ `html`
         if (doc?.content) {
           doc.html = convertRichTextToHTML(doc.content)
         }
+
         // Marque si l'utilisateur est propriétaire de l'article
         if (req?.user) {
           doc.isOwner =
             typeof doc?.config?.createdBy?.equals === 'function'
               ? doc.config.createdBy.equals(req.user.id)
-              : doc.config?.createdBy === req.user.id
+              : doc.config?.createdBy === req.user.id;
         }
         return doc
       },

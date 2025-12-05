@@ -14,7 +14,6 @@ import { es } from '@payloadcms/translations/languages/es'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import Pages from './collections/Pages'
-import Galleries from './collections/Galleries'
 import Navigation from './collections/Navigation'
 import Posts from './collections/Posts'
 
@@ -34,7 +33,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, Posts, Galleries, Navigation, Settings],
+  collections: [Users, Media, Pages, Posts, Navigation, Settings],
   globals: [LegalNotice, Confidentiality, Cgv],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

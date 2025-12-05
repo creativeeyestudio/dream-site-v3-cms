@@ -8,7 +8,7 @@ import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import { pagesAccess } from '@/access/pagesAccess'
+import RequestProps from '@/interfaces/UserProps'
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
@@ -58,7 +58,12 @@ const Pages: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Contenu',
   },
-  access: pagesAccess,
+  access: {
+    read: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    create: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    update: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    delete: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+  },
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
     {
