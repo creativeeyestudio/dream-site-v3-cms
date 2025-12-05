@@ -1,10 +1,11 @@
+import LinkField from "@/components/LinkField";
 import type { Block } from "payload";
 
 const TextIntro: Block = {
     slug: 'text-intro',
     labels: {
-        singular: 'text-intro-block',
-        plural: 'text-intro-blocks',
+        singular: 'Bloc Introduction',
+        plural: 'Blocs Introduction',
     },
     fields: [
         {
@@ -19,6 +20,14 @@ const TextIntro: Block = {
             type: 'richText',
             required: true,
         },
+        {
+            name: 'links',
+            label: 'Liens',
+            type: 'array',
+            fields: [
+                ...LinkField(),
+            ]
+        }
     ]
 }
 
