@@ -13,7 +13,7 @@ const Navigation: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'menuId',
     hidden: ({ user }) => {
-      return !['admin', 'editor'].includes(user.role);
+      return !['admin', 'editor'].includes(user?.role);
     }
 
   },

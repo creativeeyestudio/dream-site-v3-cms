@@ -58,14 +58,14 @@ const Pages: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Contenu',
     hidden: ({ user }) => {
-      return !['admin', 'editor'].includes(user.role);
+      return !['admin', 'editor'].includes(user?.role);
     }
   },
   access: {
     read: () => true,
-    create: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user.role),
-    update: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user.role),
-    delete: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user.role),
+    create: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role),
+    update: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role),
+    delete: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role),
   },
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */

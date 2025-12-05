@@ -10,7 +10,7 @@ const Posts: CollectionConfig = {
   },
   access: {
     read: ({ req }) => {
-      if (['contributor'].includes(req.user.role)) {
+      if (['contributor'].includes(req.user?.role)) {
         return {
           'config.createdBy': {
             equals: req.user.id,
