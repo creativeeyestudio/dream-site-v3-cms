@@ -9,26 +9,26 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: ({ req }) => {
-      if (['admin', 'editor', 'author'].includes(req.user.role)) {
-        return true;
+    read: ({ req }: { req: RequestProps }) => {
+      if (['contributor'].includes(req.user?.role ?? 'contributor')) {
+        return {
+          'config.createdBy': {
+            equals: req.user?.id,
+          },
+        };
       }
 
-      return {
-        'config.createdBy': {
-          equals: req.user.id,
-        },
-      };
+      return true;
     },
 
     create: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
 
     update: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
 
     delete: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
   },
 
   labels: {
@@ -124,7 +124,7 @@ const Posts: CollectionConfig = {
 
   hooks: {
     beforeChange: [
-      ({ req, data }) => {
+      ({ req, data }: { req: RequestProps, data: DataProps }) => {
         if (req.user?.role === 'contributor' && data?.config?.published === '2') {
           data.config.published = '1';
         }
@@ -153,3 +153,10 @@ const Posts: CollectionConfig = {
 }
 
 export default Posts
+
+interface DataProps {
+  config: {
+    published: '1' | '2' | '3',
+    createdBy: number
+  }
+}

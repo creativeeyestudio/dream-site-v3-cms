@@ -48,5 +48,8 @@ export const Users: CollectionConfig = {
     admin: {
       position: 'sidebar',
     },
+    access: {
+      read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
+    }
   }],
 }
