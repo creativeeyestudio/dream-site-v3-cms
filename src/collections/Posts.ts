@@ -94,9 +94,9 @@ const Posts: CollectionConfig = {
             { label: 'Publié', value: '2' },
           ],
           access: {
-            create: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author'].includes(req.user?.role ?? ''),
-            read: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author'].includes(req.user?.role ?? ''),
-            update: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author'].includes(req.user?.role ?? ''),
+            read: () => true,
+            create: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+            update: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
           },
         },
         {
@@ -135,7 +135,7 @@ const Posts: CollectionConfig = {
           doc.isOwner =
             typeof doc?.config?.createdBy?.equals === 'function'
               ? doc.config.createdBy.equals(req.user.id)
-              : doc.config?.createdBy === req.user.id
+              : doc.config?.createdBy === req.user.id;
         }
         return doc
       },
