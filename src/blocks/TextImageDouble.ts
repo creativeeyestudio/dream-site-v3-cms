@@ -1,10 +1,24 @@
-import type { Block } from "payload";
+import LinkField from "@/components/LinkField";
+import type { Block, Field } from "payload";
+
+const ImageField = (name: string, label: string, required: boolean): Field => {
+    return {
+        name: name,
+        label: label,
+        type: 'upload',
+        relationTo: 'media',
+        required: required,
+        admin: {
+            width: '50%',
+        },
+    }
+}
 
 const TextImageDouble: Block = {
     slug: 'text-double-image',
     labels: {
-        singular: 'text-double-image-block',
-        plural: 'text-double-image-blocks',
+        singular: 'Bloc Texte Image Double',
+        plural: 'Blocs Texte Image Double',
     },
     fields: [
         {
@@ -20,19 +34,20 @@ const TextImageDouble: Block = {
             required: true,
         },
         {
-            name: 'image1',
-            label: 'Image 1',
-            type: 'upload',
-            relationTo: 'media',
-            required: true,
+            type: 'row',
+            fields: [
+                ImageField('image1', 'Image 1', true),
+                ImageField('image2', 'Image 2', false),
+            ]
         },
         {
-            name: 'image2',
-            label: 'Image 2',
-            type: 'upload',
-            relationTo: 'media',
-            required: false,
-        },
+            name: 'links',
+            label: 'Liens',
+            type: 'array',
+            fields: [
+                ...LinkField(),
+            ]
+        }
     ]
 }
 

@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
-import { accessPosts } from '@/access/postsAccess'
+import RequestProps from '@/interfaces/UserProps'
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -8,7 +8,6 @@ const Posts: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'title',
   },
-  access: accessPosts,
   labels: {
     singular: 'Article',
     plural: 'Articles',
@@ -72,9 +71,9 @@ const Posts: CollectionConfig = {
             { label: 'Publié', value: '2' },
           ],
           access: {
-            create: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
-            read: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
-            update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
+            create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
+            read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
+            update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
           },
         },
         {
@@ -87,7 +86,7 @@ const Posts: CollectionConfig = {
           },
           hooks: {
             beforeChange: [
-              ({ req, value }) => {
+              ({ req, value }: { req: RequestProps, value: any }) => {
                 if (value) return value
                 if (req.user) return req.user.id
                 return value
@@ -101,7 +100,7 @@ const Posts: CollectionConfig = {
 
   hooks: {
     afterRead: [
-      async ({ doc, req }) => {
+      async ({ doc, req }: { doc: any; req: RequestProps }) => {
         // Convertir le champ richText en HTML dans un champ `html`
         if (doc?.content) {
           doc.html = convertRichTextToHTML(doc.content)

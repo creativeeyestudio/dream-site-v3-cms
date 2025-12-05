@@ -1,3 +1,4 @@
+import RequestProps from '@/interfaces/UserProps';
 import type { CollectionConfig } from 'payload'
 
 const Galleries: CollectionConfig = {
@@ -11,7 +12,7 @@ const Galleries: CollectionConfig = {
     group: 'Contenu',
   },
   access: {
-    read: ({ req }) => req.user?.role === 'admin',
+    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
   },
   fields: [
     {
