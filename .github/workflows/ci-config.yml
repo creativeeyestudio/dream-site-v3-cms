@@ -16,21 +16,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
-      # Optionnel mais recommandé pour Payload (génération des types)
-      - name: Generate Payload types
-        run: pnpm payload:generate:types
+      # Optionnel : Payload génère du code TypeScript
+      - name: Build Payload types
+        run: npm run payload:generate:types
         if: ${{ hashFiles('src/**') != '' }}
 
-      - name: Run linter
-        run: pnpm lint
+      - name: Run ESLint
+        run: npm run lint
