@@ -123,6 +123,15 @@ const Posts: CollectionConfig = {
   ],
 
   hooks: {
+    beforeChange: [
+      ({ req, data }) => {
+        if (req.user?.role === 'contributor' && data?.config?.published === '2') {
+          data.config.published = '1';
+        }
+        return data;
+      },
+    ],
+
     afterRead: [
       async ({ doc, req }: { doc: any; req: RequestProps }) => {
         // Convertir le champ richText en HTML dans un champ `html`
