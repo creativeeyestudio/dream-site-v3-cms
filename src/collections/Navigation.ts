@@ -12,10 +12,13 @@ const Navigation: CollectionConfig = {
   admin: {
     group: 'Contenu',
     useAsTitle: 'menuId',
+    hidden: ({ user }) => {
+      return !['admin', 'editor'].includes(user.role);
+    }
+
   },
   access: {
-    read: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor'].includes(req.user?.role),
+    read: () => true,
 
     create: ({ req }: { req: RequestProps }) =>
       ['admin', 'editor'].includes(req.user?.role),

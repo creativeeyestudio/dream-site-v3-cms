@@ -57,9 +57,12 @@ const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenu',
+    hidden: ({ user }) => {
+      return !['admin', 'editor'].includes(user.role);
+    }
   },
   access: {
-    read: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    read: () => true,
     create: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
     update: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
     delete: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),

@@ -10,15 +10,15 @@ const Posts: CollectionConfig = {
   },
   access: {
     read: ({ req }) => {
-      if (['admin', 'editor', 'author'].includes(req.user.role)) {
-        return true;
+      if (['contributor'].includes(req.user.role)) {
+        return {
+          'config.createdBy': {
+            equals: req.user.id,
+          },
+        };
       }
 
-      return {
-        'config.createdBy': {
-          equals: req.user.id,
-        },
-      };
+      return true;
     },
 
     create: ({ req }: { req: RequestProps }) =>
