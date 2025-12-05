@@ -71,7 +71,6 @@ export interface Config {
     media: Media;
     pages: Page;
     posts: Post;
-    gallery: Gallery;
     navigation: Navigation;
     settings: Setting;
     'payload-locked-documents': PayloadLockedDocument;
@@ -84,7 +83,6 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    gallery: GallerySelect<false> | GallerySelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     settings: SettingsSelect<false> | SettingsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -419,20 +417,6 @@ export interface Setting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "gallery".
- */
-export interface Gallery {
-  id: string;
-  gallery_name?: string | null;
-  gallery_images: (string | Media)[];
-  config: {
-    site: string | Setting;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
 export interface Navigation {
@@ -490,10 +474,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: string | Post;
-      } | null)
-    | ({
-        relationTo: 'gallery';
-        value: string | Gallery;
       } | null)
     | ({
         relationTo: 'navigation';
@@ -745,21 +725,6 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "gallery_select".
- */
-export interface GallerySelect<T extends boolean = true> {
-  gallery_name?: T;
-  gallery_images?: T;
-  config?:
-    | T
-    | {
-        site?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -8,6 +8,11 @@ const Posts: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'title',
   },
+  access: {
+    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+  },
   labels: {
     singular: 'Article',
     plural: 'Articles',

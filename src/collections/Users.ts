@@ -12,6 +12,11 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
     group: 'Administration',
   },
+  access: {
+    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
+    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
+    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
+  },
   auth: true,
   fields: [{
     name: 'role',
@@ -19,11 +24,6 @@ export const Users: CollectionConfig = {
     required: true,
     defaultValue: 'contributor',
     options: ROLE_OPTIONS,
-    access: {
-      create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
-      read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
-      update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
-    },
     admin: {
       position: 'sidebar',
     },

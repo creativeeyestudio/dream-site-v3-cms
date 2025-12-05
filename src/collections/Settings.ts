@@ -1,3 +1,4 @@
+import RequestProps from '@/interfaces/UserProps'
 import { CollectionConfig } from 'payload'
 
 const Settings: CollectionConfig = {
@@ -8,6 +9,9 @@ const Settings: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    delete: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
   },
   admin: {
     useAsTitle: 'title',
