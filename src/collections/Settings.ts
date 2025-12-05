@@ -1,4 +1,3 @@
-import RequestProps from '@/interfaces/UserProps'
 import { CollectionConfig } from 'payload'
 
 const Settings: CollectionConfig = {
@@ -9,13 +8,13 @@ const Settings: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req }: { req: RequestProps }) =>
+    create: ({ req }) =>
       ['admin', 'editor', 'author'].includes(req.user?.role ?? 'author'),
 
-    update: ({ req }: { req: RequestProps }) =>
+    update: ({ req }) =>
       ['admin', 'editor', 'author'].includes(req.user?.role ?? 'author'),
 
-    delete: ({ req }: { req: RequestProps }) =>
+    delete: ({ req }) =>
       ['admin', 'editor'].includes(req.user?.role ?? 'author'),
   },
   admin: {
@@ -34,7 +33,7 @@ const Settings: CollectionConfig = {
       label: 'Identité du site',
       type: 'group',
       access: {
-        read: ({ req }: { req: RequestProps }) =>
+        read: ({ req }) =>
           ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
       },
       fields: [
@@ -63,7 +62,7 @@ const Settings: CollectionConfig = {
       label: 'Maintenance du site',
       type: 'group',
       access: {
-        read: ({ req }: { req: RequestProps }) =>
+        read: ({ req }) =>
           ['admin'].includes(req.user?.role ?? 'admin'),
       },
       fields: [

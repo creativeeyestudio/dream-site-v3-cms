@@ -57,15 +57,15 @@ const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenu',
-    hidden: ({ user }: { user: UserProps }) => {
+    hidden: ({ user }) => {
       return !['admin', 'editor'].includes(user?.role);
     }
   },
   access: {
     read: () => true,
-    create: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
-    update: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
-    delete: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+    create: ({ req }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+    update: ({ req }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+    delete: ({ req }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
   },
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
@@ -137,7 +137,7 @@ const Pages: CollectionConfig = {
      * Enrichit les blocks avec du HTML côté lecture.
      */
     afterRead: [
-      async (doc: DocProps) => {
+      async (doc) => {
         if (doc?.content?.layout) {
           doc.content.layout = await enrichLayoutWithHTML(doc.content.layout)
         }

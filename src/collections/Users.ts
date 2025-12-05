@@ -1,4 +1,3 @@
-import RequestProps from '@/interfaces/UserProps'
 import type { CollectionConfig } from 'payload'
 import { ROLE_OPTIONS } from '@/constants/roles'
 
@@ -13,7 +12,7 @@ export const Users: CollectionConfig = {
     group: 'Administration',
   },
   access: {
-    read: ({ req }: { req: RequestProps }) => {
+    read: ({ req }) => {
       if (req.user?.role === 'admin') return true;
 
       return {
@@ -23,11 +22,11 @@ export const Users: CollectionConfig = {
       };
     },
 
-    create: ({ req }: { req: RequestProps }) => {
+    create: ({ req }) => {
       return req.user?.role === 'admin';
     },
 
-    update: ({ req }: { req: RequestProps }) => {
+    update: ({ req }) => {
       if (req.user?.role === 'admin') return true;
 
       return {
@@ -49,7 +48,7 @@ export const Users: CollectionConfig = {
       position: 'sidebar',
     },
     access: {
-      read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
+      read: ({ req }) => req.user?.role === 'admin',
     }
   }],
 }
