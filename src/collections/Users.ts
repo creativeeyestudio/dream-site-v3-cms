@@ -13,10 +13,31 @@ export const Users: CollectionConfig = {
     group: 'Administration',
   },
   access: {
-    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
-    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
-    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin',
+    read: ({ req }: { req: RequestProps }) => {
+      if (req.user?.role === 'admin') return true;
+
+      return {
+        id: {
+          equals: req.user?.id,
+        },
+      };
+    },
+
+    create: ({ req }: { req: RequestProps }) => {
+      return req.user?.role === 'admin';
+    },
+
+    update: ({ req }: { req: RequestProps }) => {
+      if (req.user?.role === 'admin') return true;
+
+      return {
+        id: {
+          equals: req.user?.id,
+        },
+      };
+    },
   },
+
   auth: true,
   fields: [{
     name: 'role',

@@ -4,5 +4,5 @@ export default interface RequestProps {
 
 export interface UserProps {
     id: number;
-    role: 'admin' | 'editor'
+    role: 'admin' | 'editor' | 'author'
 }

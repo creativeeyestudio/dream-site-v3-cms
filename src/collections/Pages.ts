@@ -59,10 +59,10 @@ const Pages: CollectionConfig = {
     group: 'Contenu',
   },
   access: {
-    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    delete: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    read: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    create: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    update: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    delete: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
   },
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */

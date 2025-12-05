@@ -9,10 +9,19 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    read: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role),
+
+    create: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role),
+
+    update: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role),
+
+    delete: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role),
   },
+
   labels: {
     singular: 'Article',
     plural: 'Articles',

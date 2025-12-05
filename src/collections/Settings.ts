@@ -9,9 +9,14 @@ const Settings: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
-    delete: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || 'editor',
+    create: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role),
+
+    update: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role),
+
+    delete: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor'].includes(req.user?.role),
   },
   admin: {
     useAsTitle: 'title',
@@ -22,11 +27,16 @@ const Settings: CollectionConfig = {
       name: 'title',
       label: 'Titre du site',
       type: 'text',
+      required: true,
     },
     {
       name: 'identityGroup',
       label: 'Identité du site',
       type: 'group',
+      access: {
+        read: ({ req }: { req: RequestProps }) =>
+          ['admin', 'editor'].includes(req.user?.role),
+      },
       fields: [
         {
           name: 'logo',
@@ -52,6 +62,10 @@ const Settings: CollectionConfig = {
       name: 'maintenanceGroup',
       label: 'Maintenance du site',
       type: 'group',
+      access: {
+        read: ({ req }: { req: RequestProps }) =>
+          ['admin'].includes(req.user?.role),
+      },
       fields: [
         {
           name: 'maintenance',

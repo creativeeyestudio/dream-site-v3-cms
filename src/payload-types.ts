@@ -403,7 +403,7 @@ export interface Post {
  */
 export interface Setting {
   id: string;
-  title?: string | null;
+  title: string;
   identityGroup?: {
     logo?: (string | null) | Media;
     favicon?: (string | null) | Media;

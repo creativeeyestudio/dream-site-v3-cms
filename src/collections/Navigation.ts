@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { v4 as uuidv4 } from 'uuid'
 import LinkField from '@/components/LinkField'
+import RequestProps from '@/interfaces/UserProps'
 
 const Navigation: CollectionConfig = {
   slug: 'navigation',
@@ -11,6 +12,19 @@ const Navigation: CollectionConfig = {
   admin: {
     group: 'Contenu',
     useAsTitle: 'menuId',
+  },
+  access: {
+    read: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor'].includes(req.user?.role),
+
+    create: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor'].includes(req.user?.role),
+
+    update: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor'].includes(req.user?.role),
+
+    delete: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor'].includes(req.user?.role),
   },
   fields: [
     {
