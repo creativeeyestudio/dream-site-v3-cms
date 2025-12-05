@@ -3,8 +3,8 @@ import { Block } from 'payload'
 const HtmlContent: Block = {
   slug: 'html-content',
   labels: {
-    singular: 'html-content',
-    plural: 'html-contents',
+    singular: 'Contenu HTML',
+    plural: 'Contenus HTML',
   },
   fields: [
     {

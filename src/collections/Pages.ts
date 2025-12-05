@@ -8,12 +8,11 @@ import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import { pagesAccess } from '@/access/pagesAccess'
+import RequestProps, { UserProps } from '@/interfaces/UserProps'
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
 /* -------------------------------------------------------------------------- */
-
 type LayoutBlock = {
   blockType: string
   blockName?: string
@@ -22,11 +21,12 @@ type LayoutBlock = {
   [key: string]: unknown
 }
 
-/**
- * Ajoute une propriété `html` à chaque block possédant `content`.
- * On utilise `Promise.all` pour gérer correctement une éventuelle
- * fonction `convertRichTextToHTML` asynchrone.
- */
+interface DocProps {
+  content: {
+    layout: LayoutBlock[];
+  }
+}
+
 export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
   return Promise.all(
     layout.map(async (block) => {
@@ -38,7 +38,7 @@ export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<
       return {
         blockType,
         blockName,
-        html: await convertRichTextToHTML(content),
+        html: convertRichTextToHTML(content),
         ...rest,
       }
     }),
@@ -57,8 +57,16 @@ const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenu',
+    hidden: ({ user }: { user: UserProps }) => {
+      return !['admin', 'editor'].includes(user?.role);
+    }
   },
-  access: pagesAccess,
+  access: {
+    read: () => true,
+    create: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+    update: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+    delete: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+  },
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
     {
@@ -129,7 +137,7 @@ const Pages: CollectionConfig = {
      * Enrichit les blocks avec du HTML côté lecture.
      */
     afterRead: [
-      async ({ doc }) => {
+      async (doc: DocProps) => {
         if (doc?.content?.layout) {
           doc.content.layout = await enrichLayoutWithHTML(doc.content.layout)
         }

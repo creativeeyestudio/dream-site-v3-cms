@@ -3,8 +3,8 @@ import { Block } from "payload";
 const Parallax: Block = {
     slug: 'parallax',
     labels: {
-        singular: 'parallax',
-        plural: 'parallaxes'
+        singular: 'Parallax',
+        plural: 'Parallaxes'
     },
     fields: [
         {
@@ -12,7 +12,7 @@ const Parallax: Block = {
             label: 'Image du Parallax',
             type: 'upload',
             relationTo: 'media',
-            required: true, 
+            required: true,
         },
         {
             name: 'parallax_speed',

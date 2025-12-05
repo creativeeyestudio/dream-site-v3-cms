@@ -1,10 +1,11 @@
+import LinkField from "@/components/LinkField";
 import type { Block } from "payload";
 
 const TextImage: Block = {
     slug: 'text-image',
     labels: {
-        singular: 'text-image-block',
-        plural: 'text-image-blocks',
+        singular: 'Bloc Texte Image',
+        plural: 'Blocs Texte Image',
     },
     fields: [
         {
@@ -26,6 +27,14 @@ const TextImage: Block = {
             relationTo: 'media',
             required: true,
         },
+        {
+            name: 'links',
+            label: 'Liens',
+            type: 'array',
+            fields: [
+                ...LinkField(),
+            ]
+        }
     ]
 }
 

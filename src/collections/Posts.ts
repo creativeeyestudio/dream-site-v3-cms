@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
-import { accessPosts } from '@/access/postsAccess'
+import RequestProps from '@/interfaces/UserProps'
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -8,7 +8,29 @@ const Posts: CollectionConfig = {
     group: 'Contenu',
     useAsTitle: 'title',
   },
-  access: accessPosts,
+  access: {
+    read: ({ req }: { req: RequestProps }) => {
+      if (['contributor'].includes(req.user?.role ?? 'contributor')) {
+        return {
+          'config.createdBy': {
+            equals: req.user?.id,
+          },
+        };
+      }
+
+      return true;
+    },
+
+    create: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
+
+    update: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
+
+    delete: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
+  },
+
   labels: {
     singular: 'Article',
     plural: 'Articles',
@@ -72,9 +94,9 @@ const Posts: CollectionConfig = {
             { label: 'Publié', value: '2' },
           ],
           access: {
-            create: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
-            read: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
-            update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
+            read: () => true,
+            create: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+            update: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
           },
         },
         {
@@ -85,9 +107,10 @@ const Posts: CollectionConfig = {
           admin: {
             hidden: true,
           },
+
           hooks: {
             beforeChange: [
-              ({ req, value }) => {
+              ({ req, value }: { req: RequestProps, value: any }) => {
                 if (value) return value
                 if (req.user) return req.user.id
                 return value
@@ -100,18 +123,28 @@ const Posts: CollectionConfig = {
   ],
 
   hooks: {
+    beforeChange: [
+      ({ req, data }: { req: RequestProps, data: DataProps }) => {
+        if (req.user?.role === 'contributor' && data?.config?.published === '2') {
+          data.config.published = '1';
+        }
+        return data;
+      },
+    ],
+
     afterRead: [
-      async ({ doc, req }) => {
+      async ({ doc, req }: { doc: any; req: RequestProps }) => {
         // Convertir le champ richText en HTML dans un champ `html`
         if (doc?.content) {
           doc.html = convertRichTextToHTML(doc.content)
         }
+
         // Marque si l'utilisateur est propriétaire de l'article
         if (req?.user) {
           doc.isOwner =
             typeof doc?.config?.createdBy?.equals === 'function'
               ? doc.config.createdBy.equals(req.user.id)
-              : doc.config?.createdBy === req.user.id
+              : doc.config?.createdBy === req.user.id;
         }
         return doc
       },
@@ -120,3 +153,10 @@ const Posts: CollectionConfig = {
 }
 
 export default Posts
+
+interface DataProps {
+  config: {
+    published: '1' | '2' | '3',
+    createdBy: number
+  }
+}

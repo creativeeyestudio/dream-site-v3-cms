@@ -1,3 +1,4 @@
+import RequestProps from '@/interfaces/UserProps'
 import { CollectionConfig } from 'payload'
 
 const Settings: CollectionConfig = {
@@ -7,7 +8,15 @@ const Settings: CollectionConfig = {
     plural: 'Sites internet',
   },
   access: {
-    read: () => true, // Public
+    read: () => true,
+    create: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role ?? 'author'),
+
+    update: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor', 'author'].includes(req.user?.role ?? 'author'),
+
+    delete: ({ req }: { req: RequestProps }) =>
+      ['admin', 'editor'].includes(req.user?.role ?? 'author'),
   },
   admin: {
     useAsTitle: 'title',
@@ -18,11 +27,16 @@ const Settings: CollectionConfig = {
       name: 'title',
       label: 'Titre du site',
       type: 'text',
+      required: true,
     },
     {
       name: 'identityGroup',
       label: 'Identité du site',
       type: 'group',
+      access: {
+        read: ({ req }: { req: RequestProps }) =>
+          ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
+      },
       fields: [
         {
           name: 'logo',
@@ -48,6 +62,10 @@ const Settings: CollectionConfig = {
       name: 'maintenanceGroup',
       label: 'Maintenance du site',
       type: 'group',
+      access: {
+        read: ({ req }: { req: RequestProps }) =>
+          ['admin'].includes(req.user?.role ?? 'admin'),
+      },
       fields: [
         {
           name: 'maintenance',
