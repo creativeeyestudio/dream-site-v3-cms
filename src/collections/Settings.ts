@@ -10,13 +10,13 @@ const Settings: CollectionConfig = {
   access: {
     read: () => true,
     create: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author'].includes(req.user?.role),
+      ['admin', 'editor', 'author'].includes(req.user?.role ?? 'author'),
 
     update: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author'].includes(req.user?.role),
+      ['admin', 'editor', 'author'].includes(req.user?.role ?? 'author'),
 
     delete: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor'].includes(req.user?.role),
+      ['admin', 'editor'].includes(req.user?.role ?? 'author'),
   },
   admin: {
     useAsTitle: 'title',
@@ -35,7 +35,7 @@ const Settings: CollectionConfig = {
       type: 'group',
       access: {
         read: ({ req }: { req: RequestProps }) =>
-          ['admin', 'editor'].includes(req.user?.role),
+          ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
       },
       fields: [
         {
@@ -64,7 +64,7 @@ const Settings: CollectionConfig = {
       type: 'group',
       access: {
         read: ({ req }: { req: RequestProps }) =>
-          ['admin'].includes(req.user?.role),
+          ['admin'].includes(req.user?.role ?? 'admin'),
       },
       fields: [
         {

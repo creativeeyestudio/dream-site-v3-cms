@@ -1,10 +1,11 @@
+import RequestProps from '@/interfaces/UserProps'
 import { GlobalConfig } from 'payload'
 
 const LegalNotice: GlobalConfig = {
   slug: 'legal-notice',
   label: 'Mentions légales',
   access: {
-    read: ({ req }) => req.user?.role === 'admin', // Public
+    read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin', // Public
   },
   admin: {
     group: 'Infos juridiques',
