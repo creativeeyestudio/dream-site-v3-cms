@@ -13,7 +13,6 @@ import { pagesAccess } from '@/access/pagesAccess'
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
 /* -------------------------------------------------------------------------- */
-
 type LayoutBlock = {
   blockType: string
   blockName?: string
@@ -22,11 +21,12 @@ type LayoutBlock = {
   [key: string]: unknown
 }
 
-/**
- * Ajoute une propriété `html` à chaque block possédant `content`.
- * On utilise `Promise.all` pour gérer correctement une éventuelle
- * fonction `convertRichTextToHTML` asynchrone.
- */
+interface DocProps {
+  content: {
+    layout: LayoutBlock[];
+  }
+}
+
 export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
   return Promise.all(
     layout.map(async (block) => {
@@ -38,7 +38,7 @@ export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<
       return {
         blockType,
         blockName,
-        html: await convertRichTextToHTML(content),
+        html: convertRichTextToHTML(content),
         ...rest,
       }
     }),
@@ -129,7 +129,7 @@ const Pages: CollectionConfig = {
      * Enrichit les blocks avec du HTML côté lecture.
      */
     afterRead: [
-      async ({ doc }) => {
+      async (doc: DocProps) => {
         if (doc?.content?.layout) {
           doc.content.layout = await enrichLayoutWithHTML(doc.content.layout)
         }

@@ -74,7 +74,6 @@ export interface Config {
     gallery: Gallery;
     navigation: Navigation;
     settings: Setting;
-    'chr-config': ChrConfig;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -88,7 +87,6 @@ export interface Config {
     gallery: GallerySelect<false> | GallerySelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     settings: SettingsSelect<false> | SettingsSelect<true>;
-    'chr-config': ChrConfigSelect<false> | ChrConfigSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -424,32 +422,6 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "chr-config".
- */
-export interface ChrConfig {
-  id: string;
-  hotelData: {
-    site: string | Setting;
-  };
-  thais?: {
-    apiUrl?: string | null;
-    username?: string | null;
-    password?: string | null;
-    passwordHash?: string | null;
-  };
-  siteminder?: {
-    apiUrl?: string | null;
-    password?: string | null;
-    passwordHash?: string | null;
-  };
-  zenchef?: {
-    widget?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -482,10 +454,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'settings';
         value: string | Setting;
-      } | null)
-    | ({
-        relationTo: 'chr-config';
-        value: string | ChrConfig;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -755,39 +723,6 @@ export interface SettingsSelect<T extends boolean = true> {
     | T
     | {
         maintenance?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "chr-config_select".
- */
-export interface ChrConfigSelect<T extends boolean = true> {
-  hotelData?:
-    | T
-    | {
-        site?: T;
-      };
-  thais?:
-    | T
-    | {
-        apiUrl?: T;
-        username?: T;
-        password?: T;
-        passwordHash?: T;
-      };
-  siteminder?:
-    | T
-    | {
-        apiUrl?: T;
-        password?: T;
-        passwordHash?: T;
-      };
-  zenchef?:
-    | T
-    | {
-        widget?: T;
       };
   updatedAt?: T;
   createdAt?: T;

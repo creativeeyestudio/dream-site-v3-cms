@@ -20,7 +20,7 @@ const linkFields = (): Field[] => [
     type: 'relationship',
     relationTo: 'pages',
     admin: {
-      condition: (_data, sibling) => sibling.type === 'page',
+      condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'page',
     },
   },
   {
@@ -28,7 +28,7 @@ const linkFields = (): Field[] => [
     type: 'relationship',
     relationTo: 'posts',
     admin: {
-      condition: (_data, sibling) => sibling.type === 'post',
+      condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'post',
     },
   },
   {
@@ -37,14 +37,14 @@ const linkFields = (): Field[] => [
     required: true,
     localized: true,
     admin: {
-      condition: (_data, sibling) => sibling.type === 'external',
+      condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'external',
     },
   },
   {
     name: 'url',
     type: 'text',
     admin: {
-      condition: (_data, sibling) => sibling.type === 'external',
+      condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'external',
     },
   },
   {
@@ -120,7 +120,7 @@ const Navigation: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [
-      async ({ data, operation }) => {
+      async ({ data, operation }: DataProps) => {
         if (operation === 'create' && !data.menuId) data.menuId = uuidv4()
         return data
       },
@@ -129,3 +129,23 @@ const Navigation: CollectionConfig = {
 }
 
 export default Navigation
+
+
+interface TypeProps {
+  type: 'page' | 'post' | 'external'
+}
+
+interface FieldProps {
+  name: 'string';
+  type: 'radio' | 'relationship' | 'text' | 'checkbox';
+  options: Array<{ label: 'string', value: TypeProps }>;
+  defaultValue: 'string';
+  required?: boolean
+}
+
+interface DataProps {
+  data: {
+    menuId: number
+  }
+  operation: 'create';
+}

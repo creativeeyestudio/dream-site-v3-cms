@@ -7,7 +7,7 @@ const Settings: CollectionConfig = {
     plural: 'Sites internet',
   },
   access: {
-    read: () => true, // Public
+    read: () => true,
   },
   admin: {
     useAsTitle: 'title',
