@@ -63,9 +63,9 @@ const Pages: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
-    update: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
-    delete: ({ req }: { req: RequestProps }) => req.user?.role === ('admin' || 'editor'),
+    create: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user.role),
+    update: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user.role),
+    delete: ({ req }: { req: RequestProps }) => ['admin', 'editor'].includes(req.user.role),
   },
   fields: [
     /* ------------------------ Métadonnées basiques ------------------------ */
