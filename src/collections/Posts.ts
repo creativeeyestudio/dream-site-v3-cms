@@ -9,17 +9,26 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author'].includes(req.user?.role),
+    read: ({ req }) => {
+      if (['admin', 'editor', 'author'].includes(req.user.role)) {
+        return true;
+      }
+
+      return {
+        'config.createdBy': {
+          equals: req.user.id,
+        },
+      };
+    },
 
     create: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author'].includes(req.user?.role),
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
 
     update: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author'].includes(req.user?.role),
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
 
     delete: ({ req }: { req: RequestProps }) =>
-      ['admin', 'editor', 'author'].includes(req.user?.role),
+      ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
   },
 
   labels: {
@@ -85,9 +94,9 @@ const Posts: CollectionConfig = {
             { label: 'Publié', value: '2' },
           ],
           access: {
-            create: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
-            read: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
-            update: ({ req }: { req: RequestProps }) => req.user?.role === 'admin' || req.user?.role === 'editor',
+            create: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author'].includes(req.user?.role ?? ''),
+            read: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author'].includes(req.user?.role ?? ''),
+            update: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author'].includes(req.user?.role ?? ''),
           },
         },
         {
@@ -98,6 +107,7 @@ const Posts: CollectionConfig = {
           admin: {
             hidden: true,
           },
+
           hooks: {
             beforeChange: [
               ({ req, value }: { req: RequestProps, value: any }) => {
@@ -119,6 +129,7 @@ const Posts: CollectionConfig = {
         if (doc?.content) {
           doc.html = convertRichTextToHTML(doc.content)
         }
+
         // Marque si l'utilisateur est propriétaire de l'article
         if (req?.user) {
           doc.isOwner =
