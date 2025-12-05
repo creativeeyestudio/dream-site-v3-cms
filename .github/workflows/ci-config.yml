@@ -1,0 +1,29 @@
+name: ci-config 
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Optionnel : Payload génère du code TypeScript
+      - name: Build Payload types
+        run: npm run payload:generate:types
+        if: ${{ hashFiles('src/**') != '' }}
+
+      - name: Run ESLint
+        run: npm run lint
