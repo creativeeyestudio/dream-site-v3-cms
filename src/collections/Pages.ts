@@ -6,9 +6,8 @@ import Heroscreen from '@/blocks/Heroscreen'
 import Parallax from '@/blocks/Parallax'
 import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
-import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import RequestProps, { UserProps } from '@/interfaces/UserProps'
+import convertRichTextToHTML from '@/utils/convertRichTextToHTML'
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
@@ -19,12 +18,6 @@ type LayoutBlock = {
   content?: SerializedEditorState
   html?: string
   [key: string]: unknown
-}
-
-interface DocProps {
-  content: {
-    layout: LayoutBlock[];
-  }
 }
 
 export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
@@ -58,8 +51,8 @@ const Pages: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Contenu',
     hidden: ({ user }) => {
-      return !['admin', 'editor'].includes(user?.role);
-    }
+      return !['admin', 'editor'].includes(user?.role)
+    },
   },
   access: {
     read: () => true,
@@ -137,10 +130,30 @@ const Pages: CollectionConfig = {
      * Enrichit les blocks avec du HTML côté lecture.
      */
     afterRead: [
-      async (doc) => {
-        if (doc?.content?.layout) {
-          doc.content.layout = await enrichLayoutWithHTML(doc.content.layout)
-        }
+      async ({ doc }) => {
+        // Ton schema met le layout dans doc.content.layout (d'après ton code)
+        const layout = doc?.content?.layout ?? doc?.layout ?? []
+
+        // Si pas de layout, on renvoie doc tel quel
+        if (!Array.isArray(layout) || layout.length === 0) return doc
+
+        // On mappe et on protège le typage / les valeurs manquantes
+        doc.content = doc.content ?? {}
+        doc.content.layout = await Promise.all(
+          layout.map(async (block: any) => {
+            // Si pas de contenu richText, on ne touche pas au block
+            if (!block || !block.content) return block
+
+            // Convertit prudemment — convertRichTextToHTML gère undefined / erreurs
+            const html = convertRichTextToHTML(block.content)
+
+            return {
+              ...block,
+              html, // champ HTML ajouté
+            }
+          }),
+        )
+
         return doc
       },
     ],
