@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { convertRichTextToHTML } from '@/utils/convertRichTextToHTML'
-import RequestProps from '@/interfaces/UserProps'
+import convertRichTextToHTML from '@/utils/convertRichTextToHTML'
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -9,7 +8,7 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: ({ req }: { req: RequestProps }) => {
+    read: ({ req }) => {
       if (['contributor'].includes(req.user?.role ?? 'contributor')) {
         return {
           'config.createdBy': {
@@ -21,13 +20,13 @@ const Posts: CollectionConfig = {
       return true;
     },
 
-    create: ({ req }: { req: RequestProps }) =>
+    create: ({ req }) =>
       ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
 
-    update: ({ req }: { req: RequestProps }) =>
+    update: ({ req }) =>
       ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
 
-    delete: ({ req }: { req: RequestProps }) =>
+    delete: ({ req }) =>
       ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? 'contributor'),
   },
 
@@ -81,7 +80,6 @@ const Posts: CollectionConfig = {
           type: 'relationship',
           relationTo: 'settings',
           required: true,
-          multiple: true,
         },
         {
           name: 'published',
@@ -95,8 +93,8 @@ const Posts: CollectionConfig = {
           ],
           access: {
             read: () => true,
-            create: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
-            update: ({ req }: { req: RequestProps }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+            create: ({ req }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
+            update: ({ req }) => ['admin', 'editor', 'author', 'contributor'].includes(req.user?.role ?? ''),
           },
         },
         {
@@ -110,7 +108,7 @@ const Posts: CollectionConfig = {
 
           hooks: {
             beforeChange: [
-              ({ req, value }: { req: RequestProps, value: any }) => {
+              ({ req, value }) => {
                 if (value) return value
                 if (req.user) return req.user.id
                 return value
@@ -124,7 +122,7 @@ const Posts: CollectionConfig = {
 
   hooks: {
     beforeChange: [
-      ({ req, data }: { req: RequestProps, data: DataProps }) => {
+      ({ req, data }) => {
         if (req.user?.role === 'contributor' && data?.config?.published === '2') {
           data.config.published = '1';
         }
@@ -133,7 +131,7 @@ const Posts: CollectionConfig = {
     ],
 
     afterRead: [
-      async ({ doc, req }: { doc: any; req: RequestProps }) => {
+      async ({ doc, req }) => {
         // Convertir le champ richText en HTML dans un champ `html`
         if (doc?.content) {
           doc.html = convertRichTextToHTML(doc.content)
@@ -153,10 +151,3 @@ const Posts: CollectionConfig = {
 }
 
 export default Posts
-
-interface DataProps {
-  config: {
-    published: '1' | '2' | '3',
-    createdBy: number
-  }
-}

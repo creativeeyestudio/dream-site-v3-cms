@@ -1,7 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { v4 as uuidv4 } from 'uuid'
 import LinkField from '@/components/LinkField'
-import RequestProps, { UserProps } from '@/interfaces/UserProps'
 
 const Navigation: CollectionConfig = {
   slug: 'navigation',
@@ -12,7 +11,7 @@ const Navigation: CollectionConfig = {
   admin: {
     group: 'Contenu',
     useAsTitle: 'menuId',
-    hidden: ({ user }: { user: UserProps }) => {
+    hidden: ({ user }) => {
       return !['admin', 'editor'].includes(user?.role);
     }
 
@@ -20,13 +19,13 @@ const Navigation: CollectionConfig = {
   access: {
     read: () => true,
 
-    create: ({ req }: { req: RequestProps }) =>
+    create: ({ req }) =>
       ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
 
-    update: ({ req }: { req: RequestProps }) =>
+    update: ({ req }) =>
       ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
 
-    delete: ({ req }: { req: RequestProps }) =>
+    delete: ({ req }) =>
       ['admin', 'editor'].includes(req.user?.role ?? 'editor'),
   },
   fields: [
@@ -70,14 +69,13 @@ const Navigation: CollectionConfig = {
           type: 'relationship',
           relationTo: 'settings',
           required: true,
-          multiple: true,
         },
       ],
     },
   ],
   hooks: {
     beforeChange: [
-      async ({ data, operation }: DataProps) => {
+      async ({ data, operation }) => {
         if (operation === 'create' && !data.menuId) data.menuId = uuidv4()
         return data
       },
@@ -86,10 +84,3 @@ const Navigation: CollectionConfig = {
 }
 
 export default Navigation
-
-interface DataProps {
-  data: {
-    menuId: number
-  }
-  operation: 'create';
-}

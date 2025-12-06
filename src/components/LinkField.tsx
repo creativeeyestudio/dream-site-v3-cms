@@ -17,7 +17,7 @@ const LinkField = (imageView: boolean = false): Field[] => [
         type: 'relationship',
         relationTo: 'pages',
         admin: {
-            condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'page',
+            condition: (_data, sibling) => sibling.type === 'page',
         },
     },
     {
@@ -25,7 +25,7 @@ const LinkField = (imageView: boolean = false): Field[] => [
         type: 'relationship',
         relationTo: 'posts',
         admin: {
-            condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'post',
+            condition: (_data, sibling) => sibling.type === 'post',
         },
     },
     {
@@ -34,14 +34,14 @@ const LinkField = (imageView: boolean = false): Field[] => [
         required: true,
         localized: true,
         admin: {
-            condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'external',
+            condition: (_data, sibling) => sibling.type === 'external',
         },
     },
     {
         name: 'url',
         type: 'text',
         admin: {
-            condition: (_data: FieldProps, sibling: TypeProps) => sibling.type === 'external',
+            condition: (_data, sibling) => sibling.type === 'external',
         },
     },
     {
@@ -60,17 +60,5 @@ const LinkField = (imageView: boolean = false): Field[] => [
         label: 'Ouvrir dans un nouvel onglet',
     },
 ]
-
-interface TypeProps {
-    type: 'page' | 'post' | 'external'
-}
-
-interface FieldProps {
-    name: 'string';
-    type: 'radio' | 'relationship' | 'text' | 'checkbox';
-    options: Array<{ label: 'string', value: TypeProps }>;
-    defaultValue: 'string';
-    required?: boolean
-}
 
 export default LinkField;
