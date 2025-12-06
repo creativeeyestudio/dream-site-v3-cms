@@ -6,8 +6,6 @@ const convertRichTextToHTML = (data?: SerializedEditorState): string => {
   try {
     return convertLexicalToHTML({ data })
   } catch (err) {
-    // Log pour debug côté serveur — évite de planter l'app
-    // eslint-disable-next-line no-console
     console.error('convertRichTextToHTML error:', err)
     return ''
   }

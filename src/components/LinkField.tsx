@@ -61,16 +61,4 @@ const LinkField = (imageView: boolean = false): Field[] => [
     },
 ]
 
-interface TypeProps {
-    type: 'page' | 'post' | 'external'
-}
-
-interface FieldProps {
-    name: 'string';
-    type: 'radio' | 'relationship' | 'text' | 'checkbox';
-    options: Array<{ label: 'string', value: TypeProps }>;
-    defaultValue: 'string';
-    required?: boolean
-}
-
 export default LinkField;
