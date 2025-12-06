@@ -4,5 +4,16 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "{}": "Avoid using empty object types {}"
+        },
+        "extendDefaults": true
+      }
+    ]
+  }
 }
