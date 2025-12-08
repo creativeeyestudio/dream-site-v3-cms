@@ -23,6 +23,8 @@ import Confidentiality from './globals/Confidentiality'
 import Cgv from './globals/Cgv'
 import Customization from './globals/Customization'
 
+import { fields, formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -50,6 +52,105 @@ export default buildConfig({
     seoPlugin({
       collections: ['pages', 'posts'],
       uploadsCollection: 'media',
+    }),
+    formBuilderPlugin({
+      fields: {
+        text: {
+          ...fields.text,
+          labels: {
+            singular: 'Ligne de texte',
+            plural: 'Lignes de texte',
+          },
+          fields: [
+            {
+              name: 'label',
+              label: 'Label',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'placeholder',
+              label: 'Placeholder',
+              type: 'text',
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'min',
+                  label: 'Min',
+                  type: 'number',
+                  admin: {
+                    width: '50%',
+                  },
+                },
+                {
+                  name: 'max',
+                  label: 'Max',
+                  type: 'number',
+                  admin: {
+                    width: '50%',
+                  },
+                },
+              ],
+            },
+            {
+              name: 'required',
+              label: 'Champ requis',
+              type: 'checkbox',
+            },
+          ],
+        },
+        textarea: {
+          ...fields.textarea,
+          labels: {
+            singular: 'Champ de texte',
+            plural: 'Champs de texte',
+          },
+          fields: [
+            {
+              name: 'label',
+              label: 'Label',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'placeholder',
+              label: 'Placeholder',
+              type: 'text',
+            },
+            {
+              name: 'required',
+              label: 'Champ requis',
+              type: 'checkbox',
+            },
+          ],
+        },
+        select: true,
+        radio: true,
+        email: true,
+        state: true,
+        country: true,
+        checkbox: true,
+        number: true,
+        message: true,
+        date: false,
+        payment: false,
+      },
+      formOverrides: {
+        labels: {
+          singular: 'Formulaire',
+          plural: 'Formulaires',
+        },
+        admin: {
+          group: 'Plugins',
+        },
+      },
+      formSubmissionOverrides: {
+        admin: {
+          group: 'Plugins',
+        },
+      },
     }),
   ],
   i18n: {
