@@ -892,7 +892,43 @@ export interface Customization {
     site_logo?: (string | null) | Media;
     site_favicon?: (string | null) | Media;
   };
-  typography?: {};
+  typography?: {
+    body?: {
+      body_font?: string | null;
+      body_size?: string | null;
+      body_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title1?: {
+      title1_font?: string | null;
+      title1_size?: string | null;
+      title1_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title2?: {
+      title2_font?: string | null;
+      title2_size?: string | null;
+      title2_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title3?: {
+      title3_font?: string | null;
+      title3_size?: string | null;
+      title3_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title4?: {
+      title4_font?: string | null;
+      title4_size?: string | null;
+      title4_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title5?: {
+      title5_font?: string | null;
+      title5_size?: string | null;
+      title5_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title6?: {
+      title6_font?: string | null;
+      title6_size?: string | null;
+      title6_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+  };
   custom_css?: {};
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1019,7 +1055,59 @@ export interface CustomizationSelect<T extends boolean = true> {
         site_logo?: T;
         site_favicon?: T;
       };
-  typography?: T | {};
+  typography?:
+    | T
+    | {
+        body?:
+          | T
+          | {
+              body_font?: T;
+              body_size?: T;
+              body_weight?: T;
+            };
+        title1?:
+          | T
+          | {
+              title1_font?: T;
+              title1_size?: T;
+              title1_weight?: T;
+            };
+        title2?:
+          | T
+          | {
+              title2_font?: T;
+              title2_size?: T;
+              title2_weight?: T;
+            };
+        title3?:
+          | T
+          | {
+              title3_font?: T;
+              title3_size?: T;
+              title3_weight?: T;
+            };
+        title4?:
+          | T
+          | {
+              title4_font?: T;
+              title4_size?: T;
+              title4_weight?: T;
+            };
+        title5?:
+          | T
+          | {
+              title5_font?: T;
+              title5_size?: T;
+              title5_weight?: T;
+            };
+        title6?:
+          | T
+          | {
+              title6_font?: T;
+              title6_size?: T;
+              title6_weight?: T;
+            };
+      };
   custom_css?: T | {};
   updatedAt?: T;
   createdAt?: T;

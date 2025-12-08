@@ -1,4 +1,90 @@
-import { GlobalConfig } from 'payload'
+import { Field, GlobalConfig, SelectField, TextField } from 'payload'
+
+const FontFamilyConfig = (name: string): SelectField => {
+  return {
+    type: 'select',
+    name: name,
+    label: 'Taille de texte',
+    options: [],
+  }
+}
+
+const FontSizeConfig = (name: string): TextField => {
+  return {
+    type: 'text',
+    name,
+    label: 'Taille de texte',
+    admin: {
+      width: '33.33%',
+      placeholder: '1px, 1em, 1rem'
+    },
+  }
+}
+
+const FontWeightConfig = (name: string): SelectField => {
+  return {
+    type: 'select',
+    name: name,
+    label: 'Taille de texte',
+    options: [
+      {
+        label: 'Thin – 100',
+        value: '100',
+      },
+      {
+        label: 'Extra-Light – 200',
+        value: '200',
+      },
+      {
+        label: 'Light – 300',
+        value: '300',
+      },
+      {
+        label: 'Regular – 400',
+        value: '400',
+      },
+      {
+        label: 'Medium – 500',
+        value: '500',
+      },
+      {
+        label: 'Semi-Bold – 600',
+        value: '600',
+      },
+      {
+        label: 'Bold – 700',
+        value: '700',
+      },
+      {
+        label: 'Extra-Bold – 800',
+        value: '800',
+      },
+    ],
+    admin: {
+      width: '33.33%',
+    },
+  }
+}
+
+const headingFields: Field[] = Array.from({ length: 6 }, (_, i) => {
+  const n = i + 1
+
+  return {
+    type: 'group',
+    name: `title${n}`,
+    label: `Titre ${n} (H${n})`,
+    fields: [
+      {
+        type: 'row',
+        fields: [
+          FontFamilyConfig(`title${n}_font`),
+          FontSizeConfig(`title${n}_size`),
+          FontWeightConfig(`title${n}_weight`),
+        ],
+      },
+    ],
+  }
+})
 
 const Customization: GlobalConfig = {
   slug: 'customization',
@@ -37,8 +123,8 @@ const Customization: GlobalConfig = {
                   relationTo: 'media',
                   label: 'Logo du site',
                   admin: {
-                    width: '50%'
-                  }
+                    width: '50%',
+                  },
                 },
                 {
                   type: 'upload',
@@ -46,8 +132,8 @@ const Customization: GlobalConfig = {
                   relationTo: 'media',
                   label: 'Favicon du site',
                   admin: {
-                    width: '50%'
-                  }
+                    width: '50%',
+                  },
                 },
               ],
             },
@@ -56,7 +142,24 @@ const Customization: GlobalConfig = {
         {
           name: 'typography',
           label: 'Typographie',
-          fields: [],
+          fields: [
+            {
+              type: 'group',
+              name: `body`,
+              label: `Corps de texte`,
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    FontFamilyConfig(`body_font`),
+                    FontSizeConfig(`body_size`),
+                    FontWeightConfig(`body_weight`),
+                  ],
+                },
+              ],
+            },
+            ...headingFields,
+          ],
         },
         {
           name: 'custom_css',
