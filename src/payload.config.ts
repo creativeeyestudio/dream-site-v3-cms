@@ -21,7 +21,7 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import LegalNotice from './globals/LegalNotice'
 import Confidentiality from './globals/Confidentiality'
 import Cgv from './globals/Cgv'
-import Settings from '@/collections/Settings'
+import Customization from './globals/Customization'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,8 +33,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, Posts, Navigation, Settings],
-  globals: [LegalNotice, Confidentiality, Cgv],
+  collections: [Users, Media, Pages, Posts, Navigation],
+  globals: [LegalNotice, Confidentiality, Cgv, Customization],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

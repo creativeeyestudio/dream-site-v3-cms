@@ -72,7 +72,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     navigation: Navigation;
-    settings: Setting;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -84,7 +84,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
-    settings: SettingsSelect<false> | SettingsSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -92,15 +92,18 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('fr' | 'en' | 'es') | ('fr' | 'en' | 'es')[];
   globals: {
     'legal-notice': LegalNotice;
     confidentiality: Confidentiality;
     cgv: Cgv;
+    customization: Customization;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
+    customization: CustomizationSelect<false> | CustomizationSelect<true>;
   };
   locale: 'fr' | 'en' | 'es';
   user: User & {
@@ -190,7 +193,7 @@ export interface Page {
                 root: {
                   type: string;
                   children: {
-                    type: string;
+                    type: any;
                     version: number;
                     [k: string]: unknown;
                   }[];
@@ -223,7 +226,7 @@ export interface Page {
                 root: {
                   type: string;
                   children: {
-                    type: string;
+                    type: any;
                     version: number;
                     [k: string]: unknown;
                   }[];
@@ -256,7 +259,7 @@ export interface Page {
                 root: {
                   type: string;
                   children: {
-                    type: string;
+                    type: any;
                     version: number;
                     [k: string]: unknown;
                   }[];
@@ -290,7 +293,7 @@ export interface Page {
                 root: {
                   type: string;
                   children: {
-                    type: string;
+                    type: any;
                     version: number;
                     [k: string]: unknown;
                   }[];
@@ -341,8 +344,7 @@ export interface Page {
         )[]
       | null;
   };
-  config: {
-    site: string | Setting;
+  config?: {
     published?: ('0' | '1' | '2') | null;
   };
   meta?: {
@@ -369,7 +371,7 @@ export interface Post {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -381,8 +383,7 @@ export interface Post {
     [k: string]: unknown;
   };
   coverImage?: (string | null) | Media;
-  config: {
-    site: string | Setting;
+  config?: {
     published?: ('0' | '1' | '2') | null;
     createdBy?: (string | null) | User;
   };
@@ -393,24 +394,6 @@ export interface Post {
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (string | null) | Media;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
- */
-export interface Setting {
-  id: string;
-  title: string;
-  identityGroup?: {
-    logo?: (string | null) | Media;
-    favicon?: (string | null) | Media;
-    homepage?: (string | null) | Page;
-  };
-  maintenanceGroup?: {
-    maintenance?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -446,11 +429,25 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
-  config: {
-    site: string | Setting;
-  };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: string;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -478,10 +475,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'navigation';
         value: string | Navigation;
-      } | null)
-    | ({
-        relationTo: 'settings';
-        value: string | Setting;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -689,7 +682,6 @@ export interface PagesSelect<T extends boolean = true> {
   config?:
     | T
     | {
-        site?: T;
         published?: T;
       };
   meta?:
@@ -715,7 +707,6 @@ export interface PostsSelect<T extends boolean = true> {
   config?:
     | T
     | {
-        site?: T;
         published?: T;
         createdBy?: T;
       };
@@ -759,34 +750,16 @@ export interface NavigationSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  config?:
-    | T
-    | {
-        site?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings_select".
+ * via the `definition` "payload-kv_select".
  */
-export interface SettingsSelect<T extends boolean = true> {
-  title?: T;
-  identityGroup?:
-    | T
-    | {
-        logo?: T;
-        favicon?: T;
-        homepage?: T;
-      };
-  maintenanceGroup?:
-    | T
-    | {
-        maintenance?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -909,6 +882,61 @@ export interface Cgv {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customization".
+ */
+export interface Customization {
+  id: string;
+  identity?: {
+    site_title?: string | null;
+    homepage?: (string | null) | Page;
+    site_logo?: (string | null) | Media;
+    site_favicon?: (string | null) | Media;
+  };
+  typography?: {
+    body?: {
+      body_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      body_size?: string | null;
+      body_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title1?: {
+      title1_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      title1_size?: string | null;
+      title1_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title2?: {
+      title2_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      title2_size?: string | null;
+      title2_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title3?: {
+      title3_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      title3_size?: string | null;
+      title3_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title4?: {
+      title4_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      title4_size?: string | null;
+      title4_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title5?: {
+      title5_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      title5_size?: string | null;
+      title5_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+    title6?: {
+      title6_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
+      title6_size?: string | null;
+      title6_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
+    };
+  };
+  custom_css?: {
+    custom_css_block?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -1011,6 +1039,81 @@ export interface CgvSelect<T extends boolean = true> {
         cancel_delay?: T;
         cancel_fees?: T;
         special_cancel_conditions?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customization_select".
+ */
+export interface CustomizationSelect<T extends boolean = true> {
+  identity?:
+    | T
+    | {
+        site_title?: T;
+        homepage?: T;
+        site_logo?: T;
+        site_favicon?: T;
+      };
+  typography?:
+    | T
+    | {
+        body?:
+          | T
+          | {
+              body_font?: T;
+              body_size?: T;
+              body_weight?: T;
+            };
+        title1?:
+          | T
+          | {
+              title1_font?: T;
+              title1_size?: T;
+              title1_weight?: T;
+            };
+        title2?:
+          | T
+          | {
+              title2_font?: T;
+              title2_size?: T;
+              title2_weight?: T;
+            };
+        title3?:
+          | T
+          | {
+              title3_font?: T;
+              title3_size?: T;
+              title3_weight?: T;
+            };
+        title4?:
+          | T
+          | {
+              title4_font?: T;
+              title4_size?: T;
+              title4_weight?: T;
+            };
+        title5?:
+          | T
+          | {
+              title5_font?: T;
+              title5_size?: T;
+              title5_weight?: T;
+            };
+        title6?:
+          | T
+          | {
+              title6_font?: T;
+              title6_size?: T;
+              title6_weight?: T;
+            };
+      };
+  custom_css?:
+    | T
+    | {
+        custom_css_block?: T;
       };
   updatedAt?: T;
   createdAt?: T;
