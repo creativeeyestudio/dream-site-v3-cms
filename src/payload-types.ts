@@ -886,6 +886,9 @@ export interface Cgv {
  */
 export interface Customization {
   id: string;
+  identity?: {};
+  typography?: {};
+  custom_css?: {};
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1003,6 +1006,9 @@ export interface CgvSelect<T extends boolean = true> {
  * via the `definition` "customization_select".
  */
 export interface CustomizationSelect<T extends boolean = true> {
+  identity?: T | {};
+  typography?: T | {};
+  custom_css?: T | {};
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

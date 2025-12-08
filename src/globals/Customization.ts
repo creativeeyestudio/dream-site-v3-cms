@@ -9,7 +9,28 @@ const Customization: GlobalConfig = {
   admin: {
     group: 'Administration',
   },
-  fields: [],
+  fields: [
+    {
+        type: 'tabs',
+        tabs: [
+            {
+                name: 'identity',
+                label: 'Identité du site',
+                fields: []
+            },
+            {
+                name: 'typography',
+                label: 'Typographie',
+                fields: []
+            },
+            {
+                name: 'custom_css',
+                label: 'CSS personnalisé',
+                fields: []
+            }
+        ]
+    }
+  ],
 }
 
 export default Customization
