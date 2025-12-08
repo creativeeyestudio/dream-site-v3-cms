@@ -121,43 +121,6 @@ const Pages: CollectionConfig = {
       ],
     },
   ],
-
-  /* ---------------------------------------------------------------------- */
-  /*  Hooks                                                                 */
-  /* ---------------------------------------------------------------------- */
-  hooks: {
-    /**
-     * Enrichit les blocks avec du HTML côté lecture.
-     */
-    afterRead: [
-      async ({ doc }) => {
-        // Ton schema met le layout dans doc.content.layout (d'après ton code)
-        const layout = doc?.content?.layout ?? doc?.layout ?? []
-
-        // Si pas de layout, on renvoie doc tel quel
-        if (!Array.isArray(layout) || layout.length === 0) return doc
-
-        // On mappe et on protège le typage / les valeurs manquantes
-        doc.content = doc.content ?? {}
-        doc.content.layout = await Promise.all(
-          layout.map(async (block: any) => {
-            // Si pas de contenu richText, on ne touche pas au block
-            if (!block || !block.content) return block
-
-            // Convertit prudemment — convertRichTextToHTML gère undefined / erreurs
-            const html = convertRichTextToHTML(block.content)
-
-            return {
-              ...block,
-              html, // champ HTML ajouté
-            }
-          }),
-        )
-
-        return doc
-      },
-    ],
-  },
 }
 
 export default Pages

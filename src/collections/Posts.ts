@@ -132,11 +132,6 @@ const Posts: CollectionConfig = {
 
     afterRead: [
       async ({ doc, req }) => {
-        // Convertir le champ richText en HTML dans un champ `html`
-        if (doc?.content) {
-          doc.html = convertRichTextToHTML(doc.content)
-        }
-
         // Marque si l'utilisateur est propriétaire de l'article
         if (req?.user) {
           doc.isOwner =
