@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import convertRichTextToHTML from '@/utils/convertRichTextToHTML'
 
 const Posts: CollectionConfig = {
   slug: 'posts',
