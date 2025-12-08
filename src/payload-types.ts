@@ -894,37 +894,37 @@ export interface Customization {
   };
   typography?: {
     body?: {
-      body_font?: string | null;
+      body_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       body_size?: string | null;
       body_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
     title1?: {
-      title1_font?: string | null;
+      title1_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       title1_size?: string | null;
       title1_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
     title2?: {
-      title2_font?: string | null;
+      title2_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       title2_size?: string | null;
       title2_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
     title3?: {
-      title3_font?: string | null;
+      title3_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       title3_size?: string | null;
       title3_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
     title4?: {
-      title4_font?: string | null;
+      title4_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       title4_size?: string | null;
       title4_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
     title5?: {
-      title5_font?: string | null;
+      title5_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       title5_size?: string | null;
       title5_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
     title6?: {
-      title6_font?: string | null;
+      title6_font?: ('lato' | 'montserrat' | 'raleway' | 'roboto') | null;
       title6_size?: string | null;
       title6_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };

@@ -5,7 +5,24 @@ const FontFamilyConfig = (name: string): SelectField => {
     type: 'select',
     name: name,
     label: 'Taille de texte',
-    options: [],
+    options: [
+        {
+            label: 'Lato',
+            value: 'lato'
+        },
+        {
+            label: 'Montserrat',
+            value: 'montserrat'
+        },
+        {
+            label: 'Raleway',
+            value: 'raleway'
+        },
+        {
+            label: 'Roboto',
+            value: 'roboto'
+        },
+    ],
   }
 }
 
