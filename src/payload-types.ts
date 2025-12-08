@@ -97,11 +97,13 @@ export interface Config {
     'legal-notice': LegalNotice;
     confidentiality: Confidentiality;
     cgv: Cgv;
+    customization: Customization;
   };
   globalsSelect: {
     'legal-notice': LegalNoticeSelect<false> | LegalNoticeSelect<true>;
     confidentiality: ConfidentialitySelect<false> | ConfidentialitySelect<true>;
     cgv: CgvSelect<false> | CgvSelect<true>;
+    customization: CustomizationSelect<false> | CustomizationSelect<true>;
   };
   locale: 'fr' | 'en' | 'es';
   user: User & {
@@ -880,6 +882,15 @@ export interface Cgv {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customization".
+ */
+export interface Customization {
+  id: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-notice_select".
  */
 export interface LegalNoticeSelect<T extends boolean = true> {
@@ -983,6 +994,15 @@ export interface CgvSelect<T extends boolean = true> {
         cancel_fees?: T;
         special_cancel_conditions?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customization_select".
+ */
+export interface CustomizationSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
