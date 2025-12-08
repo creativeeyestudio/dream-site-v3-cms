@@ -11,25 +11,60 @@ const Customization: GlobalConfig = {
   },
   fields: [
     {
-        type: 'tabs',
-        tabs: [
+      type: 'tabs',
+      tabs: [
+        {
+          name: 'identity',
+          label: 'Identité du site',
+          fields: [
             {
-                name: 'identity',
-                label: 'Identité du site',
-                fields: []
+              type: 'text',
+              name: 'site_title',
+              label: 'Titre du site',
             },
             {
-                name: 'typography',
-                label: 'Typographie',
-                fields: []
+              type: 'relationship',
+              name: 'homepage',
+              relationTo: 'pages',
+              label: "Page d'accueil",
             },
             {
-                name: 'custom_css',
-                label: 'CSS personnalisé',
-                fields: []
-            }
-        ]
-    }
+              type: 'row',
+              fields: [
+                {
+                  type: 'upload',
+                  name: 'site_logo',
+                  relationTo: 'media',
+                  label: 'Logo du site',
+                  admin: {
+                    width: '50%'
+                  }
+                },
+                {
+                  type: 'upload',
+                  name: 'site_favicon',
+                  relationTo: 'media',
+                  label: 'Favicon du site',
+                  admin: {
+                    width: '50%'
+                  }
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'typography',
+          label: 'Typographie',
+          fields: [],
+        },
+        {
+          name: 'custom_css',
+          label: 'CSS personnalisé',
+          fields: [],
+        },
+      ],
+    },
   ],
 }
 

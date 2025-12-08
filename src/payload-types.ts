@@ -886,7 +886,12 @@ export interface Cgv {
  */
 export interface Customization {
   id: string;
-  identity?: {};
+  identity?: {
+    site_title?: string | null;
+    homepage?: (string | null) | Page;
+    site_logo?: (string | null) | Media;
+    site_favicon?: (string | null) | Media;
+  };
   typography?: {};
   custom_css?: {};
   updatedAt?: string | null;
@@ -1006,7 +1011,14 @@ export interface CgvSelect<T extends boolean = true> {
  * via the `definition` "customization_select".
  */
 export interface CustomizationSelect<T extends boolean = true> {
-  identity?: T | {};
+  identity?:
+    | T
+    | {
+        site_title?: T;
+        homepage?: T;
+        site_logo?: T;
+        site_favicon?: T;
+      };
   typography?: T | {};
   custom_css?: T | {};
   updatedAt?: T;
