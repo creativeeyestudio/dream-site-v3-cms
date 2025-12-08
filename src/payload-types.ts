@@ -442,6 +442,7 @@ export interface Navigation {
  */
 export interface Form {
   id: string;
+  custom?: ('contact-form' | 'news-form') | null;
   title: string;
   fields?:
     | (
@@ -976,6 +977,7 @@ export interface NavigationSelect<T extends boolean = true> {
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
+  custom?: T;
   title?: T;
   fields?:
     | T

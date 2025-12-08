@@ -145,6 +145,26 @@ export default buildConfig({
         admin: {
           group: 'Plugins',
         },
+        fields: ({ defaultFields }) => {
+          return [
+            {
+              name: 'custom',
+              type: 'select',
+              label: 'Type de formulaire',
+              options: [
+                {
+                  label: 'Formulaire de contact',
+                  value: 'contact-form'
+                },
+                {
+                  label: 'Formulaire de newsletter',
+                  value: 'news-form'
+                },
+              ]
+            },
+            ...defaultFields,
+          ]
+        },
       },
       formSubmissionOverrides: {
         admin: {
