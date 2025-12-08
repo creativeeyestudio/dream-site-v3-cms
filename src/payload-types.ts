@@ -929,7 +929,9 @@ export interface Customization {
       title6_weight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800') | null;
     };
   };
-  custom_css?: {};
+  custom_css?: {
+    custom_css_block?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1108,7 +1110,11 @@ export interface CustomizationSelect<T extends boolean = true> {
               title6_weight?: T;
             };
       };
-  custom_css?: T | {};
+  custom_css?:
+    | T
+    | {
+        custom_css_block?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

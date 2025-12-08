@@ -16,7 +16,7 @@ const FontSizeConfig = (name: string): TextField => {
     label: 'Taille de texte',
     admin: {
       width: '33.33%',
-      placeholder: '1px, 1em, 1rem'
+      placeholder: '1px, 1em, 1rem',
     },
   }
 }
@@ -66,7 +66,7 @@ const FontWeightConfig = (name: string): SelectField => {
   }
 }
 
-const headingFields: Field[] = Array.from({ length: 6 }, (_, i) => {
+const HeadingFields: Field[] = Array.from({ length: 6 }, (_, i) => {
   const n = i + 1
 
   return {
@@ -158,13 +158,22 @@ const Customization: GlobalConfig = {
                 },
               ],
             },
-            ...headingFields,
+            ...HeadingFields,
           ],
         },
         {
           name: 'custom_css',
           label: 'CSS personnalisé',
-          fields: [],
+          fields: [
+            {
+              type: 'code',
+              name: 'custom_css_block',
+              label: false,
+              admin: {
+                language: 'css',
+              },
+            },
+          ],
         },
       ],
     },
