@@ -148,9 +148,11 @@ export default buildConfig({
         fields: ({ defaultFields }) => {
           return [
             {
-              name: 'custom',
+              name: 'formType',
               type: 'select',
               label: 'Type de formulaire',
+              unique: true,
+              required: true,
               options: [
                 {
                   label: 'Formulaire de contact',
