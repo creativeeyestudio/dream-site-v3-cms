@@ -1,42 +1,10 @@
 import type { CollectionConfig } from 'payload'
-import Text from '@/blocks/Text'
 import TextIntro from '@/blocks/TextIntro'
 import HtmlContent from '@/blocks/HtmlContent'
 import Heroscreen from '@/blocks/Heroscreen'
 import Parallax from '@/blocks/Parallax'
 import TextDoubleImage from '@/blocks/TextImageDouble'
 import TextImage from '@/blocks/TextImage'
-import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import convertRichTextToHTML from '@/utils/convertRichTextToHTML'
-
-/* -------------------------------------------------------------------------- */
-/*  Helpers                                                                   */
-/* -------------------------------------------------------------------------- */
-type LayoutBlock = {
-  blockType: string
-  blockName?: string
-  content?: SerializedEditorState
-  html?: string
-  [key: string]: unknown
-}
-
-export async function enrichLayoutWithHTML(layout: LayoutBlock[] = []): Promise<LayoutBlock[]> {
-  return Promise.all(
-    layout.map(async (block) => {
-      if (!block.content) return block
-
-      // On extrait uniquement ce qu’on veut réellement renvoyer
-      const { blockType, blockName, content, ...rest } = block
-
-      return {
-        blockType,
-        blockName,
-        html: convertRichTextToHTML(content),
-        ...rest,
-      }
-    }),
-  )
-}
 
 /* -------------------------------------------------------------------------- */
 /*  Collection                                                                */
@@ -85,9 +53,13 @@ const Pages: CollectionConfig = {
       fields: [
         {
           name: 'layout',
-          label: 'Blocks de la page',
+          label: false,
+          labels: {
+            singular: 'Bloc de page',
+            plural: 'Blocs de page'
+          },
           type: 'blocks',
-          blocks: [Text, TextIntro, TextImage, TextDoubleImage, Parallax, HtmlContent, Heroscreen],
+          blocks: [TextIntro, TextImage, TextDoubleImage, Heroscreen, Parallax, HtmlContent],
           required: false,
           localized: true,
         },

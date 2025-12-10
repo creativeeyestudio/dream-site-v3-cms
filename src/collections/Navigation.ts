@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { v4 as uuidv4 } from 'uuid'
-import LinkField from '@/components/LinkField'
+import LinkComponent from '@/components/LinkComponent'
 
 const Navigation: CollectionConfig = {
   slug: 'navigation',
@@ -46,12 +46,12 @@ const Navigation: CollectionConfig = {
       type: 'array',
       label: 'Liens du menu',
       fields: [
-        ...LinkField(true),
+        ...LinkComponent(true),
         {
           name: 'children',
           type: 'array',
           label: 'Sous-menus',
-          fields: LinkField(true),
+          fields: LinkComponent(true),
         },
       ],
     },

@@ -192,139 +192,163 @@ export interface Page {
     layout?:
       | (
           | {
-              title: string;
-              content: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
-              links?:
+              contentLayout: (
                 | {
-                    type: 'page' | 'post' | 'external';
-                    page?: (string | null) | Page;
-                    post?: (string | null) | Post;
-                    label?: string | null;
-                    url?: string | null;
-                    image?: (string | null) | Media;
-                    newTab?: boolean | null;
+                    textBlockField: {
+                      root: {
+                        type: string;
+                        children: {
+                          type: any;
+                          version: number;
+                          [k: string]: unknown;
+                        }[];
+                        direction: ('ltr' | 'rtl') | null;
+                        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                        indent: number;
+                        version: number;
+                      };
+                      [k: string]: unknown;
+                    };
                     id?: string | null;
-                  }[]
-                | null;
-              id?: string | null;
-              blockName?: string | null;
-              blockType: 'text';
-            }
-          | {
-              title: string;
-              content: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
-              links?:
+                    blockName?: string | null;
+                    blockType: 'textBlock';
+                  }
                 | {
-                    type: 'page' | 'post' | 'external';
-                    page?: (string | null) | Page;
-                    post?: (string | null) | Post;
-                    label?: string | null;
-                    url?: string | null;
-                    image?: (string | null) | Media;
-                    newTab?: boolean | null;
+                    imageBlockField: string | Media;
                     id?: string | null;
-                  }[]
-                | null;
+                    blockName?: string | null;
+                    blockType: 'imageBlock';
+                  }
+                | {
+                    buttonsListField?:
+                      | {
+                          type: 'page' | 'post' | 'external';
+                          page?: (string | null) | Page;
+                          post?: (string | null) | Post;
+                          label?: string | null;
+                          url?: string | null;
+                          image?: (string | null) | Media;
+                          newTab?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'buttonsListBlock';
+                  }
+              )[];
               id?: string | null;
               blockName?: string | null;
               blockType: 'text-intro';
             }
           | {
-              title: string;
-              content: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
-              image: string | Media;
-              links?:
+              contentLayout: (
                 | {
-                    type: 'page' | 'post' | 'external';
-                    page?: (string | null) | Page;
-                    post?: (string | null) | Post;
-                    label?: string | null;
-                    url?: string | null;
-                    image?: (string | null) | Media;
-                    newTab?: boolean | null;
+                    textBlockField: {
+                      root: {
+                        type: string;
+                        children: {
+                          type: any;
+                          version: number;
+                          [k: string]: unknown;
+                        }[];
+                        direction: ('ltr' | 'rtl') | null;
+                        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                        indent: number;
+                        version: number;
+                      };
+                      [k: string]: unknown;
+                    };
                     id?: string | null;
-                  }[]
-                | null;
+                    blockName?: string | null;
+                    blockType: 'textBlock';
+                  }
+                | {
+                    imageBlockField: string | Media;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'imageBlock';
+                  }
+                | {
+                    buttonsListField?:
+                      | {
+                          type: 'page' | 'post' | 'external';
+                          page?: (string | null) | Page;
+                          post?: (string | null) | Post;
+                          label?: string | null;
+                          url?: string | null;
+                          image?: (string | null) | Media;
+                          newTab?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'buttonsListBlock';
+                  }
+              )[];
+              image: string | Media;
               id?: string | null;
               blockName?: string | null;
               blockType: 'text-image';
             }
           | {
-              title: string;
-              content: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
+              contentLayout: (
+                | {
+                    textBlockField: {
+                      root: {
+                        type: string;
+                        children: {
+                          type: any;
+                          version: number;
+                          [k: string]: unknown;
+                        }[];
+                        direction: ('ltr' | 'rtl') | null;
+                        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                        indent: number;
+                        version: number;
+                      };
+                      [k: string]: unknown;
+                    };
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'textBlock';
+                  }
+                | {
+                    imageBlockField: string | Media;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'imageBlock';
+                  }
+                | {
+                    buttonsListField?:
+                      | {
+                          type: 'page' | 'post' | 'external';
+                          page?: (string | null) | Page;
+                          post?: (string | null) | Post;
+                          label?: string | null;
+                          url?: string | null;
+                          image?: (string | null) | Media;
+                          newTab?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'buttonsListBlock';
+                  }
+              )[];
               image1: string | Media;
               image2?: (string | null) | Media;
-              links?:
-                | {
-                    type: 'page' | 'post' | 'external';
-                    page?: (string | null) | Page;
-                    post?: (string | null) | Post;
-                    label?: string | null;
-                    url?: string | null;
-                    image?: (string | null) | Media;
-                    newTab?: boolean | null;
-                    id?: string | null;
-                  }[]
-                | null;
               id?: string | null;
               blockName?: string | null;
               blockType: 'text-double-image';
+            }
+          | {
+              hero_image: (string | Media)[];
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'heroscreen';
             }
           | {
               parallax_image: string | Media;
@@ -338,12 +362,6 @@ export interface Page {
               id?: string | null;
               blockName?: string | null;
               blockType: 'html-content';
-            }
-          | {
-              hero_image: (string | Media)[];
-              id?: string | null;
-              blockName?: string | null;
-              blockType: 'heroscreen';
             }
         )[]
       | null;
@@ -791,42 +809,44 @@ export interface PagesSelect<T extends boolean = true> {
         layout?:
           | T
           | {
-              text?:
-                | T
-                | {
-                    title?: T;
-                    content?: T;
-                    links?:
-                      | T
-                      | {
-                          type?: T;
-                          page?: T;
-                          post?: T;
-                          label?: T;
-                          url?: T;
-                          image?: T;
-                          newTab?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                    blockName?: T;
-                  };
               'text-intro'?:
                 | T
                 | {
-                    title?: T;
-                    content?: T;
-                    links?:
+                    contentLayout?:
                       | T
                       | {
-                          type?: T;
-                          page?: T;
-                          post?: T;
-                          label?: T;
-                          url?: T;
-                          image?: T;
-                          newTab?: T;
-                          id?: T;
+                          textBlock?:
+                            | T
+                            | {
+                                textBlockField?: T;
+                                id?: T;
+                                blockName?: T;
+                              };
+                          imageBlock?:
+                            | T
+                            | {
+                                imageBlockField?: T;
+                                id?: T;
+                                blockName?: T;
+                              };
+                          buttonsListBlock?:
+                            | T
+                            | {
+                                buttonsListField?:
+                                  | T
+                                  | {
+                                      type?: T;
+                                      page?: T;
+                                      post?: T;
+                                      label?: T;
+                                      url?: T;
+                                      image?: T;
+                                      newTab?: T;
+                                      id?: T;
+                                    };
+                                id?: T;
+                                blockName?: T;
+                              };
                         };
                     id?: T;
                     blockName?: T;
@@ -834,43 +854,94 @@ export interface PagesSelect<T extends boolean = true> {
               'text-image'?:
                 | T
                 | {
-                    title?: T;
-                    content?: T;
-                    image?: T;
-                    links?:
+                    contentLayout?:
                       | T
                       | {
-                          type?: T;
-                          page?: T;
-                          post?: T;
-                          label?: T;
-                          url?: T;
-                          image?: T;
-                          newTab?: T;
-                          id?: T;
+                          textBlock?:
+                            | T
+                            | {
+                                textBlockField?: T;
+                                id?: T;
+                                blockName?: T;
+                              };
+                          imageBlock?:
+                            | T
+                            | {
+                                imageBlockField?: T;
+                                id?: T;
+                                blockName?: T;
+                              };
+                          buttonsListBlock?:
+                            | T
+                            | {
+                                buttonsListField?:
+                                  | T
+                                  | {
+                                      type?: T;
+                                      page?: T;
+                                      post?: T;
+                                      label?: T;
+                                      url?: T;
+                                      image?: T;
+                                      newTab?: T;
+                                      id?: T;
+                                    };
+                                id?: T;
+                                blockName?: T;
+                              };
                         };
+                    image?: T;
                     id?: T;
                     blockName?: T;
                   };
               'text-double-image'?:
                 | T
                 | {
-                    title?: T;
-                    content?: T;
-                    image1?: T;
-                    image2?: T;
-                    links?:
+                    contentLayout?:
                       | T
                       | {
-                          type?: T;
-                          page?: T;
-                          post?: T;
-                          label?: T;
-                          url?: T;
-                          image?: T;
-                          newTab?: T;
-                          id?: T;
+                          textBlock?:
+                            | T
+                            | {
+                                textBlockField?: T;
+                                id?: T;
+                                blockName?: T;
+                              };
+                          imageBlock?:
+                            | T
+                            | {
+                                imageBlockField?: T;
+                                id?: T;
+                                blockName?: T;
+                              };
+                          buttonsListBlock?:
+                            | T
+                            | {
+                                buttonsListField?:
+                                  | T
+                                  | {
+                                      type?: T;
+                                      page?: T;
+                                      post?: T;
+                                      label?: T;
+                                      url?: T;
+                                      image?: T;
+                                      newTab?: T;
+                                      id?: T;
+                                    };
+                                id?: T;
+                                blockName?: T;
+                              };
                         };
+                    image1?: T;
+                    image2?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              heroscreen?:
+                | T
+                | {
+                    hero_image?: T;
                     id?: T;
                     blockName?: T;
                   };
@@ -886,13 +957,6 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     htmlCode?: T;
-                    id?: T;
-                    blockName?: T;
-                  };
-              heroscreen?:
-                | T
-                | {
-                    hero_image?: T;
                     id?: T;
                     blockName?: T;
                   };

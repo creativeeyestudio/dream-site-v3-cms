@@ -1,4 +1,5 @@
-import LinkField from "@/components/LinkField";
+import LinkComponent from "@/components/LinkComponent";
+import Content from "../fields/Content";
 import type { Block, Field } from "payload";
 
 const ImageField = (name: string, label: string, required: boolean): Field => {
@@ -21,18 +22,7 @@ const TextImageDouble: Block = {
         plural: 'Blocs Texte Image Double',
     },
     fields: [
-        {
-            name: 'title',
-            label: 'Titre',
-            type: 'text',
-            required: true,
-        },
-        {
-            name: 'content',
-            label: 'Contenu',
-            type: 'richText',
-            required: true,
-        },
+        Content,
         {
             type: 'row',
             fields: [
@@ -40,14 +30,6 @@ const TextImageDouble: Block = {
                 ImageField('image2', 'Image 2', false),
             ]
         },
-        {
-            name: 'links',
-            label: 'Liens',
-            type: 'array',
-            fields: [
-                ...LinkField(),
-            ]
-        }
     ]
 }
 
