@@ -367,7 +367,7 @@ export interface Page {
       | null;
   };
   config?: {
-    published?: ('0' | '1' | '2') | null;
+    published?: ('0' | '1') | null;
   };
   meta?: {
     title?: string | null;
