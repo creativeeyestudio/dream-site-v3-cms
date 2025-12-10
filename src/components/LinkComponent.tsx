@@ -1,6 +1,6 @@
 import { Field } from 'payload'
 
-const LinkField = (imageView: boolean = false): Field[] => [
+const LinkComponent = (imageView: boolean = false): Field[] => [
     {
         name: 'type',
         type: 'radio',
@@ -61,4 +61,4 @@ const LinkField = (imageView: boolean = false): Field[] => [
     },
 ]
 
-export default LinkField;
+export default LinkComponent;

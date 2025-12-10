@@ -1,4 +1,5 @@
-import LinkField from "@/components/LinkField";
+import LinkComponent from "@/components/LinkComponent";
+import Content from "@/fields/Content";
 import type { Block } from "payload";
 
 const TextIntro: Block = {
@@ -7,28 +8,7 @@ const TextIntro: Block = {
         singular: 'Bloc Introduction',
         plural: 'Blocs Introduction',
     },
-    fields: [
-        {
-            name: 'title',
-            label: 'Titre',
-            type: 'text',
-            required: true,
-        },
-        {
-            name: 'content',
-            label: 'Contenu',
-            type: 'richText',
-            required: true,
-        },
-        {
-            name: 'links',
-            label: 'Liens',
-            type: 'array',
-            fields: [
-                ...LinkField(),
-            ]
-        }
-    ]
+    fields: [Content]
 }
 
 export default TextIntro;
