@@ -69,6 +69,7 @@ const Pages: CollectionConfig = {
     /* ------------------------ Options de publication ------------------------ */
     {
       name: 'config',
+      label: 'Paramètres de la page',
       type: 'group',
       admin: {
         position: 'sidebar',
@@ -77,11 +78,10 @@ const Pages: CollectionConfig = {
         {
           name: 'published',
           type: 'radio',
-          label: 'Publié',
+          label: 'État de publication',
           options: [
             { label: 'En brouillon', value: '0' },
-            { label: 'A relire', value: '1' },
-            { label: 'Publié', value: '2' },
+            { label: 'Publié', value: '1' },
           ],
         },
       ],
