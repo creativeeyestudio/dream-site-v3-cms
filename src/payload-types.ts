@@ -487,6 +487,56 @@ export interface Post {
                   blockType: 'buttonsListBlock';
                 }
             )[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
+          }
+        | {
+            contentLayout: (
+              | {
+                  textBlockField: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'textBlock';
+                }
+              | {
+                  imageBlockField: number | Media;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'imageBlock';
+                }
+              | {
+                  buttonsListField?:
+                    | {
+                        type: 'page' | 'post' | 'external';
+                        page?: (number | null) | Page;
+                        post?: (number | null) | Post;
+                        label?: string | null;
+                        url?: string | null;
+                        image?: (number | null) | Media;
+                        newTab?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'buttonsListBlock';
+                }
+            )[];
             image: number | Media;
             id?: string | null;
             blockName?: string | null;
@@ -1150,6 +1200,48 @@ export interface PostsSelect<T extends boolean = true> {
     | T
     | {
         'text-intro'?:
+          | T
+          | {
+              contentLayout?:
+                | T
+                | {
+                    textBlock?:
+                      | T
+                      | {
+                          textBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageBlock?:
+                      | T
+                      | {
+                          imageBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    buttonsListBlock?:
+                      | T
+                      | {
+                          buttonsListField?:
+                            | T
+                            | {
+                                type?: T;
+                                page?: T;
+                                post?: T;
+                                label?: T;
+                                url?: T;
+                                image?: T;
+                                newTab?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        content?:
           | T
           | {
               contentLayout?:

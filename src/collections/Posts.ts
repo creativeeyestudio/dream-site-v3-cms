@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import Text from '@/blocks/Text'
 import TextIntro from '@/blocks/TextIntro'
 import HtmlContent from '@/blocks/HtmlContent'
 import Heroscreen from '@/blocks/Heroscreen'
@@ -62,13 +63,13 @@ const Posts: CollectionConfig = {
     },
     {
       name: 'content',
-      label: false,
+      label: "Contenu",
       labels: {
         singular: "Bloc d'article",
         plural: "Blocs d'article"
       },
       type: 'blocks',
-      blocks: [TextIntro, TextImage, TextDoubleImage, Heroscreen, Parallax, HtmlContent],
+      blocks: [TextIntro, Text, TextImage, TextDoubleImage, Heroscreen, Parallax, HtmlContent],
       required: false,
       localized: true,
     },
