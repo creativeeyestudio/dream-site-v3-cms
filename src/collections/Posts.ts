@@ -1,5 +1,10 @@
 import type { CollectionConfig } from 'payload'
-import convertRichTextToHTML from '@/utils/convertRichTextToHTML'
+import TextIntro from '@/blocks/TextIntro'
+import HtmlContent from '@/blocks/HtmlContent'
+import Heroscreen from '@/blocks/Heroscreen'
+import Parallax from '@/blocks/Parallax'
+import TextDoubleImage from '@/blocks/TextImageDouble'
+import TextImage from '@/blocks/TextImage'
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -57,9 +62,14 @@ const Posts: CollectionConfig = {
     },
     {
       name: 'content',
-      label: 'Contenu',
-      type: 'richText',
-      required: true,
+      label: false,
+      labels: {
+        singular: "Bloc d'article",
+        plural: "Blocs d'article"
+      },
+      type: 'blocks',
+      blocks: [TextIntro, TextImage, TextDoubleImage, Heroscreen, Parallax, HtmlContent],
+      required: false,
       localized: true,
     },
     {
