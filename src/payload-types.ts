@@ -94,7 +94,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('fr' | 'en' | 'es') | ('fr' | 'en' | 'es')[];
   globals: {
@@ -141,7 +141,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   role: 'admin' | 'editor' | 'author' | 'contributor';
   updatedAt: string;
   createdAt: string;
@@ -166,7 +166,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -185,7 +185,7 @@ export interface Media {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   slug: string;
   content?: {
@@ -214,7 +214,7 @@ export interface Page {
                     blockType: 'textBlock';
                   }
                 | {
-                    imageBlockField: string | Media;
+                    imageBlockField: number | Media;
                     id?: string | null;
                     blockName?: string | null;
                     blockType: 'imageBlock';
@@ -223,11 +223,11 @@ export interface Page {
                     buttonsListField?:
                       | {
                           type: 'page' | 'post' | 'external';
-                          page?: (string | null) | Page;
-                          post?: (string | null) | Post;
+                          page?: (number | null) | Page;
+                          post?: (number | null) | Post;
                           label?: string | null;
                           url?: string | null;
-                          image?: (string | null) | Media;
+                          image?: (number | null) | Media;
                           newTab?: boolean | null;
                           id?: string | null;
                         }[]
@@ -264,7 +264,7 @@ export interface Page {
                     blockType: 'textBlock';
                   }
                 | {
-                    imageBlockField: string | Media;
+                    imageBlockField: number | Media;
                     id?: string | null;
                     blockName?: string | null;
                     blockType: 'imageBlock';
@@ -273,11 +273,11 @@ export interface Page {
                     buttonsListField?:
                       | {
                           type: 'page' | 'post' | 'external';
-                          page?: (string | null) | Page;
-                          post?: (string | null) | Post;
+                          page?: (number | null) | Page;
+                          post?: (number | null) | Post;
                           label?: string | null;
                           url?: string | null;
-                          image?: (string | null) | Media;
+                          image?: (number | null) | Media;
                           newTab?: boolean | null;
                           id?: string | null;
                         }[]
@@ -287,7 +287,7 @@ export interface Page {
                     blockType: 'buttonsListBlock';
                   }
               )[];
-              image: string | Media;
+              image: number | Media;
               id?: string | null;
               blockName?: string | null;
               blockType: 'text-image';
@@ -315,7 +315,7 @@ export interface Page {
                     blockType: 'textBlock';
                   }
                 | {
-                    imageBlockField: string | Media;
+                    imageBlockField: number | Media;
                     id?: string | null;
                     blockName?: string | null;
                     blockType: 'imageBlock';
@@ -324,11 +324,11 @@ export interface Page {
                     buttonsListField?:
                       | {
                           type: 'page' | 'post' | 'external';
-                          page?: (string | null) | Page;
-                          post?: (string | null) | Post;
+                          page?: (number | null) | Page;
+                          post?: (number | null) | Post;
                           label?: string | null;
                           url?: string | null;
-                          image?: (string | null) | Media;
+                          image?: (number | null) | Media;
                           newTab?: boolean | null;
                           id?: string | null;
                         }[]
@@ -338,20 +338,20 @@ export interface Page {
                     blockType: 'buttonsListBlock';
                   }
               )[];
-              image1: string | Media;
-              image2?: (string | null) | Media;
+              image1: number | Media;
+              image2?: (number | null) | Media;
               id?: string | null;
               blockName?: string | null;
               blockType: 'text-double-image';
             }
           | {
-              hero_image: (string | Media)[];
+              hero_image: (number | Media)[];
               id?: string | null;
               blockName?: string | null;
               blockType: 'heroscreen';
             }
           | {
-              parallax_image: string | Media;
+              parallax_image: number | Media;
               parallax_speed: number;
               id?: string | null;
               blockName?: string | null;
@@ -375,7 +375,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -385,7 +385,7 @@ export interface Page {
  * via the `definition` "posts".
  */
 export interface Post {
-  id: string;
+  id: number;
   title: string;
   slug: string;
   excerpt?: string | null;
@@ -404,10 +404,10 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  coverImage?: (string | null) | Media;
+  coverImage?: (number | null) | Media;
   config?: {
     published?: ('0' | '1' | '2') | null;
-    createdBy?: (string | null) | User;
+    createdBy?: (number | null) | User;
   };
   meta?: {
     title?: string | null;
@@ -415,7 +415,7 @@ export interface Post {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -425,25 +425,25 @@ export interface Post {
  * via the `definition` "navigation".
  */
 export interface Navigation {
-  id: string;
+  id: number;
   menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
   items?:
     | {
         type: 'page' | 'post' | 'external';
-        page?: (string | null) | Page;
-        post?: (string | null) | Post;
+        page?: (number | null) | Page;
+        post?: (number | null) | Post;
         label?: string | null;
         url?: string | null;
-        image?: (string | null) | Media;
+        image?: (number | null) | Media;
         newTab?: boolean | null;
         children?:
           | {
               type: 'page' | 'post' | 'external';
-              page?: (string | null) | Page;
-              post?: (string | null) | Post;
+              page?: (number | null) | Page;
+              post?: (number | null) | Post;
               label?: string | null;
               url?: string | null;
-              image?: (string | null) | Media;
+              image?: (number | null) | Media;
               newTab?: boolean | null;
               id?: string | null;
             }[]
@@ -459,7 +459,7 @@ export interface Navigation {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   formType: 'contact-form' | 'news-form';
   title: string;
   fields?:
@@ -649,8 +649,8 @@ export interface Form {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
@@ -666,7 +666,7 @@ export interface FormSubmission {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -683,40 +683,40 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       } | null)
     | ({
         relationTo: 'navigation';
-        value: string | Navigation;
+        value: number | Navigation;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -726,10 +726,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -749,7 +749,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1247,7 +1247,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "legal-notice".
  */
 export interface LegalNotice {
-  id: string;
+  id: number;
   editeur: {
     identite: string;
     capital?: string | null;
@@ -1277,7 +1277,7 @@ export interface LegalNotice {
  * via the `definition` "confidentiality".
  */
 export interface Confidentiality {
-  id: string;
+  id: number;
   identity: {
     id_name: string;
     id_adress: string;
@@ -1300,7 +1300,7 @@ export interface Confidentiality {
  * via the `definition` "cgv".
  */
 export interface Cgv {
-  id: string;
+  id: number;
   user_data: {
     user_name: string;
     user_adress: string;
@@ -1334,12 +1334,12 @@ export interface Cgv {
  * via the `definition` "customization".
  */
 export interface Customization {
-  id: string;
+  id: number;
   identity?: {
     site_title?: string | null;
-    homepage?: (string | null) | Page;
-    site_logo?: (string | null) | Media;
-    site_favicon?: (string | null) | Media;
+    homepage?: (number | null) | Page;
+    site_logo?: (number | null) | Media;
+    site_favicon?: (number | null) | Media;
   };
   typography?: {
     body?: {
