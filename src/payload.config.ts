@@ -34,6 +34,11 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Icon: '/components/payload/Icon',
+      }
+    }
   },
   collections: [Users, Media, Pages, Posts, Navigation],
   globals: [LegalNotice, Confidentiality, Cgv, Customization],
@@ -173,6 +178,7 @@ export default buildConfig({
       formSubmissionOverrides: {
         admin: {
           group: 'Plugins',
+          hidden: true
         },
       },
     }),
