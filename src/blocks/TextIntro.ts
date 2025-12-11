@@ -1,5 +1,4 @@
-import LinkComponent from "@/components/LinkComponent";
-import Content from "@/fields/Content";
+import Container from "@/fields/Container";
 import type { Block } from "payload";
 
 const TextIntro: Block = {
@@ -8,7 +7,7 @@ const TextIntro: Block = {
         singular: 'Bloc Introduction',
         plural: 'Blocs Introduction',
     },
-    fields: [Content]
+    fields: [Container]
 }
 
 export default TextIntro;

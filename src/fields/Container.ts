@@ -1,7 +1,7 @@
 import { Image, ButtonsList, Text } from "@/components/BlocksContent";
 import { Field } from "payload";
 
-const Content: Field = {
+const Container: Field = {
     name: 'contentLayout',
     type: 'blocks',
     label: false,
@@ -9,4 +9,4 @@ const Content: Field = {
     required: true
 }
 
-export default Content;
+export default Container;

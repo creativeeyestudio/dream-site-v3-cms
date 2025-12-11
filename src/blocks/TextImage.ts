@@ -1,5 +1,5 @@
 import type { Block } from "payload";
-import Content from "../fields/Content";
+import Container from "../fields/Container";
 
 const TextImage: Block = {
     slug: 'text-image',
@@ -8,7 +8,7 @@ const TextImage: Block = {
         plural: 'Blocs Texte Image',
     },
     fields: [
-        Content,
+        Container,
         {
             name: 'image',
             label: 'Image',

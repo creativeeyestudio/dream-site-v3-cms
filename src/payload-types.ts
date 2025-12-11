@@ -389,21 +389,232 @@ export interface Post {
   title: string;
   slug: string;
   excerpt?: string | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  content?:
+    | (
+        | {
+            contentLayout: (
+              | {
+                  textBlockField: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'textBlock';
+                }
+              | {
+                  imageBlockField: number | Media;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'imageBlock';
+                }
+              | {
+                  buttonsListField?:
+                    | {
+                        type: 'page' | 'post' | 'external';
+                        page?: (number | null) | Page;
+                        post?: (number | null) | Post;
+                        label?: string | null;
+                        url?: string | null;
+                        image?: (number | null) | Media;
+                        newTab?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'buttonsListBlock';
+                }
+            )[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text-intro';
+          }
+        | {
+            contentLayout: (
+              | {
+                  textBlockField: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'textBlock';
+                }
+              | {
+                  imageBlockField: number | Media;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'imageBlock';
+                }
+              | {
+                  buttonsListField?:
+                    | {
+                        type: 'page' | 'post' | 'external';
+                        page?: (number | null) | Page;
+                        post?: (number | null) | Post;
+                        label?: string | null;
+                        url?: string | null;
+                        image?: (number | null) | Media;
+                        newTab?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'buttonsListBlock';
+                }
+            )[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
+          }
+        | {
+            contentLayout: (
+              | {
+                  textBlockField: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'textBlock';
+                }
+              | {
+                  imageBlockField: number | Media;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'imageBlock';
+                }
+              | {
+                  buttonsListField?:
+                    | {
+                        type: 'page' | 'post' | 'external';
+                        page?: (number | null) | Page;
+                        post?: (number | null) | Post;
+                        label?: string | null;
+                        url?: string | null;
+                        image?: (number | null) | Media;
+                        newTab?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'buttonsListBlock';
+                }
+            )[];
+            image: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text-image';
+          }
+        | {
+            contentLayout: (
+              | {
+                  textBlockField: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'textBlock';
+                }
+              | {
+                  imageBlockField: number | Media;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'imageBlock';
+                }
+              | {
+                  buttonsListField?:
+                    | {
+                        type: 'page' | 'post' | 'external';
+                        page?: (number | null) | Page;
+                        post?: (number | null) | Post;
+                        label?: string | null;
+                        url?: string | null;
+                        image?: (number | null) | Media;
+                        newTab?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'buttonsListBlock';
+                }
+            )[];
+            image1: number | Media;
+            image2?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text-double-image';
+          }
+        | {
+            hero_image: (number | Media)[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroscreen';
+          }
+        | {
+            parallax_image: number | Media;
+            parallax_speed: number;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'parallax';
+          }
+        | {
+            htmlCode: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'html-content';
+          }
+      )[]
+    | null;
   coverImage?: (number | null) | Media;
   config?: {
     published?: ('0' | '1' | '2') | null;
@@ -985,7 +1196,203 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   excerpt?: T;
-  content?: T;
+  content?:
+    | T
+    | {
+        'text-intro'?:
+          | T
+          | {
+              contentLayout?:
+                | T
+                | {
+                    textBlock?:
+                      | T
+                      | {
+                          textBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageBlock?:
+                      | T
+                      | {
+                          imageBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    buttonsListBlock?:
+                      | T
+                      | {
+                          buttonsListField?:
+                            | T
+                            | {
+                                type?: T;
+                                page?: T;
+                                post?: T;
+                                label?: T;
+                                url?: T;
+                                image?: T;
+                                newTab?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        content?:
+          | T
+          | {
+              contentLayout?:
+                | T
+                | {
+                    textBlock?:
+                      | T
+                      | {
+                          textBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageBlock?:
+                      | T
+                      | {
+                          imageBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    buttonsListBlock?:
+                      | T
+                      | {
+                          buttonsListField?:
+                            | T
+                            | {
+                                type?: T;
+                                page?: T;
+                                post?: T;
+                                label?: T;
+                                url?: T;
+                                image?: T;
+                                newTab?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'text-image'?:
+          | T
+          | {
+              contentLayout?:
+                | T
+                | {
+                    textBlock?:
+                      | T
+                      | {
+                          textBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageBlock?:
+                      | T
+                      | {
+                          imageBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    buttonsListBlock?:
+                      | T
+                      | {
+                          buttonsListField?:
+                            | T
+                            | {
+                                type?: T;
+                                page?: T;
+                                post?: T;
+                                label?: T;
+                                url?: T;
+                                image?: T;
+                                newTab?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'text-double-image'?:
+          | T
+          | {
+              contentLayout?:
+                | T
+                | {
+                    textBlock?:
+                      | T
+                      | {
+                          textBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageBlock?:
+                      | T
+                      | {
+                          imageBlockField?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    buttonsListBlock?:
+                      | T
+                      | {
+                          buttonsListField?:
+                            | T
+                            | {
+                                type?: T;
+                                page?: T;
+                                post?: T;
+                                label?: T;
+                                url?: T;
+                                image?: T;
+                                newTab?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              image1?: T;
+              image2?: T;
+              id?: T;
+              blockName?: T;
+            };
+        heroscreen?:
+          | T
+          | {
+              hero_image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        parallax?:
+          | T
+          | {
+              parallax_image?: T;
+              parallax_speed?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'html-content'?:
+          | T
+          | {
+              htmlCode?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   coverImage?: T;
   config?:
     | T
