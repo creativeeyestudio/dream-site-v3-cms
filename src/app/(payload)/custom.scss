@@ -1,0 +1,230 @@
+/* Import du thème Payload */
+@import "~@payloadcms/ui/scss";
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Geist:wght@100..900&display=swap');
+
+/* ----------------------------------------------------
+   VARIABLES GLOBALES
+----------------------------------------------------- */
+
+:root {
+  /* Polices */
+  --font-text: "Geist", system-ui, sans-serif;
+  --font-titles: "Dosis", system-ui, sans-serif;
+
+  /* Radius & Focus */
+  --radius-base: 10px;
+  --radius-card: 14px;
+  --focus-ring: 0 0 0 3px rgba(62, 168, 255, 0.45);
+
+  /* Statuts RGAA friendly */
+  --color-success: #3ddc97;
+  --color-warning: #f5b759;
+  --color-danger: #ff6b6b;
+  --color-info: #4fb6ff;
+}
+
+/* ----------------------------------------------------
+   THEME LIGHT
+----------------------------------------------------- */
+
+[data-theme="light"] {
+  --color-bg: #f8fafc;
+  --color-bg-alt: #ffffff;
+  --color-surface: #ffffff;
+  --color-border: #cbd5e1;
+  --color-border-strong: #94a3b8;
+  --color-text: #1e293b;
+  --color-text-muted: #475569;
+
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-accent: #8b5cf6;
+  --color-accent-hover: #a78bfa;
+}
+
+/* ----------------------------------------------------
+   THEME DARK
+----------------------------------------------------- */
+
+[data-theme="dark"] {
+  --color-bg: #0b0f16;
+  --color-bg-alt: #131922;
+  --color-surface: #1b2330;
+  --color-border: #2a3544;
+  --color-border-strong: #3a4a61;
+  --color-text: #e5ecf5;
+  --color-text-muted: #9aa6b8;
+
+  --color-primary: #3ea8ff;
+  --color-primary-hover: #68bfff;
+  --color-accent: #9d7dff;
+  --color-accent-hover: #b49aff;
+}
+
+/* ----------------------------------------------------
+   BASE GLOBAL
+----------------------------------------------------- */
+
+@layer payload-default {
+  html, body {
+    font-family: var(--font-text);
+    background: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  *:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: 4px;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-titles);
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.015em;
+  }
+
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.8rem; }
+  h3 { font-size: 1.5rem; }
+  h4 { font-size: 1.3rem; }
+  h5 { font-size: 1.1rem; }
+  h6 { font-size: 1rem; }
+}
+
+/* ----------------------------------------------------
+   UI COMPONENTS
+----------------------------------------------------- */
+
+@layer payload-default {
+  /* Cards */
+  .card, .payload--card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: rgba(0,0,0,0.25) 0 4px 12px;
+    transition: border-color 0.2s, transform 0.15s;
+
+    &:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Buttons */
+  .btn, .payload-button {
+    font-family: var(--font-text);
+    font-weight: 600;
+    border-radius: var(--radius-base);
+    padding: 0.55rem 1.1rem;
+    transition: all 0.15s;
+
+    &--primary {
+      background: var(--color-primary);
+      color: #fff;
+
+      &:hover {
+        background: var(--color-primary-hover);
+      }
+    }
+
+    &--secondary {
+      background: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+
+      &:hover {
+        border-color: var(--color-primary-hover);
+        color: var(--color-primary-hover);
+      }
+    }
+  }
+
+  /* Inputs */
+  input, select, textarea {
+    font-family: var(--font-text);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    border-radius: var(--radius-base);
+    padding: 0.55rem 0.75rem;
+    transition: border-color 0.15s;
+
+    &::placeholder { color: var(--color-text-muted); }
+
+    &:focus-visible {
+      border-color: var(--color-primary);
+      box-shadow: var(--focus-ring);
+    }
+  }
+
+  /* Navigation */
+  .payload-nav {
+    background: var(--color-bg-alt);
+    border-right: 1px solid var(--color-border);
+
+    a {
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius-base);
+      font-family: var(--font-text);
+      color: var(--color-text);
+      display: block;
+
+      &:hover {
+        background: rgba(62, 168, 255, 0.08);
+      }
+
+      &[aria-current="page"] {
+        background: rgba(62, 168, 255, 0.15);
+        border-left: 3px solid var(--color-primary);
+      }
+    }
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--color-text);
+
+    th, td { padding: 0.75rem; border-bottom: 1px solid var(--color-border); }
+
+    th { font-family: var(--font-titles); font-weight: 600; text-align: left; }
+
+    tbody tr:hover td { background: rgba(62, 168, 255, 0.06); }
+  }
+}
+
+/* ----------------------------------------------------
+   ACCESSIBILITÉ
+----------------------------------------------------- */
+
+@layer payload-default {
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+  }
+}
